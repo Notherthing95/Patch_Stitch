@@ -22,7 +22,7 @@ public class PlayerController_test : MonoBehaviour
     [SerializeField] float moveRange = 15;
     float rangeCoefficient;
 
-
+    Color color;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,6 +35,7 @@ public class PlayerController_test : MonoBehaviour
         spring = GetComponent<SpringJoint>();
         attackRangePreview = Instantiate(_attackRangePreview);
         attackRangePreview.SetActive(false);
+        color = attackRangePreview.gameObject.GetComponent<Renderer>().material.color;
     }
 
     // Update is called once per frame
@@ -78,6 +79,8 @@ public class PlayerController_test : MonoBehaviour
             attackRangePreview.transform.localScale = new Vector3(moveRange * 2, attackRangePreview.transform.localScale.y, moveRange * 2);
         }
 
+        color = new Color(255 - moveRange * 15, 255, 0, 1);
+        attackRangePreview.gameObject.GetComponent<Renderer>().material.color = color;
     }
 
     void FixedUpdate()

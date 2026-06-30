@@ -7,6 +7,8 @@ public class PlayerController_test : MonoBehaviour
     InputAction attackAction;
     InputAction finalAttackAction;
 
+    SpringJoint spring;
+
     Rigidbody p_Rigidbody;
 
     [SerializeField] GameObject _attackRangePreview;
@@ -18,6 +20,8 @@ public class PlayerController_test : MonoBehaviour
 
     [SerializeField] float moveSpeed = 10;
     [SerializeField] float moveRange = 15;
+    float rangeCoefficient;
+
 
 
 
@@ -28,6 +32,7 @@ public class PlayerController_test : MonoBehaviour
         attackAction = InputSystem.actions.FindAction("Attack");
         finalAttackAction = InputSystem.actions.FindAction("FinalAttack");
         p_Rigidbody = GetComponent<Rigidbody>();
+        spring = GetComponent<SpringJoint>();
         attackRangePreview = Instantiate(_attackRangePreview);
         attackRangePreview.SetActive(false);
     }
@@ -38,30 +43,39 @@ public class PlayerController_test : MonoBehaviour
         RaycastHit hit;
         Physics.SphereCast(transform.position, .5f, transform.forward, out hit, 1);
         Debug.DrawRay(transform.position + transform.forward.normalized * 0.5f, transform.forward.normalized * 1);
-
         if (attackAction.triggered)
         {
+            if (attackRangePreview.activeSelf)
+            {
+                if (hit.collider != null)
+                {
+                    moveRange--;
+                    attackRangePreview.transform.localScale = new Vector3(moveRange * 2 * rangeCoefficient, attackRangePreview.transform.localScale.y, moveRange * 2 * rangeCoefficient);
+                }
+            }
             if (hit.collider != null)
             {
                 attackRangePreview.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
                 attackRangePreview.transform.parent = hit.collider.transform;
+                rangeCoefficient = 1 / hit.collider.transform.parent.transform.localScale.x / hit.collider.transform.localScale.x;
                 attackRangePreview.SetActive(true);
             }
-            if (attackRangePreview.activeSelf)
-            {
-                moveRange--;
-                attackRangePreview.transform.localScale = new Vector3(moveRange * 2, attackRangePreview.transform.localScale.y, moveRange * 2);
-            }
         }
-
-        Debug.Log(attackRangePreview.transform.localScale);
-        attackPoint = attackRangePreview.transform.position;
+        if (attackRangePreview.activeSelf)
+        {
+            attackPoint = attackRangePreview.transform.position;
+        }
+        else
+        {
+            attackPoint = transform.position;
+        }
 
         if (finalAttackAction.triggered)
         {
             attackRangePreview.SetActive(false);
+            attackRangePreview.transform.parent = null;
             moveRange = 15;
-            attackRangePreview.transform.localScale.Set(moveRange, attackRangePreview.transform.localScale.y, moveRange);
+            attackRangePreview.transform.localScale = new Vector3(moveRange * 2, attackRangePreview.transform.localScale.y, moveRange * 2);
         }
 
     }
@@ -70,6 +84,10 @@ public class PlayerController_test : MonoBehaviour
     {
         readVector = moveAction.ReadValue<Vector2>();
         moveVector = readVector.y * transform.forward + readVector.x * transform.right;
+
+        spring.connectedAnchor = attackPoint;
+        spring.maxDistance = moveRange + .5f;
+        Debug.Log(spring.connectedAnchor);
 
         if (readVector.magnitude > 0.1)
         {

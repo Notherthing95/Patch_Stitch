@@ -7,6 +7,8 @@ public class PlayerController_test : MonoBehaviour
     InputAction attackAction;
     InputAction finalAttackAction;
 
+    SpringJoint spring;
+
     Rigidbody p_Rigidbody;
 
     [SerializeField] GameObject _attackRangePreview;
@@ -16,8 +18,15 @@ public class PlayerController_test : MonoBehaviour
     Vector3 moveVector;
     Vector3 attackPoint;
 
-    [SerializeField]float moveSpeed = 10;
+    [SerializeField] float moveSpeed = 10;
     [SerializeField] float moveRange = 15;
+    float rangeCoefficient;
+
+    [SerializeField] Color startColor = Color.green;   // 最大サイズのときの色
+    [SerializeField] Color endColor = Color.red;       // 最小サイズのときの色
+
+    Renderer previewRenderer;
+    float maxRange;   // 初期の moveRange を保存しておく
 
 
 
@@ -28,19 +37,68 @@ public class PlayerController_test : MonoBehaviour
         attackAction = InputSystem.actions.FindAction("Attack");
         finalAttackAction = InputSystem.actions.FindAction("FinalAttack");
         p_Rigidbody = GetComponent<Rigidbody>();
+        spring = GetComponent<SpringJoint>();
+
         attackRangePreview = Instantiate(_attackRangePreview);
         attackRangePreview.SetActive(false);
+
+        previewRenderer = attackRangePreview.GetComponent<Renderer>();
+        maxRange = moveRange;  // 初期値を保存
     }
 
     // Update is called once per frame
     void Update()
     {
+        RaycastHit hit;
+        Physics.SphereCast(transform.position, .5f, transform.forward, out hit, 1);
+        Debug.DrawRay(transform.position + transform.forward.normalized * 0.5f, transform.forward.normalized * 1);
         if (attackAction.triggered)
         {
-            attackPoint = transform.position;
-            attackRangePreview.transform.position = attackPoint;
-            attackRangePreview.SetActive (true);
+            if (attackRangePreview.activeSelf)
+            {
+                if (hit.collider != null)
+                {
+                    moveRange--;
+
+                    attackRangePreview.transform.localScale =
+                        new Vector3(moveRange * 2 * rangeCoefficient,
+                                    attackRangePreview.transform.localScale.y,
+                                    moveRange * 2 * rangeCoefficient);
+
+                    float t = 1f - (moveRange / maxRange);
+                    previewRenderer.material.color = Color.Lerp(startColor, endColor, t);
+                }
+            }
+            if (hit.collider != null)
+            {
+                attackRangePreview.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
+                attackRangePreview.transform.parent = hit.collider.transform;
+                rangeCoefficient = 1f / hit.collider.transform.lossyScale.x;
+                attackRangePreview.SetActive(true);
+            }
         }
+        if (attackRangePreview.activeSelf)
+        {
+            attackPoint = attackRangePreview.transform.position;
+        }
+        else
+        {
+            attackPoint = transform.position;
+        }
+
+        if (finalAttackAction.triggered)
+        {
+            attackRangePreview.SetActive(false);
+            attackRangePreview.transform.parent = null;
+
+            moveRange = maxRange;
+
+            attackRangePreview.transform.localScale =
+                new Vector3(moveRange * 2, attackRangePreview.transform.localScale.y, moveRange * 2);
+
+            previewRenderer.material.color = startColor;
+        }
+
     }
 
     void FixedUpdate()
@@ -48,24 +106,39 @@ public class PlayerController_test : MonoBehaviour
         readVector = moveAction.ReadValue<Vector2>();
         moveVector = readVector.y * transform.forward + readVector.x * transform.right;
 
-        if(Vector3.Distance(attackPoint, transform.position) >= moveRange)
-        {
-            if(Vector3.Distance(attackPoint,transform.position) > Vector3.Distance(attackPoint, transform.position + moveVector))
-            {
-                p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+        spring.connectedAnchor = attackPoint;
+        spring.maxDistance = moveRange + .5f;
+        Debug.Log(spring.connectedAnchor);
 
+        if (readVector.magnitude > 0.1)
+        {
+            if (attackRangePreview.activeSelf)
+            {
+                if (Vector3.Distance(attackPoint, transform.position) >= moveRange)
+                {
+                    if (Vector3.Distance(attackPoint, transform.position) > Vector3.Distance(attackPoint, transform.position + moveVector))
+                    {
+                        p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+
+                    }
+                    else
+                    {
+                        p_Rigidbody.linearVelocity /= 1.2f;
+                    }
+                }
+                else
+                {
+                    p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+                }
             }
             else
             {
-                p_Rigidbody.linearVelocity = Vector3.zero;
+                p_Rigidbody.linearVelocity = moveVector * moveSpeed;
             }
         }
         else
         {
-            p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+            p_Rigidbody.linearVelocity /= 1.2f;
         }
-
-
-        //p_Rigidbody.linearVelocity = moveVector;
     }
 }

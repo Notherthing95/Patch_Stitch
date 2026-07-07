@@ -22,7 +22,12 @@ public class PlayerController_test : MonoBehaviour
     [SerializeField] float moveRange = 15;
     float rangeCoefficient;
 
-    Color color;
+    [SerializeField] Color startColor = Color.green;   // 最大サイズのときの色
+    [SerializeField] Color endColor = Color.red;       // 最小サイズのときの色
+
+    Renderer previewRenderer;
+    float maxRange;   // 初期の moveRange を保存しておく
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,9 +38,12 @@ public class PlayerController_test : MonoBehaviour
         finalAttackAction = InputSystem.actions.FindAction("FinalAttack");
         p_Rigidbody = GetComponent<Rigidbody>();
         spring = GetComponent<SpringJoint>();
+
         attackRangePreview = Instantiate(_attackRangePreview);
         attackRangePreview.SetActive(false);
-        color = attackRangePreview.gameObject.GetComponent<Renderer>().material.color;
+
+        previewRenderer = attackRangePreview.GetComponent<Renderer>();
+        maxRange = moveRange;  // 初期値を保存
     }
 
     // Update is called once per frame
@@ -51,14 +59,21 @@ public class PlayerController_test : MonoBehaviour
                 if (hit.collider != null)
                 {
                     moveRange--;
-                    attackRangePreview.transform.localScale = new Vector3(moveRange * 2 * rangeCoefficient, attackRangePreview.transform.localScale.y, moveRange * 2 * rangeCoefficient);
+
+                    attackRangePreview.transform.localScale =
+                        new Vector3(moveRange * 2 * rangeCoefficient,
+                                    attackRangePreview.transform.localScale.y,
+                                    moveRange * 2 * rangeCoefficient);
+
+                    float t = 1f - (moveRange / maxRange);
+                    previewRenderer.material.color = Color.Lerp(startColor, endColor, t);
                 }
             }
             if (hit.collider != null)
             {
                 attackRangePreview.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
                 attackRangePreview.transform.parent = hit.collider.transform;
-                rangeCoefficient = 1 / hit.collider.transform.parent.transform.localScale.x / hit.collider.transform.localScale.x;
+                rangeCoefficient = 1f / hit.collider.transform.lossyScale.x;
                 attackRangePreview.SetActive(true);
             }
         }
@@ -75,12 +90,15 @@ public class PlayerController_test : MonoBehaviour
         {
             attackRangePreview.SetActive(false);
             attackRangePreview.transform.parent = null;
-            moveRange = 15;
-            attackRangePreview.transform.localScale = new Vector3(moveRange * 2, attackRangePreview.transform.localScale.y, moveRange * 2);
+
+            moveRange = maxRange;
+
+            attackRangePreview.transform.localScale =
+                new Vector3(moveRange * 2, attackRangePreview.transform.localScale.y, moveRange * 2);
+
+            previewRenderer.material.color = startColor;
         }
 
-        color = new Color(255 - moveRange * 15, 255, 0, 1);
-        attackRangePreview.gameObject.GetComponent<Renderer>().material.color = color;
     }
 
     void FixedUpdate()

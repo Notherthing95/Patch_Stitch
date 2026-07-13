@@ -25,6 +25,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "CameraReset",
+                    "type": "Button",
+                    "id": "16a6d1b2-5cbc-4c50-92cf-e1bb68cb2bb3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "0377a1bb-1f4e-4ebe-9646-26f16d21cdb0",
@@ -283,6 +292,17 @@
                     "action": "FinalAttack",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3ee509d4-98f8-4b9a-8c89-85574be31b96",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraReset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -11,6 +11,6 @@ public class TranslateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(0,0,Mathf.Sin(Time.time)* Time.deltaTime * 30);
+        transform.Translate(0,0,Mathf.Sin(Time.time / 4)* Time.deltaTime * 10);
     }
 }

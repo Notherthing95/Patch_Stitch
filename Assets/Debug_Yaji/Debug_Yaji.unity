@@ -312,7 +312,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 77402c91f9150d443ba7547d0ec389e5, type: 2}
+  - {fileID: 2100000, guid: ae98e9d93a79baa4e8927c8125902159, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -928,6 +928,7 @@ GameObject:
   - component: {fileID: 1666687580}
   - component: {fileID: 1666687579}
   - component: {fileID: 1666687581}
+  - component: {fileID: 1666687582}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1042,7 +1043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 9bb1f87815d76994b9c07fac3f32e2ef, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:

@@ -128,10 +128,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 21979774}
+  - component: {fileID: 21979778}
   - component: {fileID: 21979777}
   - component: {fileID: 21979776}
   - component: {fileID: 21979775}
-  - component: {fileID: 21979778}
   m_Layer: 0
   m_Name: LeftLeg
   m_TagString: Untagged
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyInfo
   enemyInfo: {fileID: 930086285}
-  repairedMaterial: {fileID: 2100000, guid: 345dce724630fad498afca2b0e666fa5, type: 2}
+  repairedMaterial: {fileID: 2100000, guid: 693e28c183918424db975b9cc08e6148, type: 2}
   Life: 5
   isRepaired: 0
   isJoint: 0
@@ -914,7 +914,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyInfo
   Life: 1
   AfterDefeatEnemy: {fileID: 6081564533691474326, guid: 5bcbb91ac411eac4a8caac6d9b19d5d1, type: 3}
-  bodyInfos: []
+  bodyInfos:
+  - {fileID: 21979778}
 --- !u!1 &961739749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,13 +1047,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.22584403, y: 0.0020429036, z: -0.00047358626, w: -0.97416127}
-  m_LocalPosition: {x: 0.051253345, y: 5.9879184, z: -12.22002}
+  m_LocalRotation: {x: -0.08045985, y: 0, z: 0, w: 0.99675786}
+  m_LocalPosition: {x: 0, y: 1.35, z: -24.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1666687578}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -9.23, y: 0, z: 0}
 --- !u!114 &961739754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1062,10 +1063,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 961739749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e48ec970fae67b4d927d2fafae5cc13, type: 3}
+  m_Script: {fileID: 11500000, guid: a267042269e845e45977feabed4ac52d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CametaController_test
-  playerObj: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController_test
+  playerObj: {fileID: 1666687574}
 --- !u!1 &1105449982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,8 +1314,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 961739753}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1666687579
@@ -1419,5 +1419,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 203844589}
   - {fileID: 641431381}
+  - {fileID: 961739753}
   - {fileID: 1666687578}
   - {fileID: 930086282}

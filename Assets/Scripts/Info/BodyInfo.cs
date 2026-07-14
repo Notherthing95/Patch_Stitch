@@ -1,3 +1,4 @@
+using Unity.Scripting.LifecycleManagement;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,12 +8,17 @@ public class BodyInfo : MonoBehaviour
     [SerializeField] Material repairedMaterial;
 
     public float Life = 5;  // デフォルト
+    
+    public float AttackCount = 0;
+
     public bool isRepaired = false;
     public bool isJoint = false;
 
     private bool _checkFlag = false;
 
-
+    [SerializeField] bool isHit = false;             // デバッグ用
+    [SerializeField] bool isFinish = false;         // デバッグ用
+    [SerializeField] bool isThreadBreak = false;   // デバッグ用
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,9 +39,30 @@ public class BodyInfo : MonoBehaviour
             enemyInfo.bodyRepaired();
             
         }
+
+        //Hitのデバッグ用
+        if (isHit)
+        {
+            Hit();
+            isHit = false;
+        }
+
+        //Finishのデバッグ用
+        if (isFinish)
+        {
+            Finish();
+            isFinish = false;
+        }
+
+        //Finishのデバッグ用
+        if (isThreadBreak)
+        {
+            ThreadBreak();
+            isThreadBreak = false;
+        }
     }
 
-    public void isHit()
+    public void Hit()
     {
         if (!isJoint)
         {
@@ -45,7 +72,23 @@ public class BodyInfo : MonoBehaviour
 
         if (isJoint)
         {
-            Life--;
+            AttackCount++;
         }
+    }
+
+    public void Finish()
+    {
+        if (isJoint)
+        {
+            Life -= AttackCount;
+            AttackCount = 0;
+            isJoint = false;
+        }
+    }
+
+    public void ThreadBreak()
+    {
+        AttackCount = 0;
+        isJoint = false;
     }
 }

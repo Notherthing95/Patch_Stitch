@@ -21,6 +21,7 @@ public class CameraController_test : MonoBehaviour
         cameraDistance = Vector3.Distance(playerObj.transform.position, Camera.main.transform.position);
         cameraRay.origin = playerObj.transform.position;
         cameraRay.direction = Camera.main.transform.position - playerObj.transform.position;
+        cameraAngleHorizontal = Mathf.Atan2(cameraRay.direction.z, cameraRay.direction.x);
 
     }
 
@@ -31,10 +32,10 @@ public class CameraController_test : MonoBehaviour
 
         cameraRay.origin = playerObj.transform.position;
 
-        cameraAngleHorizontal += readVector2.x * 0.01f;
+        cameraAngleHorizontal -= readVector2.x * 0.01f;
         cameraAngleHorizontal %= 2 * Mathf.PI;
 
-        cameraAngleVertical += readVector2.y * 0.01f;
+        cameraAngleVertical -= readVector2.y * 0.01f;
 
         //xはコサイン zはサイン yは直入れ
         cameraRay.direction = new Vector3(Mathf.Cos(cameraAngleHorizontal), cameraAngleVertical, Mathf.Sin(cameraAngleHorizontal));
@@ -45,7 +46,6 @@ public class CameraController_test : MonoBehaviour
         }
 
         //Debug.Log("cos" + Mathf.Cos(cameraRay.direction.x) + "sin" + Mathf.Sin(cameraRay.direction.x));
-        //Debug.Log(cameraAngleVertical);
 
         Debug.DrawRay(cameraRay.origin, cameraRay.direction * cameraDistance, Color.blue);
 

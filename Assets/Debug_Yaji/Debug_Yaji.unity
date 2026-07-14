@@ -1101,7 +1101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController_test
   _attackRangePreview: {fileID: 7107211372973026063, guid: 1836c39e2d300034f9de35a7cd290bac, type: 3}
-  moveSpeed: 10
+  initialMoveSpeed: 10
+  dodgeMoveSpeed: 30
   moveRange: 15
 --- !u!145 &1666687582
 SpringJoint:

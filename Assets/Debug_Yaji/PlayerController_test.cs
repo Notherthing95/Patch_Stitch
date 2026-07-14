@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,7 @@ public class PlayerController_test : MonoBehaviour
     InputAction moveAction;
     InputAction attackAction;
     InputAction finalAttackAction;
+    InputAction dodgeAction;
 
     SpringJoint spring;
 
@@ -18,7 +20,13 @@ public class PlayerController_test : MonoBehaviour
     Vector3 moveVector;
     Vector3 attackPoint;
 
-    [SerializeField] float moveSpeed = 10;
+    [SerializeField] float initialMoveSpeed = 10;
+    [SerializeField] float dodgeMoveSpeed = 30;
+    float moveSpeed;
+
+    bool IsDodge = false;
+    float dodgeTimer;
+
     [SerializeField] float moveRange = 15;
     float rangeCoefficient;
 
@@ -31,11 +39,13 @@ public class PlayerController_test : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         attackAction = InputSystem.actions.FindAction("Attack");
         finalAttackAction = InputSystem.actions.FindAction("FinalAttack");
+        dodgeAction = InputSystem.actions.FindAction("Dodge");
         p_Rigidbody = GetComponent<Rigidbody>();
         spring = GetComponent<SpringJoint>();
         attackRangePreview = Instantiate(_attackRangePreview);
         attackRangePreview.SetActive(false);
 
+        moveSpeed = initialMoveSpeed;
         spring.connectedAnchor = transform.position;
     }
 
@@ -84,6 +94,22 @@ public class PlayerController_test : MonoBehaviour
             attackRangePreview.gameObject.GetComponent<Renderer>().material.color = color;
         }
 
+        if (dodgeAction.triggered && !IsDodge)
+        {
+            IsDodge = true;
+            moveSpeed = dodgeMoveSpeed;
+        }
+        if (IsDodge)
+        {
+            dodgeTimer += Time.deltaTime;
+
+            moveSpeed = Mathf.Lerp(dodgeMoveSpeed, initialMoveSpeed, dodgeTimer * (1 / 0.33f));
+            if (dodgeTimer >= 0.33f)
+            {
+                dodgeTimer = 0;
+                IsDodge = false;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -102,29 +128,49 @@ public class PlayerController_test : MonoBehaviour
             {
                 if (Vector3.Distance(attackPoint, transform.position) >= moveRange)
                 {
-                    if (Vector3.Distance(attackPoint, transform.position) > Vector3.Distance(attackPoint, transform.position + moveVector))
+                    if (Vector3.Distance(attackPoint, transform.position) > Vector3.Distance(attackPoint, transform.position + moveVector))//‹ß‚Ã‚±‚¤‚Æ‚µ‚Ä‚½‚ç
                     {
-                        p_Rigidbody.linearVelocity = moveVector * moveSpeed;
-
+                        if (IsDodge)
+                        {
+                            p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
+                        }
+                        else
+                        {
+                            p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+                        }
                     }
                     else
                     {
-                        p_Rigidbody.linearVelocity /= 1.2f;
+                        p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
                     }
+                }
+                else
+                {
+                    if (IsDodge)
+                    {
+                        p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
+                    }
+                    else
+                    {
+                        p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+                    }
+                }
+            }
+            else
+            {
+                if (IsDodge)
+                {
+                    p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
                 }
                 else
                 {
                     p_Rigidbody.linearVelocity = moveVector * moveSpeed;
                 }
             }
-            else
-            {
-                p_Rigidbody.linearVelocity = moveVector * moveSpeed;
-            }
         }
         else
         {
-            p_Rigidbody.linearVelocity /= 1.2f;
+            p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
         }
     }
 }

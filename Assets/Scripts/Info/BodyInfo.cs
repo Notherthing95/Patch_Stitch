@@ -9,7 +9,8 @@ public class BodyInfo : MonoBehaviour
 
     public float Life = 5;  // デフォルト
     
-    public float AttackCount = 0;
+    public float attackCount = 0;
+    public float stringRadius = 10;
 
     public bool isRepaired = false;
     public bool isJoint = false;
@@ -72,7 +73,7 @@ public class BodyInfo : MonoBehaviour
 
         if (isJoint)
         {
-            AttackCount++;
+            attackCount++;
         }
     }
 
@@ -80,15 +81,15 @@ public class BodyInfo : MonoBehaviour
     {
         if (isJoint)
         {
-            Life -= AttackCount;
-            AttackCount = 0;
+            Life -= attackCount;
+            attackCount = 0;
             isJoint = false;
         }
     }
 
     public void ThreadBreak()
     {
-        AttackCount = 0;
+        attackCount = 0;
         isJoint = false;
     }
 }

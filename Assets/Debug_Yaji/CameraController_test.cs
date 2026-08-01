@@ -11,6 +11,7 @@ public class CameraController_test : MonoBehaviour
     Ray cameraRay;
     float cameraAngleHorizontal;
     float cameraAngleVertical;
+    [SerializeField] float cameraVerticalRange = 6f;
     Vector2 readVector2;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,9 +37,17 @@ public class CameraController_test : MonoBehaviour
         cameraAngleHorizontal %= 2 * Mathf.PI;
 
         cameraAngleVertical -= readVector2.y * 0.01f;
+        if(cameraAngleVertical >= Mathf.PI / cameraVerticalRange)
+        {
+            cameraAngleVertical = Mathf.PI / cameraVerticalRange;
+        }
+        else if(cameraAngleVertical <= -Mathf.PI / cameraVerticalRange)
+        {
+            cameraAngleVertical = -Mathf.PI / cameraVerticalRange;
+        }
 
         //xはコサイン zはサイン yは直入れ
-        cameraRay.direction = new Vector3(Mathf.Cos(cameraAngleHorizontal), cameraAngleVertical, Mathf.Sin(cameraAngleHorizontal));
+        cameraRay.direction = new Vector3(Mathf.Cos(cameraAngleHorizontal) * Mathf.Cos(cameraAngleVertical), Mathf.Sin(cameraAngleVertical), Mathf.Sin(cameraAngleHorizontal) * Mathf.Cos(cameraAngleVertical));
 
         if (cameraResetAction.triggered)
         {

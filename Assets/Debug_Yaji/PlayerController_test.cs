@@ -124,7 +124,7 @@ public class PlayerController_test : MonoBehaviour
             }
         }
 
-        transform.forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z).normalized;
+        //transform.forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z).normalized;
     }
 
     void FixedUpdate()
@@ -179,9 +179,10 @@ public class PlayerController_test : MonoBehaviour
                 }
                 else
                 {
-                    p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+                    p_Rigidbody.linearVelocity = moveVector * moveSpeed; //移動スピードは2段階らしいですよ
                 }
             }
+            transform.forward = new Vector3(p_Rigidbody.linearVelocity.x, 0, p_Rigidbody.linearVelocity.z).normalized;
         }
         else
         {

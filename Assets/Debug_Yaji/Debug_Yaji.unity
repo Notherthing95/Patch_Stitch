@@ -1108,7 +1108,7 @@ GameObject:
   - component: {fileID: 961739752}
   - component: {fileID: 961739751}
   - component: {fileID: 961739750}
-  - component: {fileID: 961739754}
+  - component: {fileID: 961739755}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1234,7 +1234,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -9.23, y: 0, z: 0}
---- !u!114 &961739754
+--- !u!114 &961739755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1243,11 +1243,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 961739749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a267042269e845e45977feabed4ac52d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e82cda80b2b20243887054f9963f14b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraController_test
-  playerObj: {fileID: 1666687574}
-  cameraVerticalRange: 6
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  playerTransform: {fileID: 1666687578}
+  MaxPitch: 5
+  MinPitch: 6
 --- !u!1 &1105449982
 GameObject:
   m_ObjectHideFlags: 0

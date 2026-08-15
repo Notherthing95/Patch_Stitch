@@ -147,27 +147,27 @@ public class PlayerController_test : MonoBehaviour
                     {
                         if (IsDodge)
                         {
-                            p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
+                            //p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
                         }
                         else
                         {
-                            p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+                           // p_Rigidbody.linearVelocity = moveVector * moveSpeed;
                         }
                     }
                     else
                     {
-                        p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
+                      //  p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
                     }
                 }
                 else
                 {
                     if (IsDodge)
                     {
-                        p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
+                       // p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
                     }
                     else
                     {
-                        p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+                      //  p_Rigidbody.linearVelocity = moveVector * moveSpeed;
                     }
                 }
             }
@@ -175,18 +175,18 @@ public class PlayerController_test : MonoBehaviour
             {
                 if (IsDodge)
                 {
-                    p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
+                    //p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
                 }
                 else
                 {
-                    p_Rigidbody.linearVelocity = moveVector * moveSpeed; //移動スピードは2段階らしいですよ
+                    //p_Rigidbody.linearVelocity = moveVector * moveSpeed; //移動スピードは2段階らしいですよ
                 }
             }
-            transform.forward = new Vector3(p_Rigidbody.linearVelocity.x, 0, p_Rigidbody.linearVelocity.z).normalized;
+           // transform.forward = new Vector3(p_Rigidbody.linearVelocity.x, 0, p_Rigidbody.linearVelocity.z).normalized;
         }
         else
         {
-            p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
+           // p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
         }
     }
 }

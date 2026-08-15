@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -44,13 +43,13 @@ public class CameraController : MonoBehaviour
     /// カメラ上向きの制限
     /// </summary>
     [Header("視点上向きの制限")]
-    [SerializeField] float MaxPitch = 5f;
+    [SerializeField] float maxPitch = 5f;
 
     /// <summary>
     /// カメラ下向きの制限
     /// </summary>
     [Header("視点下向きの制限")]
-    [SerializeField] float MinPitch = 6f;
+    [SerializeField] float minPitch = 6f;
 
     /// <summary>
     /// カメラのヨー回転の感度 初期値0.01f
@@ -80,10 +79,10 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// リセットにかかる時間
     /// </summary>
-    const float ResetDelay = 0.2f;
+    const float ResetDuration = 0.2f;
 
     /// <summary>
-    /// リセット中のタイマー
+    /// リセットし始めてから現在経った時間
     /// </summary>
     float resettingTimer;
 
@@ -113,10 +112,13 @@ public class CameraController : MonoBehaviour
     const float ReturnDelay = 0.2f;
 
     /// <summary>
-    /// カメラレイがヒットしてからcameraDistanceが最大に戻るまでのタイマー
+    /// カメラレイがヒットしてからcameraDistanceが最大に戻るまでの現在経った時間
     /// </summary>
     float returnTimer;
 
+    /// <summary>
+    /// アナログジョイスティックから読み取った値
+    /// </summary>
     Vector2 readVector2;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -183,13 +185,13 @@ public class CameraController : MonoBehaviour
         cameraPitchAngle += readVector2.y * PitchSensitivity * pitchSign;
 
         //ピッチ回転制限
-        if (cameraPitchAngle <= Mathf.PI / -MaxPitch)
+        if (cameraPitchAngle <= Mathf.PI / -maxPitch)
         {
-            cameraPitchAngle = Mathf.PI / -MaxPitch;
+            cameraPitchAngle = Mathf.PI / -maxPitch;
         }
-        else if (cameraPitchAngle >= Mathf.PI / MinPitch)
+        else if (cameraPitchAngle >= Mathf.PI / minPitch)
         {
-            cameraPitchAngle = Mathf.PI / MinPitch;
+            cameraPitchAngle = Mathf.PI / minPitch;
         }
     }
 
@@ -226,10 +228,10 @@ public class CameraController : MonoBehaviour
     {
         resettingTimer += Time.deltaTime;
 
-        cameraYawAngle = Mathf.Lerp(beforeResetYawAngle, afterResetYawAngle, resettingTimer / ResetDelay);
-        cameraPitchAngle = Mathf.Lerp(beforeResetPitchAngle, 0, resettingTimer / ResetDelay);
+        cameraYawAngle = Mathf.Lerp(beforeResetYawAngle, afterResetYawAngle, resettingTimer / ResetDuration);
+        cameraPitchAngle = Mathf.Lerp(beforeResetPitchAngle, 0, resettingTimer / ResetDuration);
 
-        if (resettingTimer >= ResetDelay)
+        if (resettingTimer >= ResetDuration)
         {
             IsReset = false;
             resettingTimer = 0;

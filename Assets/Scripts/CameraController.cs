@@ -74,7 +74,7 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// カメラ回転リセットフラグ
     /// </summary>
-    bool IsReset;
+    bool isReset;
 
     /// <summary>
     /// リセットにかかる時間
@@ -148,11 +148,11 @@ public class CameraController : MonoBehaviour
         CalculationRayAngles();
 
         //カメラ回転リセット
-        if (cameraResetAction.triggered && !IsReset)
+        if (cameraResetAction.WasPressedThisFrame() && !isReset)
         {
             ResetTiggered();
         }
-        if (IsReset)
+        if (isReset)
         {
             CameraResetting();
         }
@@ -200,7 +200,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     void ResetTiggered()
     {
-        IsReset = true;
+        isReset = true;
         //リセット前と後の回転の角度の代入
         beforeResetYawAngle = cameraYawAngle;
         afterResetYawAngle = Mathf.Atan2(-playerTransform.forward.z, -playerTransform.forward.x);
@@ -233,7 +233,7 @@ public class CameraController : MonoBehaviour
 
         if (resettingTimer >= ResetDuration)
         {
-            IsReset = false;
+            isReset = false;
             resettingTimer = 0;
         }
     }

@@ -47,7 +47,7 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// 回避している状態
     /// </summary>
-    bool IsDodge;
+    bool isDodge;
 
     /// <summary>
     /// 回避にかかる時間
@@ -86,9 +86,9 @@ public class PlayerMoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dodgeAction.triggered && !IsDodge)
+        if (dodgeAction.WasPressedThisFrame() && !isDodge)
         {
-            IsDodge = true;
+            isDodge = true;
         }
     }
 
@@ -102,6 +102,7 @@ public class PlayerMoveController : MonoBehaviour
         //移動する方向ベクトルの計算
         CalculationMoveVector();
 
+        //入力があればプレイヤーを移動させる
         if (readVector.magnitude > 0.1f)
         {
             MovePlayer();
@@ -113,13 +114,13 @@ public class PlayerMoveController : MonoBehaviour
     /// </summary>
     void SetMoveSpeed()
     {
-        if (IsDodge)
+        if (isDodge)
         {
             moveSpeed = Mathf.Lerp(dodgeSpeed, dashSpeed, dodgeTimer / DodgeDuration);
             dodgeTimer += Time.deltaTime;
             if (dodgeTimer >= DodgeDuration)
             {
-                IsDodge = false;
+                isDodge = false;
                 dodgeTimer = 0;
             }
         }

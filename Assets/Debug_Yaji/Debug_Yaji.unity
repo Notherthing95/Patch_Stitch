@@ -1483,6 +1483,7 @@ GameObject:
   - component: {fileID: 1666687579}
   - component: {fileID: 1666687581}
   - component: {fileID: 1666687582}
+  - component: {fileID: 1666687583}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1650,7 +1651,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666687574}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 229017874031a7c4fa039fda20124e90, type: 3}
   m_Name: 
@@ -1674,6 +1675,21 @@ MonoBehaviour:
   walkSpeed: 5
   dashSpeed: 10
   dodgeSpeed: 30
+--- !u!114 &1666687583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666687574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7206fb5052be59748a84e15606648e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackController
+  AttackPoint: {fileID: 0}
+  attackRange: 0.5
+  attackReach: 1.8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -9,13 +9,13 @@ public class PlayerController_test : MonoBehaviour
     InputAction finalAttackAction;
     InputAction dodgeAction;
 
-    SpringJoint spring;
+    //SpringJoint spring;
 
     Rigidbody p_Rigidbody;
 
     [SerializeField] GameObject _attackRangePreview;
     GameObject attackRangePreview;
-    BodyInfo sc_bodyInfo;
+    //BodyInfo sc_bodyInfo;
 
     Vector2 readVector;
     Vector3 moveVector;
@@ -41,19 +41,19 @@ public class PlayerController_test : MonoBehaviour
         attackAction = InputSystem.actions.FindAction("Attack");
         finalAttackAction = InputSystem.actions.FindAction("FinalAttack");
         dodgeAction = InputSystem.actions.FindAction("Dodge");
-        p_Rigidbody = GetComponent<Rigidbody>();
+        //p_Rigidbody = GetComponent<Rigidbody>();
         attackRangePreview = Instantiate(_attackRangePreview);
         attackRangePreview.SetActive(false);
 
         moveSpeed = normalMoveSpeed;
         attackPoint = transform.position;
-        spring = gameObject.AddComponent<SpringJoint>();
-        spring.connectedAnchor = transform.position;
-        spring.spring = 1000;
-        spring.damper = 0.2f;
-        spring.maxDistance = 100;
-        spring.tolerance = 0.0001f;
-        spring.autoConfigureConnectedAnchor = false;
+        //spring = gameObject.AddComponent<SpringJoint>();
+        //spring.connectedAnchor = transform.position;
+        //spring.spring = 1000;
+        //spring.damper = 0.2f;
+        //spring.maxDistance = 100;
+        //spring.tolerance = 0.0001f;
+        //spring.autoConfigureConnectedAnchor = false;
     }
 
     // Update is called once per frame
@@ -64,8 +64,8 @@ public class PlayerController_test : MonoBehaviour
         Debug.DrawRay(transform.position + transform.forward.normalized * 0.5f, transform.forward.normalized * 1);
         if (finalAttackAction.triggered)
         {
-            if (sc_bodyInfo != null) sc_bodyInfo.Finish();
-            sc_bodyInfo = null;
+            //if (sc_bodyInfo != null) sc_bodyInfo.Finish();
+            //sc_bodyInfo = null;
             attackRangePreview.SetActive(false);
             attackRangePreview.transform.parent = null;
             moveRange = 15;
@@ -83,7 +83,7 @@ public class PlayerController_test : MonoBehaviour
                     attackRangePreview.transform.localScale = new Vector3(moveRange * 2 * rangeCoefficient, attackRangePreview.transform.localScale.y, moveRange * 2 * rangeCoefficient);
                     color = new Color(1 - 1f / 15f * moveRange, 1f / 15f * moveRange, 0);
                     attackRangePreview.gameObject.GetComponent<Renderer>().material.color = color;
-                    sc_bodyInfo.Hit();
+                    //sc_bodyInfo.Hit();
                 }
             }
             else if (hit.collider != null)
@@ -92,8 +92,8 @@ public class PlayerController_test : MonoBehaviour
                 attackRangePreview.transform.parent = hit.collider.transform;
                 rangeCoefficient = 1 / hit.collider.transform.parent.transform.localScale.x / hit.collider.transform.localScale.x;  //親のscaleと子のscaleから、円の係数を算出
                 attackRangePreview.SetActive(true);
-                sc_bodyInfo = hit.collider.GetComponent<BodyInfo>();
-                if (sc_bodyInfo != null) sc_bodyInfo.Hit();
+                //sc_bodyInfo = hit.collider.GetComponent<BodyInfo>();
+                //if (sc_bodyInfo != null) sc_bodyInfo.Hit();
             }
         }
 
@@ -133,8 +133,8 @@ public class PlayerController_test : MonoBehaviour
         //moveVector = readVector.y * transform.forward + readVector.x * transform.right;
         moveVector = readVector.y * new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z).normalized + readVector.x * new Vector3(Camera.main.transform.right.x, 0, Camera.main.transform.right.z).normalized;
 
-        spring.connectedAnchor = attackPoint;
-        spring.maxDistance = moveRange + .5f;
+        //spring.connectedAnchor = attackPoint;
+        //spring.maxDistance = moveRange + .5f;
         //Debug.Log(spring.connectedAnchor);
 
         if (readVector.magnitude > 0.1)
@@ -147,27 +147,27 @@ public class PlayerController_test : MonoBehaviour
                     {
                         if (IsDodge)
                         {
-                            p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
+                            //p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
                         }
                         else
                         {
-                            p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+                           // p_Rigidbody.linearVelocity = moveVector * moveSpeed;
                         }
                     }
                     else
                     {
-                        p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
+                      //  p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
                     }
                 }
                 else
                 {
                     if (IsDodge)
                     {
-                        p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
+                       // p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
                     }
                     else
                     {
-                        p_Rigidbody.linearVelocity = moveVector * moveSpeed;
+                      //  p_Rigidbody.linearVelocity = moveVector * moveSpeed;
                     }
                 }
             }
@@ -175,18 +175,18 @@ public class PlayerController_test : MonoBehaviour
             {
                 if (IsDodge)
                 {
-                    p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
+                    //p_Rigidbody.linearVelocity = moveVector.normalized * moveSpeed;
                 }
                 else
                 {
-                    p_Rigidbody.linearVelocity = moveVector * moveSpeed; //移動スピードは2段階らしいですよ
+                    //p_Rigidbody.linearVelocity = moveVector * moveSpeed; //移動スピードは2段階らしいですよ
                 }
             }
-            transform.forward = new Vector3(p_Rigidbody.linearVelocity.x, 0, p_Rigidbody.linearVelocity.z).normalized;
+           // transform.forward = new Vector3(p_Rigidbody.linearVelocity.x, 0, p_Rigidbody.linearVelocity.z).normalized;
         }
         else
         {
-            p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
+           // p_Rigidbody.linearVelocity = new Vector3((p_Rigidbody.linearVelocity / 1.2f).x, p_Rigidbody.linearVelocity.y, (p_Rigidbody.linearVelocity / 1.2f).z);
         }
     }
 }

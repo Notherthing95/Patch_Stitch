@@ -935,7 +935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BodyInfo
   enemyInfo: {fileID: 930086285}
   repairedMaterial: {fileID: 2100000, guid: 345dce724630fad498afca2b0e666fa5, type: 2}
-  Life: 5
+  Life: 100
   attackCount: 0
   stringRadius: 10
   isRepaired: 0
@@ -1476,14 +1476,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1666687578}
-  - component: {fileID: 1666687577}
-  - component: {fileID: 1666687576}
   - component: {fileID: 1666687575}
   - component: {fileID: 1666687580}
   - component: {fileID: 1666687579}
-  - component: {fileID: 1666687581}
   - component: {fileID: 1666687582}
   - component: {fileID: 1666687583}
+  - component: {fileID: 1666687584}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1514,63 +1512,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1666687576
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1666687574}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1666687577
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1666687574}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1666687578
 Transform:
   m_ObjectHideFlags: 0
@@ -1644,22 +1585,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1666687581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1666687574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 229017874031a7c4fa039fda20124e90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController_test
-  _attackRangePreview: {fileID: 7107211372973026063, guid: 1836c39e2d300034f9de35a7cd290bac, type: 3}
-  normalMoveSpeed: 10
-  dodgeMoveSpeed: 30
-  moveRange: 15
 --- !u!114 &1666687582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1687,9 +1612,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7206fb5052be59748a84e15606648e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackController
-  AttackPoint: {fileID: 0}
   attackRange: 0.5
   attackReach: 1.8
+--- !u!114 &1666687584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666687574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6378ef9363343c345a74e2931806e7b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementAreaVisualizer
+  sc_attackController: {fileID: 1666687583}
+  _areaCircle: {fileID: 5261709003485712854, guid: bcbc1cee98e62034aa0c5a6fbe7cb249, type: 3}
+  areaCircleMaterial: {fileID: 2808123157163722749, guid: 0968821d83641f34eba42c0797dab1cc, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

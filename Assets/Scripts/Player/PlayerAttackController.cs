@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// プレイヤーの攻撃及び移動範囲制限のスクリプト 攻撃点と移動範囲を外部から参照できます
+/// </summary>
 public class PlayerAttackController : MonoBehaviour
 {
     InputAction attackAction;
@@ -20,7 +23,7 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// バネの接続先である敵への攻撃点
     /// </summary>
-    public GameObject AttackPoint;
+    public GameObject AttackPoint { get; private set; }
 
     /// <summary>
     /// 攻撃の当たり判定検知用
@@ -72,7 +75,7 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// プレイヤーの行動範囲(糸の距離)
     /// </summary>
-    float moveRange;
+    public float MoveRange { get; private set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -91,7 +94,7 @@ public class PlayerAttackController : MonoBehaviour
         Debug.DrawRay(transform.position + transform.right.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
         Debug.DrawRay(transform.position + -transform.right.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
         Debug.DrawRay(transform.position + transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
-        Debug.DrawRay(transform.position + -transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset , transform.forward * attackReach, Color.red);
+        Debug.DrawRay(transform.position + -transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
 
         //攻撃が入力された時
         if (finalAttackAction.WasPressedThisFrame())
@@ -131,24 +134,25 @@ public class PlayerAttackController : MonoBehaviour
     {
         isInCombat = true;
 
+        sc_bodyInfo = hit.collider.GetComponent<BodyInfo>();
+        sc_bodyInfo.Hit();
+
         AttackPoint.SetActive(true);
         AttackPoint.transform.parent = hit.collider.transform;
         AttackPoint.transform.position = hit.point;
 
-        maxMoveRange = 15;//後々敵の部位から取得するようにします
-        moveRange = maxMoveRange;
+        maxMoveRange = sc_bodyInfo.stringRadius;
+        MoveRange = maxMoveRange;
 
         spring = gameObject.AddComponent<SpringJoint>();
         spring.spring = SpringValue;
         spring.damper = DamperValue;
-        spring.maxDistance = moveRange;
+        spring.maxDistance = MoveRange;
         spring.tolerance = ToleranceValue;
         spring.autoConfigureConnectedAnchor = false;
 
         spring.connectedAnchor = AttackPoint.transform.position;
 
-        sc_bodyInfo = hit.collider.GetComponent<BodyInfo>();
-        sc_bodyInfo.Hit();
     }
 
     /// <summary>
@@ -156,9 +160,12 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void OnHit()
     {
-        moveRange--;
-        spring.maxDistance = moveRange;
-        sc_bodyInfo.Hit();
+        if (MoveRange > 1)
+        {
+            MoveRange--;
+            spring.maxDistance = MoveRange;
+            sc_bodyInfo.Hit();
+        }
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 /// <summary>
 /// プレイヤーの移動範囲の制限を可視化するスクリプト
@@ -10,12 +11,22 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     [SerializeField] GameObject _areaCircle;
     GameObject areaCircle;
 
-    [SerializeField] Material areaCircleMaterial;
+    DecalProjector decalProjector;
 
     /// <summary>
-    /// エリアのスケール
+    /// エリア円のサイズ(x,width y,height z,depth)
     /// </summary>
-    Vector3 areaCircleScale;
+    Vector3 areaCircleSize;
+
+    /// <summary>
+    /// DecalProjectorのsizeのDepthの値
+    /// </summary>
+    const float DepthValue = 10f;
+
+    /// <summary>
+    /// 透明度の値
+    /// </summary>
+    const float AlphaValue = 0.5f;
 
     /// <summary>
     /// 制限距離が変わりエリアが縮小している状態
@@ -46,8 +57,8 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     void Start()
     {
         areaCircle = Instantiate(_areaCircle);
+        decalProjector = areaCircle.GetComponent<DecalProjector>();
         areaCircle.SetActive(false);
-
     }
 
     // Update is called once per frame
@@ -59,11 +70,11 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
             if (!areaCircle.activeSelf)
             {
                 areaCircle.SetActive(true);
-                areaCircleScale = new Vector3(sc_attackController.MoveRange * 2, 1, sc_attackController.MoveRange * 2);
-                areaCircle.transform.localScale = areaCircleScale;
+                areaCircleSize = new Vector3(sc_attackController.MoveRange * 2, sc_attackController.MoveRange * 2, DepthValue);
+                decalProjector.size = areaCircleSize;
                 maxMoveRange = sc_attackController.MoveRange;
                 oldMoveRange = sc_attackController.MoveRange;
-                areaCircleMaterial.color = Color.green;
+                decalProjector.material.SetColor("_DecalColor", new Color(0, 1f, 0, AlphaValue));
             }
 
             //制限距離が変わった時
@@ -74,9 +85,9 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
             if (isChangeRange)
             {
                 float temp = Mathf.Lerp(oldMoveRange, sc_attackController.MoveRange, timer / Duration);
-                areaCircleScale = new Vector3(temp * 2, 1, temp * 2);
+                areaCircleSize = new Vector3(temp * 2, temp * 2, DepthValue);
                 timer += Time.deltaTime;
-                areaCircle.transform.localScale = areaCircleScale;
+                decalProjector.size = areaCircleSize;
 
                 if (timer >= Duration)
                 {
@@ -92,7 +103,7 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
                 oldMoveRange = sc_attackController.MoveRange;
             }
 
-            areaCircle.transform.position = new Vector3(sc_attackController.AttackPoint.transform.position.x, 0.001f, sc_attackController.AttackPoint.transform.position.z);
+            areaCircle.transform.position = sc_attackController.AttackPoint.transform.position;
         }
         else if (areaCircle.activeSelf)
         {
@@ -111,14 +122,14 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
             float r = Mathf.Lerp(Color.green.r, Color.yellow.r, 1 - (sc_attackController.MoveRange - temp) / maxMoveRange);
             float g = Mathf.Lerp(Color.green.g, Color.yellow.g, 1 - (sc_attackController.MoveRange - temp) / maxMoveRange);
             float b = Mathf.Lerp(Color.green.b, Color.yellow.b, 1 - (sc_attackController.MoveRange - temp) / maxMoveRange);
-            areaCircleMaterial.color = new Color(r, g, b, 0.5f);
+            decalProjector.material.SetColor("_DecalColor", new Color(r, g, b, AlphaValue));
         }
         else
         {
             float r = Mathf.Lerp(Color.yellow.r, Color.red.r, 1 - sc_attackController.MoveRange / (maxMoveRange / 2));
             float g = Mathf.Lerp(Color.yellow.g, Color.red.g, 1 - sc_attackController.MoveRange / (maxMoveRange / 2));
             float b = Mathf.Lerp(Color.yellow.b, Color.red.b, 1 - sc_attackController.MoveRange / (maxMoveRange / 2));
-            areaCircleMaterial.color = new Color(r, g, b, 0.5f);
+            decalProjector.material.SetColor("_DecalColor", new Color(r, g, b, AlphaValue));
         }
     }
 }

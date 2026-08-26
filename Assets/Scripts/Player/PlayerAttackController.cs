@@ -16,7 +16,7 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     SpringJoint spring;
 
-    const float SpringValue = 1000;
+    const float SpringValue = 1000f;
     const float DamperValue = 0.2f;
     const float ToleranceValue = 0.0001f;
 

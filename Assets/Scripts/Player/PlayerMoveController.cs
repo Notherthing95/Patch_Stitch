@@ -74,13 +74,17 @@ public class PlayerMoveController : MonoBehaviour
     /// </summary>
     const float ForceMultiPlier = 10f;
 
+    /// <summary>
+    /// プレイヤーの背の高さの半分
+    /// </summary>
+    const float PlayerHeightHalf = 0.8f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         moveAction = InputSystem.actions.FindAction("Move");
         dodgeAction = InputSystem.actions.FindAction("Dodge");
         p_rigidbody = GetComponent<Rigidbody>();
-        p_rigidbody.linearDamping = DampingValue;
     }
 
     // Update is called once per frame
@@ -102,10 +106,21 @@ public class PlayerMoveController : MonoBehaviour
         //移動する方向ベクトルの計算
         CalculationMoveVector();
 
-        //入力があればプレイヤーを移動させる
-        if (readVector.magnitude > 0.1f)
+        //接地しているか
+        if (IsGround())
         {
-            MovePlayer();
+            //プレイヤーが停止するのを早める
+            p_rigidbody.linearDamping = DampingValue;
+
+            //入力があればプレイヤーを移動させる
+            if (readVector.magnitude > 0.1f)
+            {
+                MovePlayer();
+            }
+        }
+        else
+        {
+            p_rigidbody.linearDamping = 0;
         }
     }
 
@@ -154,5 +169,21 @@ public class PlayerMoveController : MonoBehaviour
             p_rigidbody.AddForce(moveVector * moveSpeed * ForceMultiPlier);
         }
         transform.forward = moveVector;
+    }
+
+    /// <summary>
+    /// プレイヤーが接地しているかの判定
+    /// </summary>
+    bool IsGround()
+    {
+        Debug.DrawRay(transform.position, -Vector3.up * (PlayerHeightHalf + 0.05f), Color.brown);
+        if (Physics.Raycast(transform.position, -Vector3.up, PlayerHeightHalf + 0.05f))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -54,12 +54,12 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// カメラのヨー回転の感度 初期値0.01f
     /// </summary>
-    public float yawSensitivity { get; set; } = 0.01f;
+    public float yawSensitivity { get; set; } = 2f;
 
     /// <summary>
     /// カメラのピッチ回転の感度 初期値0.01f
     /// </summary>
-    public float pitchSensitivity { get; set; } = 0.01f;
+    public float pitchSensitivity { get; set; } = 2f;
 
     /// <summary>
     /// カメラのヨー回転の反転
@@ -176,13 +176,13 @@ public class CameraController : MonoBehaviour
         float pitchSign = isInvertPitch ? 1f : -1f;
 
         //入力値から角度に変換
-        _cameraYawAngle += _readVector2.x * yawSensitivity * yawSign;
+        _cameraYawAngle += _readVector2.x * Time.deltaTime * yawSensitivity * yawSign;
         _cameraYawAngle %= Mathf.PI * 2f;
         if (_cameraYawAngle < 0)
         {
             _cameraYawAngle += Mathf.PI * 2f;
         }
-        _cameraPitchAngle += _readVector2.y * pitchSensitivity * pitchSign;
+        _cameraPitchAngle += _readVector2.y * Time.deltaTime * pitchSensitivity * pitchSign;
 
         //ピッチ回転制限
         if (_cameraPitchAngle <= Mathf.PI / -maxPitch)

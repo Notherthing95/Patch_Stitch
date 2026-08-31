@@ -5,8 +5,13 @@ using UnityEngine;
 public class BodyInfo : MonoBehaviour
 {
     [SerializeField] EnemyInfo enemyInfo;
+    /// <summary>
+    /// 修繕した身体に付けるマテリアル
+    /// </summary>
     [SerializeField] Material repairedMaterial;
-
+    /// <summary>
+    /// 
+    /// </summary>
     public float Life = 5;  // デフォルト
     
     public float attackCount = 0;

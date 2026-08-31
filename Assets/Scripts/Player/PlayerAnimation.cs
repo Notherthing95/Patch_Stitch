@@ -4,6 +4,11 @@ public class PlayerAnimation : MonoBehaviour
 {
     Animator m_Animator;
 
+    /// <summary>
+    /// アニメーションを動かします 
+    /// <para>0:歩く</para>
+    /// <para>1:任意のアニメーション</para>
+    /// </summary>
     public bool[] SetAnimation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

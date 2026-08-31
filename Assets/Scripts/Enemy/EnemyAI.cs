@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour
     
     public float distance = 0;
     public float attackRange = 10;
+    public float trackPlayerRange = 50;
     float distanceX, distanceZ; // “ñæ‚µ‚½Player-‚Ìx,yÀ•W‚ÌˆÓ
 
     private NavMeshAgent navMeshAgent;
@@ -25,17 +26,23 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ˆÚ“®
-        navMeshAgent.destination = Player.transform.position;
+
 
         // ‹——£‚ÌXV, UŒ‚”»’è
         distanceX = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);
         distanceZ = Mathf.Abs(Player.transform.position.z - gameObject.transform.position.z);
         distance = Mathf.Sqrt(Mathf.Pow(distanceX, 2) + Mathf.Pow(distanceZ,2));
         Debug.Log("Distance: " + distance);
+
+        // UŒ‚”»’è
         if(distance < attackRange)
         {
             Debug.Log("Attack!");
         }
+        else if(distance < trackPlayerRange)    // ˆÚ“®
+        {
+            navMeshAgent.destination = Player.transform.position;
+        }
+
     }
 }

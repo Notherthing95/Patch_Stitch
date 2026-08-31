@@ -6,23 +6,23 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerMoveController : MonoBehaviour
 {
-    InputAction moveAction;
-    InputAction dodgeAction;
+    InputAction _moveAction;
+    InputAction _dodgeAction;
 
     /// <summary>
     /// プレイヤーのリジッドボディ
     /// </summary>
-    Rigidbody p_rigidbody;
+    Rigidbody _playerRigidbody;
 
     /// <summary>
     /// アナログジョイスティックから読み取った値
     /// </summary>
-    Vector2 readVector;
+    Vector2 _readVector;
 
     /// <summary>
     /// 移動する方向ベクトル yは0
     /// </summary>
-    Vector3 moveVector;
+    Vector3 _moveVector;
 
     /// <summary>
     /// 歩き状態の速さ
@@ -42,12 +42,12 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// 現在の移動する速さ
     /// </summary>
-    float moveSpeed;
+    float _moveSpeed;
 
     /// <summary>
     /// 回避している状態
     /// </summary>
-    bool isDodge;
+    bool _isDodge;
 
     /// <summary>
     /// 回避にかかる時間
@@ -57,7 +57,7 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// 回避し始めてから現在経った時間
     /// </summary>
-    float dodgeTimer;
+    float _dodgeTimer;
 
     /// <summary>
     /// 走ると歩くを切り替える閾値
@@ -82,23 +82,23 @@ public class PlayerMoveController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        moveAction = InputSystem.actions.FindAction("Move");
-        dodgeAction = InputSystem.actions.FindAction("Dodge");
-        p_rigidbody = GetComponent<Rigidbody>();
+        _moveAction = InputSystem.actions.FindAction("Move");
+        _dodgeAction = InputSystem.actions.FindAction("Dodge");
+        _playerRigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (dodgeAction.WasPressedThisFrame() && !isDodge)
+        if (_dodgeAction.WasPressedThisFrame() && !_isDodge)
         {
-            isDodge = true;
+            _isDodge = true;
         }
     }
 
     void FixedUpdate()
     {
-        readVector = moveAction.ReadValue<Vector2>();
+        _readVector = _moveAction.ReadValue<Vector2>();
 
         //移動速度の設定
         SetMoveSpeed();
@@ -110,17 +110,17 @@ public class PlayerMoveController : MonoBehaviour
         if (IsGround())
         {
             //プレイヤーが停止するのを早める
-            p_rigidbody.linearDamping = DampingValue;
+            _playerRigidbody.linearDamping = DampingValue;
 
             //入力があればプレイヤーを移動させる
-            if (readVector.magnitude > 0.1f)
+            if (_readVector.magnitude > 0.1f)
             {
                 MovePlayer();
             }
         }
         else
         {
-            p_rigidbody.linearDamping = 0;
+            _playerRigidbody.linearDamping = 0;
         }
     }
 
@@ -129,23 +129,23 @@ public class PlayerMoveController : MonoBehaviour
     /// </summary>
     void SetMoveSpeed()
     {
-        if (isDodge)
+        if (_isDodge)
         {
-            moveSpeed = Mathf.Lerp(dodgeSpeed, dashSpeed, dodgeTimer / DodgeDuration);
-            dodgeTimer += Time.deltaTime;
-            if (dodgeTimer >= DodgeDuration)
+            _moveSpeed = Mathf.Lerp(dodgeSpeed, dashSpeed, _dodgeTimer / DodgeDuration);
+            _dodgeTimer += Time.deltaTime;
+            if (_dodgeTimer >= DodgeDuration)
             {
-                isDodge = false;
-                dodgeTimer = 0;
+                _isDodge = false;
+                _dodgeTimer = 0;
             }
         }
-        else if (readVector.magnitude >= RunWalkThreshold)
+        else if (_readVector.magnitude >= RunWalkThreshold)
         {
-            moveSpeed = dashSpeed;
+            _moveSpeed = dashSpeed;
         }
         else
         {
-            moveSpeed = walkSpeed;
+            _moveSpeed = walkSpeed;
         }
     }
 
@@ -156,7 +156,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         Vector3 cForward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z).normalized;
         Vector3 cRight = new Vector3(Camera.main.transform.right.x, 0, Camera.main.transform.right.z).normalized;
-        moveVector = (readVector.y * cForward + readVector.x * cRight).normalized;
+        _moveVector = (_readVector.y * cForward + _readVector.x * cRight).normalized;
     }
 
     /// <summary>
@@ -164,11 +164,11 @@ public class PlayerMoveController : MonoBehaviour
     /// </summary>
     void MovePlayer()
     {
-        if (p_rigidbody.linearVelocity.magnitude <= moveSpeed)
+        if (_playerRigidbody.linearVelocity.magnitude <= _moveSpeed)
         {
-            p_rigidbody.AddForce(moveVector * moveSpeed * ForceMultiPlier);
+            _playerRigidbody.AddForce(_moveVector * _moveSpeed * ForceMultiPlier);
         }
-        transform.forward = moveVector;
+        transform.forward = _moveVector;
     }
 
     /// <summary>

@@ -6,15 +6,15 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerAttackController : MonoBehaviour
 {
-    InputAction attackAction;
-    InputAction finalAttackAction;
+    InputAction _attackAction;
+    InputAction _finalAttackAction;
 
-    BodyInfo sc_bodyInfo;
+    BodyInfo _bodyInfo;
 
     /// <summary>
     /// プレイヤーと敵への攻撃点をつなぐ糸を表現するためのバネ
     /// </summary>
-    SpringJoint spring;
+    SpringJoint _spring;
 
     const float SpringValue = 1000f;
     const float DamperValue = 0.2f;
@@ -23,12 +23,12 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// バネの接続先である敵への攻撃点
     /// </summary>
-    public GameObject AttackPoint { get; private set; }
+    public GameObject attackPoint { get; private set; }
 
     /// <summary>
     /// 攻撃の当たり判定検知用
     /// </summary>
-    RaycastHit hit;
+    RaycastHit _hit;
 
     /// <summary>
     /// 攻撃範囲の半径
@@ -50,12 +50,12 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// 戦闘している状態
     /// </summary>
-    bool isInCombat;
+    bool _isInCombat;
 
     /// <summary>
     /// 攻撃している状態
     /// </summary>
-    bool isAttacking;
+    bool _isAttacking;
 
     /// <summary>
     /// 攻撃にかかる時間
@@ -65,25 +65,25 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// 攻撃し始めてから現在経った時間
     /// </summary>
-    float attackTimer;
+    float _attackTimer;
 
     /// <summary>
     /// プレイヤーの最大行動範囲(糸の最大距離) 敵の部位から取得
     /// </summary>
-    float maxMoveRange;
+    float _maxMoveRange;
 
     /// <summary>
     /// プレイヤーの行動範囲(糸の距離)
     /// </summary>
-    public float MoveRange { get; private set; }
+    public float moveRange { get; private set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        attackAction = InputSystem.actions.FindAction("Attack");
-        finalAttackAction = InputSystem.actions.FindAction("FinalAttack");
-        AttackPoint = new GameObject("AttackPoint");
-        AttackPoint.SetActive(false);
+        _attackAction = InputSystem.actions.FindAction("Attack");
+        _finalAttackAction = InputSystem.actions.FindAction("FinalAttack");
+        attackPoint = new GameObject("AttackPoint");
+        attackPoint.SetActive(false);
     }
 
     // Update is called once per frame
@@ -97,33 +97,33 @@ public class PlayerAttackController : MonoBehaviour
         Debug.DrawRay(transform.position + -transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
 
         //攻撃が入力された時
-        if (finalAttackAction.WasPressedThisFrame())
+        if (_finalAttackAction.WasPressedThisFrame())
         {
-            if (isInCombat)
+            if (_isInCombat)
             {
                 FinalAttack();
             }
         }
-        else if (attackAction.WasPressedThisFrame())
+        else if (_attackAction.WasPressedThisFrame())
         {
-            if (!isAttacking)
+            if (!_isAttacking)
             {
                 Attack();
             }
         }
 
-        if (isAttacking)
+        if (_isAttacking)
         {
-            attackTimer += Time.deltaTime;
-            if (attackTimer >= AttckDuration)
+            _attackTimer += Time.deltaTime;
+            if (_attackTimer >= AttckDuration)
             {
-                isAttacking = false;
-                attackTimer = 0;
+                _isAttacking = false;
+                _attackTimer = 0;
             }
         }
-        if (isInCombat)
+        if (_isInCombat)
         {
-            spring.connectedAnchor = AttackPoint.transform.position;
+            _spring.connectedAnchor = attackPoint.transform.position;
         }
     }
 
@@ -132,26 +132,26 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void StartCombat()
     {
-        isInCombat = true;
+        _isInCombat = true;
 
-        sc_bodyInfo = hit.collider.GetComponent<BodyInfo>();
-        sc_bodyInfo.Hit();
+        _bodyInfo = _hit.collider.GetComponent<BodyInfo>();
+        _bodyInfo.Hit();
 
-        AttackPoint.SetActive(true);
-        AttackPoint.transform.parent = hit.collider.transform;
-        AttackPoint.transform.position = hit.point;
+        attackPoint.SetActive(true);
+        attackPoint.transform.parent = _hit.collider.transform;
+        attackPoint.transform.position = _hit.point;
 
-        maxMoveRange = sc_bodyInfo.stringRadius;
-        MoveRange = maxMoveRange;
+        _maxMoveRange = _bodyInfo.stringRadius;
+        moveRange = _maxMoveRange;
 
-        spring = gameObject.AddComponent<SpringJoint>();
-        spring.spring = SpringValue;
-        spring.damper = DamperValue;
-        spring.maxDistance = MoveRange;
-        spring.tolerance = ToleranceValue;
-        spring.autoConfigureConnectedAnchor = false;
+        _spring = gameObject.AddComponent<SpringJoint>();
+        _spring.spring = SpringValue;
+        _spring.damper = DamperValue;
+        _spring.maxDistance = moveRange;
+        _spring.tolerance = ToleranceValue;
+        _spring.autoConfigureConnectedAnchor = false;
 
-        spring.connectedAnchor = AttackPoint.transform.position;
+        _spring.connectedAnchor = attackPoint.transform.position;
 
     }
 
@@ -160,11 +160,11 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void OnHit()
     {
-        if (MoveRange > 1)
+        if (moveRange > 1)
         {
-            MoveRange--;
-            spring.maxDistance = MoveRange;
-            sc_bodyInfo.Hit();
+            moveRange--;
+            _spring.maxDistance = moveRange;
+            _bodyInfo.Hit();
         }
     }
 
@@ -173,11 +173,11 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void Attack()
     {
-        isAttacking = true;
-        Physics.SphereCast(transform.position - transform.forward.normalized * RayOriginOffset, attackRange, transform.forward, out hit, attackReach);//後々レイヤーマスクつけます
-        if (hit.collider != null)
+        _isAttacking = true;
+        Physics.SphereCast(transform.position - transform.forward.normalized * RayOriginOffset, attackRange, transform.forward, out _hit, attackReach);//後々レイヤーマスクつけます
+        if (_hit.collider != null)
         {
-            if (!isInCombat)
+            if (!_isInCombat)
             {
                 StartCombat();
             }
@@ -193,11 +193,11 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void FinalAttack()
     {
-        sc_bodyInfo.Finish();
-        sc_bodyInfo = null;
-        AttackPoint.SetActive(false);
-        AttackPoint.transform.parent = null;
-        Destroy(spring);
-        isInCombat = false;
+        _bodyInfo.Finish();
+        _bodyInfo = null;
+        attackPoint.SetActive(false);
+        attackPoint.transform.parent = null;
+        Destroy(_spring);
+        _isInCombat = false;
     }
 }

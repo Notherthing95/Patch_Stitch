@@ -1,13 +1,16 @@
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    Animator m_Animator;
+    public Animator m_Animator;
+    public bool[] isAnimationActive;
 
     /// <summary>
     /// アニメーションを動かします 
-    /// <para>0:歩く</para>
-    /// <para>1:任意のアニメーション</para>
+    /// <para>0:idle</para>
+    /// <para>1:歩く</para>
+    /// <para>2:任意のアニメーション</para>
     /// </summary>
     public bool[] SetAnimation;
 
@@ -20,21 +23,31 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SetAnimation[0] == true)
+        if (SetAnimation[0] == true)    // idle
         {
-            m_Animator.SetBool("isWalk", true);
+            m_Animator.SetInteger("AnimationTransition", 0);
+        }
+        else if (SetAnimation[2] == true)    // Attack1
+        {
+            m_Animator.SetInteger("AnimationTransition", 2);
+        }
+        else if (SetAnimation[1] == true)    // walk
+        {
+            m_Animator.SetInteger("AnimationTransition", 1);
         }
         else
-            m_Animator.SetBool("isWalk", false);
+            m_Animator.SetInteger("AnimationTransition", 0);
 
-        if (SetAnimation[1] == true)
+    }
+
+    public bool CheckNormalizedAnimation(string animationName)
+    {
+        AnimatorStateInfo animatorState = m_Animator.GetCurrentAnimatorStateInfo(0);
+        if (animatorState.IsName(animationName) && animatorState.normalizedTime >= 1.0f && !m_Animator.IsInTransition(0))
         {
-            m_Animator.SetBool("isAttack01", true);
+            return true;
         }
-        else
-            m_Animator.SetBool("isAttack01", false);
 
-
-
+        return false;
     }
 }

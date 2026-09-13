@@ -20,10 +20,12 @@ public class TestPlayerSwitch : MonoBehaviour
     {
         if (attackAction.WasPressedThisFrame())
         {
-            playerAnimation.SetAnimation[1] = true;
+            playerAnimation.SetAnimation[2] = true;
         }
-        else
-            playerAnimation.SetAnimation[1] = false;
+        if (playerAnimation.CheckNormalizedAnimation("Attack1") == true)
+        {
+            playerAnimation.SetAnimation[2] = false;
+        }
     }
 
     private void FixedUpdate()
@@ -32,9 +34,9 @@ public class TestPlayerSwitch : MonoBehaviour
 
         if (readVector.magnitude > 0.1f)
         {
-            playerAnimation.SetAnimation[0] = true;
+            playerAnimation.SetAnimation[1] = true;
         }
         else
-            playerAnimation.SetAnimation[0] = false;
+            playerAnimation.SetAnimation[1] = false;
     }
 }

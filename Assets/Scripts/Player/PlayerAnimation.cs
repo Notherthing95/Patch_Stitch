@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -10,7 +11,14 @@ public class PlayerAnimation : MonoBehaviour
     /// ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ“®‚©‚µ‚Ü‚· 
     /// <para>0:idle</para>
     /// <para>1:•à‚­</para>
-    /// <para>2:”CˆÓ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“</para>
+    /// <para>2:UŒ‚01</para>
+    /// <para>3:UŒ‚02</para>
+    /// <para>4:UŒ‚03</para>
+    /// <para>5:UŒ‚04</para>
+    /// <para>6:UŒ‚01</para>
+    /// <para>7:UŒ‚01</para>
+    /// <para>8:UŒ‚01</para>
+    /// 
     /// </summary>
     public bool[] SetAnimation;
 
@@ -23,20 +31,19 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SetAnimation[0] == true)    // idle
+        int targetState = 0;
+
+        for (int i = SetAnimation.Length - 1; i >= 0; i--)
         {
-            m_Animator.SetInteger("AnimationTransition", 0);
+            if (SetAnimation[i] == true)
+            {
+                targetState = i;
+                break;
+            }
         }
-        else if (SetAnimation[2] == true)    // Attack1
-        {
-            m_Animator.SetInteger("AnimationTransition", 2);
-        }
-        else if (SetAnimation[1] == true)    // walk
-        {
-            m_Animator.SetInteger("AnimationTransition", 1);
-        }
-        else
-            m_Animator.SetInteger("AnimationTransition", 0);
+
+        m_Animator.SetInteger("AnimationTransition", targetState);
+        Debug.Log("TargetState: " + targetState);
 
     }
 

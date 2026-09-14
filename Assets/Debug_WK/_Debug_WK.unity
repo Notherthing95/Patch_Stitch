@@ -1675,7 +1675,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acefe46367fffa54c9ee5c959b523f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
-  SetAnimation: 000000
+  m_Animator: {fileID: 0}
+  isAnimationActive: 
+  SetAnimation: 00000000000000000000000000
 --- !u!1 &1466240175
 GameObject:
   m_ObjectHideFlags: 0

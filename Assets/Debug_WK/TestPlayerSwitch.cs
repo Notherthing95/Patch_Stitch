@@ -22,7 +22,7 @@ public class TestPlayerSwitch : MonoBehaviour
         {
             playerAnimation.SetAnimation[2] = true;
         }
-        if (playerAnimation.CheckNormalizedAnimation("Attack1") == true)
+        if (playerAnimation.CheckNormalizedAnimation("P_Attack01") == true)
         {
             playerAnimation.SetAnimation[2] = false;
         }

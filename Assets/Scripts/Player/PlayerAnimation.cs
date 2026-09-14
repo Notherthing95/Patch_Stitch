@@ -50,4 +50,9 @@ public class PlayerAnimation : MonoBehaviour
 
         return false;
     }
+
+    public void SetIdle()
+    {
+        m_Animator.SetInteger("AnimationTransition", 0);
+    }
 }

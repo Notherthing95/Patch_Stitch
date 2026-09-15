@@ -15,9 +15,13 @@ public class PlayerAnimation : MonoBehaviour
     /// <para>3:攻撃02</para>
     /// <para>4:攻撃03</para>
     /// <para>5:攻撃04</para>
-    /// <para>6:攻撃01</para>
-    /// <para>7:攻撃01</para>
-    /// <para>8:攻撃01</para>
+    /// <para>6:玉留めフィニッシュ</para>
+    /// <para>7:転ぶ</para>
+    /// <para>8:吹っ飛ばされる</para>
+    /// <para>9:引っ張られる</para>
+    /// <para>10:のけぞり</para>
+    /// <para>11:前回避</para>
+    /// <para>12:後ろ回避</para>
     /// 
     /// </summary>
     public bool[] SetAnimation;

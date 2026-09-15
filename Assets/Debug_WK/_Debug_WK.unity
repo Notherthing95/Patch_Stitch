@@ -1676,8 +1676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
   m_Animator: {fileID: 0}
-  isAnimationActive: 
-  SetAnimation: 00000000000000000000000000
+  amountAnimation: 0
 --- !u!1 &1466240175
 GameObject:
   m_ObjectHideFlags: 0

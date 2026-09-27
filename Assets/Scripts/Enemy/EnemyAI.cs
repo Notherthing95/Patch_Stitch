@@ -5,6 +5,8 @@ public class EnemyAI : MonoBehaviour
 {
     public float enemySpeed = 20.0f;
     [SerializeField] GameObject Player;
+    [SerializeField] BossAnimation bossAnimation;
+    private bool _isAttacking;
     
     public float distance = 0;
     public float attackRange = 10;
@@ -27,10 +29,14 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (bossAnimation.CheckNormalizedAnimation("Punch_Right") || bossAnimation.CheckNormalizedAnimation("Punch_Left"))
+            _isAttacking = true;
+        else
+            _isAttacking = false;
 
 
-        // 距離の更新, 攻撃判定
-        distanceX = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);
+            // 距離の更新, 攻撃判定
+            distanceX = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);
         distanceZ = Mathf.Abs(Player.transform.position.z - gameObject.transform.position.z);
         distance = Mathf.Sqrt(Mathf.Pow(distanceX, 2) + Mathf.Pow(distanceZ,2));
         Debug.Log("Distance: " + distance);
@@ -39,10 +45,9 @@ public class EnemyAI : MonoBehaviour
         if(distance < attackRange)
         {
             BossAnimation.bossState = _bossPattern;
-            Debug.Log("Attack!");
 
         }
-        else if(distance < trackPlayerRange)    // 移動
+        else if(distance < trackPlayerRange || !_isAttacking)    // 移動
         {
             navMeshAgent.destination = Player.transform.position;
         }

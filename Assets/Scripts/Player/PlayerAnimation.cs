@@ -56,6 +56,7 @@ public class PlayerAnimation : MonoBehaviour
         if (animatorState.IsName(animationName) && animatorState.normalizedTime >= 1.0f && !m_Animator.IsInTransition(0))
         {
             return true;
+
         }
 
         return false;
@@ -63,6 +64,16 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetIdle()
     {
-        m_Animator.SetInteger("AnimationTransition", 0);
+        playerState = 0;
+
+    }
+
+    public void SetApplyRootMotion()
+    {
+        m_Animator.applyRootMotion = true;
+    }
+    public void EndApplyRootMotion()
+    {
+        m_Animator.applyRootMotion = false;
     }
 }

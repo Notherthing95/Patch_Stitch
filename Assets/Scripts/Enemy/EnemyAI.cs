@@ -11,11 +11,12 @@ public class EnemyAI : MonoBehaviour
     public float trackPlayerRange = 50;
     float distanceX, distanceZ; // 二乗したPlayer-のx,y座標の意
 
+    private int _bossPattern = 1;
+    public int amountBossPattern = 2;
+
     private NavMeshAgent navMeshAgent;
 
     // Debug用、仮攻撃処理用変数
-    
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,7 +38,9 @@ public class EnemyAI : MonoBehaviour
         // 攻撃判定
         if(distance < attackRange)
         {
+            BossAnimation.bossState = _bossPattern;
             Debug.Log("Attack!");
+
         }
         else if(distance < trackPlayerRange)    // 移動
         {

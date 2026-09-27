@@ -20,11 +20,11 @@ public class TestPlayerSwitch : MonoBehaviour
     {
         if (attackAction.WasPressedThisFrame())
         {
-            PlayerAnimation.targetState = 3;
+            PlayerAnimation.playerState = 3;
         }
         if (playerAnimation.CheckNormalizedAnimation("P_Attack01") == true)
         {
-            PlayerAnimation.targetState = 0;
+            PlayerAnimation.playerState = 0;
         }
     }
 

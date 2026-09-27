@@ -24,7 +24,11 @@ public class PlayerAnimation : MonoBehaviour
     /// <para>13:後ろ回避</para>
     /// 
     /// </summary>
-    static public int targetState = 0;
+    static public int playerState = 0;
+
+    /// <summary>
+    /// プレイヤーのアニメーション総数
+    /// </summary>
     [SerializeField] int amountAnimation;
 
 
@@ -38,8 +42,8 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
 
-        m_Animator.SetInteger("AnimationTransition", targetState);
-        Debug.Log("TargetState: " + targetState);
+        m_Animator.SetInteger("AnimationTransition", playerState);
+        Debug.Log("TargetState: " + playerState);
 
         if (CheckNormalizedAnimation("P_Dodge_Forward"))
             SetIdle();

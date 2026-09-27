@@ -199,5 +199,6 @@ public class PlayerAttackController : MonoBehaviour
         attackPoint.transform.parent = null;
         Destroy(_spring);
         _isInCombat = false;
+        PlayerAnimation.playerState = 7;
     }
 }

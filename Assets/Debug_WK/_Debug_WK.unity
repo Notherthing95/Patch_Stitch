@@ -953,7 +953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &930086279
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1112,7 +1112,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 1
+  m_BaseOffset: 1.2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &930086287
@@ -1763,11 +1763,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6805370325796304588, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: areaCircle
+      value: 
+      objectReference: {fileID: 7937748508973842350, guid: 0f46be401e9a355468fce1216ce9b1f0, type: 3}
+    - target: {fileID: 6805370325796304588, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: _attackController
+      value: 
+      objectReference: {fileID: 4873868671221951458}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+--- !u!114 &4873868671221951458 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6570236158934373877, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+  m_PrefabInstance: {fileID: 4873868671221951457}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265594512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7206fb5052be59748a84e15606648e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackController
 --- !u!1001 &5968370714684221825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1838,8 +1857,8 @@ SceneRoots:
   - {fileID: 961739753}
   - {fileID: 4873868671221951457}
   - {fileID: 1666687578}
-  - {fileID: 930086282}
   - {fileID: 423254584}
   - {fileID: 1635384989}
   - {fileID: 1466240176}
+  - {fileID: 930086282}
   - {fileID: 5968370714684221825}

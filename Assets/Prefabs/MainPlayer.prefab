@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6378ef9363343c345a74e2931806e7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementAreaVisualizer
-  _attackController: {fileID: 0}
-  areaCircle: {fileID: 0}
+  _attackController: {fileID: 6570236158934373877}
+  areaCircle: {fileID: 7937748508973842350, guid: 0f46be401e9a355468fce1216ce9b1f0, type: 3}
 --- !u!54 &7589282801587435941
 Rigidbody:
   m_ObjectHideFlags: 0

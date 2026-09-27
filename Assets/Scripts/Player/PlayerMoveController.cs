@@ -134,6 +134,7 @@ public class PlayerMoveController : MonoBehaviour
         {
             _moveSpeed = Mathf.Lerp(dodgeSpeed, dashSpeed, _dodgeTimer / DodgeDuration);
             PlayerAnimation.playerState = 12;
+            Debug.Log("State: 12");
             _dodgeTimer += Time.deltaTime;
             if (_dodgeTimer >= DodgeDuration)
             {
@@ -151,8 +152,10 @@ public class PlayerMoveController : MonoBehaviour
             _moveSpeed = walkSpeed;
             PlayerAnimation.playerState = 1;
         }
-        else if(PlayerAnimation.playerState == 1 || PlayerAnimation.playerState == 2) 
+        else if (PlayerAnimation.playerState == 1 || PlayerAnimation.playerState == 2)
+        {
             PlayerAnimation.playerState = 0;
+        }
     }
 
     /// <summary>

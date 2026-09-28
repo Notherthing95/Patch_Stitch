@@ -10,6 +10,7 @@ public class StringLinerSimple : MonoBehaviour
     LineRenderer _lineRenderer;
     [SerializeField] GameObject player;
     PlayerAttackController _playerAttackController;
+    [SerializeField] Transform needleThreadPosition;
 
     /// <summary>
     /// Ž…‚ÌŽn“_
@@ -65,7 +66,7 @@ public class StringLinerSimple : MonoBehaviour
     {
         if (_playerAttackController.attackPoint.activeSelf)
         {
-            _start = player.transform.position;
+            _start = needleThreadPosition.position;
             _end = _playerAttackController.attackPoint.transform.position;
             _controlPoints[0] = _start;
             _controlPoints[2] = _end;

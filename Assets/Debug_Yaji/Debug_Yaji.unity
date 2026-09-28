@@ -362,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 92563699}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0.5, y: 0.074, z: -16.596}
+  m_LocalPosition: {x: 4.95, y: 0.074, z: -16.596}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -761,13 +761,14 @@ GameObject:
   - component: {fileID: 672418450}
   - component: {fileID: 672418449}
   - component: {fileID: 672418451}
+  - component: {fileID: 672418452}
   m_Layer: 0
   m_Name: Liner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!120 &672418449
 LineRenderer:
   serializedVersion: 3
@@ -908,16 +909,33 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672418448}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc2ddce4177b153428d0fac32ff8dfe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StringLiner_test
+  attackController: {fileID: 1666687583}
   start: {x: 0, y: 0, z: 0}
-  between: {x: 0, y: 0, z: 0}
-  end: {x: 2.41, y: 0.68, z: -0.01}
-  betY: -0.22
+  controlPoint: {x: 0, y: 0, z: 0}
+  end: {x: 0, y: 0.68, z: 0}
+  pointS_Y: 0.8
+  point_Y: 0
+  pointE_Y: 0.68
+  Yurasu: 0
   playrObj: {fileID: 1666687574}
+--- !u!114 &672418452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672418448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1512dbc7814c4164a88d010c62580ecf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StringLinerSimple
+  player: {fileID: 1666687574}
 --- !u!1 &844297840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1726,8 +1744,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6378ef9363343c345a74e2931806e7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementAreaVisualizer
-  sc_attackController: {fileID: 1666687583}
-  _areaCircle: {fileID: 7937748508973842350, guid: 0f46be401e9a355468fce1216ce9b1f0, type: 3}
+  _attackController: {fileID: 1666687583}
+  areaCircle: {fileID: 7937748508973842350, guid: 0f46be401e9a355468fce1216ce9b1f0, type: 3}
 --- !u!1 &1694714558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1834,7 +1852,7 @@ Transform:
   m_GameObject: {fileID: 1694714558}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: -14.5}
+  m_LocalPosition: {x: 4.95, y: 0.5, z: -14.5}
   m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []

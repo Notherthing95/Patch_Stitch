@@ -1043,8 +1043,9 @@ GameObject:
   - component: {fileID: 672418449}
   - component: {fileID: 672418451}
   - component: {fileID: 672418452}
+  - component: {fileID: 672418453}
   m_Layer: 0
-  m_Name: Liner
+  m_Name: StringLiner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1218,6 +1219,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StringLinerSimple
   player: {fileID: 1666687574}
   needleThreadPosition: {fileID: 1622914689}
+--- !u!114 &672418453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672418448}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 888adef749e53c44188bf2b57f663cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StringLinerComplex
 --- !u!1001 &685048867
 PrefabInstance:
   m_ObjectHideFlags: 0

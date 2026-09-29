@@ -11,6 +11,8 @@ public class PlayerAttackController : MonoBehaviour
 
     BodyInfo _bodyInfo;
 
+    LayerMask _enemyLayer;
+
     /// <summary>
     /// プレイヤーと敵への攻撃点をつなぐ糸を表現するためのバネ
     /// </summary>
@@ -77,6 +79,11 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     public float moveRange { get; private set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    string _combatEnemyName;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -84,6 +91,7 @@ public class PlayerAttackController : MonoBehaviour
         _finalAttackAction = InputSystem.actions.FindAction("FinalAttack");
         attackPoint = new GameObject("AttackPoint");
         attackPoint.SetActive(false);
+        _enemyLayer = LayerMask.GetMask("Enemy");
     }
 
     // Update is called once per frame
@@ -136,6 +144,7 @@ public class PlayerAttackController : MonoBehaviour
 
         _bodyInfo = _hit.collider.GetComponent<BodyInfo>();
         _bodyInfo.Hit();
+        _combatEnemyName = _hit.collider.name;
 
         attackPoint.SetActive(true);
         attackPoint.transform.parent = _hit.collider.transform;
@@ -162,7 +171,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (moveRange > 1)
         {
-            moveRange--;
+            moveRange -= 0.5f;
             _spring.maxDistance = moveRange;
             _bodyInfo.Hit();
         }
@@ -174,14 +183,14 @@ public class PlayerAttackController : MonoBehaviour
     void Attack()
     {
         _isAttacking = true;
-        Physics.SphereCast(transform.position - transform.forward.normalized * RayOriginOffset, attackRange, transform.forward, out _hit, attackReach);//後々レイヤーマスクつけます
+        Physics.SphereCast(transform.position - transform.forward.normalized * RayOriginOffset, attackRange, transform.forward, out _hit, attackReach, _enemyLayer);
         if (_hit.collider != null)
         {
             if (!_isInCombat)
             {
                 StartCombat();
             }
-            else
+            else if (_combatEnemyName == _hit.collider.name)
             {
                 OnHit();
             }

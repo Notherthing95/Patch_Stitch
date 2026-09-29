@@ -36,4 +36,9 @@ public class BossAnimation : MonoBehaviour
 
         return false;
     }
+    public void SetIdle()
+    {
+        bossState = 0;
+        Debug.Log("Idled");
+    }
 }

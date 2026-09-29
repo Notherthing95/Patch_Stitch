@@ -65,7 +65,7 @@ public class PlayerAnimation : MonoBehaviour
     public void SetIdle()
     {
         playerState = 0;
-
+        
     }
 
     public void SetApplyRootMotion()

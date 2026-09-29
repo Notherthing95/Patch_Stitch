@@ -30,26 +30,34 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         if (bossAnimation.CheckNormalizedAnimation("Punch_Right") || bossAnimation.CheckNormalizedAnimation("Punch_Left"))
-            _isAttacking = true;
-        else
+        {
             _isAttacking = false;
+            if (_bossPattern == 1)
+                _bossPattern++;
+            else
+                _bossPattern--;
+            
+        }
 
+        Debug.Log("isAttacking: " + _isAttacking);
 
-            // ‹——£‚ÌXV, UŒ‚”»’è
-            distanceX = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);
+        // ‹——£‚ÌXV, UŒ‚”»’è
+        distanceX = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);
         distanceZ = Mathf.Abs(Player.transform.position.z - gameObject.transform.position.z);
         distance = Mathf.Sqrt(Mathf.Pow(distanceX, 2) + Mathf.Pow(distanceZ,2));
         Debug.Log("Distance: " + distance);
 
         // UŒ‚”»’è
-        if(distance < attackRange)
+        if(distance < attackRange && !_isAttacking)
         {
             BossAnimation.bossState = _bossPattern;
+            _isAttacking = true;
 
         }
-        else if(distance < trackPlayerRange || !_isAttacking)    // ˆÚ“®
+        else if(distance < trackPlayerRange && !_isAttacking)    // ˆÚ“®
         {
             navMeshAgent.destination = Player.transform.position;
+
         }
 
     }

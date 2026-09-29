@@ -104,8 +104,11 @@ public class PlayerMoveController : MonoBehaviour
         //移動速度の設定
         SetMoveSpeed();
 
-        //移動する方向ベクトルの計算
-        CalculationMoveVector();
+        //移動する方向ベクトルの計算 回避中は方向転換不可
+        if (!_isDodge)
+        {
+            CalculationMoveVector();
+        }
 
         //接地しているか
         if (IsGround())
@@ -115,6 +118,10 @@ public class PlayerMoveController : MonoBehaviour
 
             //入力があればプレイヤーを移動させる
             if (_readVector.magnitude > 0.1f)
+            {
+                MovePlayer();
+            }
+            else if (_isDodge)
             {
                 MovePlayer();
             }
@@ -132,6 +139,11 @@ public class PlayerMoveController : MonoBehaviour
     {
         if (_isDodge)
         {
+            //入力が無ければ前方に
+            if(_moveVector == Vector3.zero)
+            {
+                _moveVector = transform.forward.normalized;
+            }
             _moveSpeed = Mathf.Lerp(dodgeSpeed, dashSpeed, _dodgeTimer / DodgeDuration);
             PlayerAnimation.playerState = 12;
             Debug.Log("State: 12");

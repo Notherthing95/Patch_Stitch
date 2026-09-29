@@ -67,13 +67,4 @@ public class PlayerAnimation : MonoBehaviour
         playerState = 0;
         
     }
-
-    public void SetApplyRootMotion()
-    {
-        m_Animator.applyRootMotion = true;
-    }
-    public void EndApplyRootMotion()
-    {
-        m_Animator.applyRootMotion = false;
-    }
 }

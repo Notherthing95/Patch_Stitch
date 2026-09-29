@@ -36,6 +36,7 @@ public class EnemyAI : MonoBehaviour
                 _bossPattern++;
             else
                 _bossPattern--;
+            Debug.Log("checkBossPattern: " + _bossPattern);
             
         }
 

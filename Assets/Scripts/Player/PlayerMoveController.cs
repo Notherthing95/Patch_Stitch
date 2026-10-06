@@ -9,6 +9,7 @@ public class PlayerMoveController : MonoBehaviour
     InputAction _moveAction;
     InputAction _dodgeAction;
     PlayerAttackController _attackController;
+    [SerializeField] PlayerInfo playerInfo;
 
     /// <summary>
     /// プレイヤーのリジッドボディ
@@ -222,5 +223,6 @@ public class PlayerMoveController : MonoBehaviour
 
         _playerRigidbody.AddForce(direction * power, ForceMode.Impulse);
         PlayerAnimation.playerState = 9;
+        playerInfo.PlayerLife--;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -6,6 +7,24 @@ public class BossAnimation : MonoBehaviour
     public Animator m_Animator;
 
     /// <summary>
+    /// HitBox用
+    /// </summary>
+    [System.Serializable]
+    class Body
+    {
+        public BodyInfo bodyInfo;
+        //public bool[] isHitBoxOn;
+    }
+
+    /// <summary>
+    /// アニメーションごとのボディの設定    
+    /// 0:idle
+    /// 1:右パンチ
+    /// 2:左パンチ
+    /// </summary>
+    [SerializeField] Body[] AnimationBody;
+
+        /// <summary>
     /// ボスのアニメーションを動かします
     /// 0:idle
     /// 1:右パンチ
@@ -36,11 +55,21 @@ public class BossAnimation : MonoBehaviour
 
         return false;
     }
+
     public void SetIdle()
     {
         bossState = 0;
         //Debug.Log("Idled");
     }
-
     
+    public void SetHitBoxOn(int animationNumber)
+    {
+        AnimationBody[animationNumber].bodyInfo.SetHitboxOn();
+    }
+
+    public void SetHitBoxOff(int animationNumber)
+    { 
+        AnimationBody[animationNumber].bodyInfo.SetHitboxOff();
+    }
+
 }

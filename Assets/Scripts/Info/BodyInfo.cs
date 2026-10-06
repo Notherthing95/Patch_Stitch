@@ -5,12 +5,15 @@ using UnityEngine;
 public class BodyInfo : MonoBehaviour
 {
     [SerializeField] EnemyInfo enemyInfo;
+    [SerializeField] GameObject HitBox;
+
     /// <summary>
     /// 修繕した身体に付けるマテリアル
     /// </summary>
     [SerializeField] Material repairedMaterial;
+
     /// <summary>
-    /// 
+    /// 部位のライフ
     /// </summary>
     public float Life = 5;  // デフォルト
     
@@ -98,4 +101,14 @@ public class BodyInfo : MonoBehaviour
         attackCount = 0;
         isJoint = false;
     }
+
+    public void SetHitboxOn()
+    {
+        HitBox.SetActive(true);
+    }
+    public void SetHitboxOff()
+    {
+        HitBox.SetActive(false);
+    }
+
 }

@@ -9,6 +9,7 @@ public class PlayerAttackController : MonoBehaviour
     InputAction _attackAction;
     InputAction _finalAttackAction;
 
+    PlayerMoveController _moveController;
     BodyInfo _bodyInfo;
 
     LayerMask _enemyLayer;
@@ -57,7 +58,7 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// çUåÇÇµÇƒÇ¢ÇÈèÛë‘
     /// </summary>
-    bool _isAttacking;
+    public bool isAttacking { get; private set; }
 
     /// <summary>
     /// çUåÇÇ…Ç©Ç©ÇÈéûä‘
@@ -92,6 +93,7 @@ public class PlayerAttackController : MonoBehaviour
         attackPoint = new GameObject("AttackPoint");
         attackPoint.SetActive(false);
         _enemyLayer = LayerMask.GetMask("Enemy");
+        _moveController = GetComponent<PlayerMoveController>();
     }
 
     // Update is called once per frame
@@ -105,27 +107,30 @@ public class PlayerAttackController : MonoBehaviour
         Debug.DrawRay(transform.position + -transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
 
         //çUåÇÇ™ì¸óÕÇ≥ÇÍÇΩéû
-        if (_finalAttackAction.WasPressedThisFrame())
+        if (_moveController.IsGround())
         {
-            if (_isInCombat)
+            if (_finalAttackAction.WasPressedThisFrame())
             {
-                FinalAttack();
+                if (_isInCombat)
+                {
+                    FinalAttack();
+                }
             }
-        }
-        else if (_attackAction.WasPressedThisFrame())
-        {
-            if (!_isAttacking)
+            else if (_attackAction.WasPressedThisFrame())
             {
-                Attack();
+                if (!isAttacking)
+                {
+                    Attack();
+                }
             }
         }
 
-        if (_isAttacking)
+        if (isAttacking)
         {
             _attackTimer += Time.deltaTime;
             if (_attackTimer >= AttckDuration)
             {
-                _isAttacking = false;
+                isAttacking = false;
                 _attackTimer = 0;
             }
         }
@@ -182,7 +187,7 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void Attack()
     {
-        _isAttacking = true;
+        isAttacking = true;
         Physics.SphereCast(transform.position - transform.forward.normalized * RayOriginOffset, attackRange, transform.forward, out _hit, attackReach, _enemyLayer);
         if (_hit.collider != null)
         {

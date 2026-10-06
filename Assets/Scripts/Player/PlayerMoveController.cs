@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// プレイヤー移動の制御のスクリプト
+/// プレイヤー移動の制御のスクリプト 接地判定とノックバックの関数を外部から呼べます
 /// </summary>
 public class PlayerMoveController : MonoBehaviour
 {
     InputAction _moveAction;
     InputAction _dodgeAction;
-
+    PlayerAttackController _attackController;
 
     /// <summary>
     /// プレイヤーのリジッドボディ
@@ -86,6 +86,7 @@ public class PlayerMoveController : MonoBehaviour
         _moveAction = InputSystem.actions.FindAction("Move");
         _dodgeAction = InputSystem.actions.FindAction("Dodge");
         _playerRigidbody = GetComponent<Rigidbody>();
+        _attackController = GetComponent<PlayerAttackController>();
     }
 
     // Update is called once per frame
@@ -116,19 +117,25 @@ public class PlayerMoveController : MonoBehaviour
             //プレイヤーが停止するのを早める
             _playerRigidbody.linearDamping = DampingValue;
 
-            //入力があればプレイヤーを移動させる
-            if (_readVector.magnitude > 0.1f)
+            //攻撃中は移動不可
+            if (!_attackController.isAttacking)
             {
-                MovePlayer();
+                //入力があればプレイヤーを移動させる
+                if (_readVector.magnitude > 0.1f)
+                {
+                    MovePlayer();
+                }
+                else if (_isDodge)
+                {
+                    MovePlayer();
+                }
             }
-            else if (_isDodge)
-            {
-                MovePlayer();
-            }
+
         }
         else
         {
             _playerRigidbody.linearDamping = 0;
+            _playerRigidbody.AddForce(-Vector3.up * 9.8f);
         }
     }
 
@@ -140,7 +147,7 @@ public class PlayerMoveController : MonoBehaviour
         if (_isDodge)
         {
             //入力が無ければ前方に
-            if(_moveVector == Vector3.zero)
+            if (_moveVector == Vector3.zero)
             {
                 _moveVector = transform.forward.normalized;
             }
@@ -193,9 +200,9 @@ public class PlayerMoveController : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーが接地しているかの判定
+    /// プレイヤーが接地していればtrueを返す
     /// </summary>
-    bool IsGround()
+    public bool IsGround()
     {
         Debug.DrawRay(transform.position, -Vector3.up * (PlayerHeightHalf + 0.05f), Color.brown);
         if (Physics.Raycast(transform.position, -Vector3.up, PlayerHeightHalf + 0.05f))
@@ -206,5 +213,14 @@ public class PlayerMoveController : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void OnKnockBack(Transform transform, float power)
+    {
+        Vector3 direction = (this.transform.position - transform.position).normalized;
+        direction.y = 0.5f;
+
+        _playerRigidbody.AddForce(direction * power, ForceMode.Impulse);
+        PlayerAnimation.playerState = 9;
     }
 }

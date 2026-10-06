@@ -11,6 +11,8 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     [SerializeField] GameObject areaCircle;
     GameObject _areaCircle;
 
+    Material _areaCircleMaterial;
+
     DecalProjector _decalProjector;
 
     /// <summary>
@@ -59,6 +61,8 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
         _areaCircle = Instantiate(areaCircle);
         _decalProjector = _areaCircle.GetComponent<DecalProjector>();
         _areaCircle.SetActive(false);
+        _areaCircleMaterial = new Material(_decalProjector.material);
+        _decalProjector.material = _areaCircleMaterial;
     }
 
     // Update is called once per frame

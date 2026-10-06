@@ -43,7 +43,7 @@ public class PlayerAnimation : MonoBehaviour
     {
 
         m_Animator.SetInteger("AnimationTransition", playerState);
-        Debug.Log("TargetState: " + playerState);
+        //Debug.Log("TargetState: " + playerState);
 
         if (CheckNormalizedAnimation("P_Dodge_Forward"))
             SetIdle();
@@ -66,14 +66,5 @@ public class PlayerAnimation : MonoBehaviour
     {
         playerState = 0;
         
-    }
-
-    public void SetApplyRootMotion()
-    {
-        m_Animator.applyRootMotion = true;
-    }
-    public void EndApplyRootMotion()
-    {
-        m_Animator.applyRootMotion = false;
     }
 }

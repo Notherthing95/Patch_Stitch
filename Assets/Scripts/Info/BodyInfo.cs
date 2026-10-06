@@ -43,6 +43,7 @@ public class BodyInfo : MonoBehaviour
         {
             _checkFlag = true;
             enemyInfo.bodyRepaired();
+            gameObject.layer = 0;
             
         }
 

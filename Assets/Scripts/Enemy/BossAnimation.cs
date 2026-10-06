@@ -23,7 +23,7 @@ public class BossAnimation : MonoBehaviour
     void Update()
     {
         m_Animator.SetInteger("AnimationTransition", bossState);
-        Debug.Log("NowBossState: " + bossState);
+        //Debug.Log("NowBossState: " + bossState);
     }
 
     public bool CheckNormalizedAnimation(string animationName)
@@ -39,6 +39,8 @@ public class BossAnimation : MonoBehaviour
     public void SetIdle()
     {
         bossState = 0;
-        Debug.Log("Idled");
+        //Debug.Log("Idled");
     }
+
+    
 }

@@ -43,7 +43,7 @@ public class PlayerAnimation : MonoBehaviour
     {
 
         m_Animator.SetInteger("AnimationTransition", playerState);
-        Debug.Log("TargetState: " + playerState);
+        //Debug.Log("TargetState: " + playerState);
 
         if (CheckNormalizedAnimation("P_Dodge_Forward"))
             SetIdle();

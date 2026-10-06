@@ -123668,18 +123668,18 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.4166666
-    functionName: 
+    functionName: SetHitBoxOn
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 2
     messageOptions: 0
   - time: 2.25
-    functionName: 
+    functionName: SetHitBoxOff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 2
     messageOptions: 0
   - time: 5.0000005
     functionName: SetIdle

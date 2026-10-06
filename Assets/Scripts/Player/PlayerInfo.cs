@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerInfo : MonoBehaviour
 {
 
-    [SerializeField] int PlayerLife = 10;
+    public int PlayerLife = 10;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -223,6 +223,5 @@ public class PlayerMoveController : MonoBehaviour
 
         _playerRigidbody.AddForce(direction * power, ForceMode.Impulse);
         PlayerAnimation.playerState = 9;
-        playerInfo.PlayerLife--;
     }
 }

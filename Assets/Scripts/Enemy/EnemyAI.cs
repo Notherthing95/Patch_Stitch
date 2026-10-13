@@ -51,18 +51,16 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bossAnimation.CheckNormalizedAnimation("Punch_Right") || bossAnimation.CheckNormalizedAnimation("Punch_Left"))
+        // Idleに戻す
+        if (BossAnimation.bossState != 0 &&
+            (bossAnimation.CheckNormalizedAnimation("Punch_Right") || bossAnimation.CheckNormalizedAnimation("Punch_Left")))
         {
-            _isAttacking = false;
-            if (_bossPattern == 1)
-                _bossPattern++;
-            else
-                _bossPattern--;
-            //Debug.Log("checkBossPattern: " + _bossPattern);
-            
+            bossAnimation.SetIdle();
         }
 
-        //Debug.Log("isAttacking: " + _isAttacking);
+        // 実際にIdleに戻り終わるまでは攻撃中扱い
+        _isAttacking = !(BossAnimation.bossState == 0 && bossAnimation.IsIdle());
+
 
         // 距離の更新
         distanceX = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);
@@ -70,17 +68,15 @@ public class EnemyAI : MonoBehaviour
         distance = Mathf.Sqrt(Mathf.Pow(distanceX, 2) + Mathf.Pow(distanceZ,2));
         //Debug.Log("Distance: " + distance);
 
-        // 攻撃判定
-        if(distance < attackRange && !_isAttacking)
+        if (distance < attackRange && !_isAttacking)
         {
             BossAnimation.bossState = _bossPattern;
+            _bossPattern = (_bossPattern == 1) ? 2 : 1;   // 攻撃開始時にパターン切り替え
             _isAttacking = true;
-            
         }
-        else if(distance < trackPlayerRange && !_isAttacking)    // 移動
+        else if (distance < trackPlayerRange && !_isAttacking)
         {
             navMeshAgent.destination = Player.transform.position;
-
         }
 
     }

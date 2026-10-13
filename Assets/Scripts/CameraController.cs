@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     InputAction _cameraAction;
     InputAction _cameraResetAction;
 
+
     /// <summary>
     /// プレイヤーのトランスフォーム
     /// </summary>
@@ -28,6 +29,11 @@ public class CameraController : MonoBehaviour
     /// カメラの方向を決めるレイ
     /// </summary>
     Ray _cameraRay;
+
+    /// <summary>
+    /// カメラの始点の高さ補正
+    /// </summary>
+    float _cameraOriginHeight;
 
     /// <summary>
     /// カメラのヨー回転の位置 0から2πの範囲
@@ -131,7 +137,8 @@ public class CameraController : MonoBehaviour
         _maxCameraDistance = Vector3.Distance(playerTransform.position, Camera.main.transform.position);
         _cameraDistance = _maxCameraDistance;
         _hitCameraDistance = _cameraDistance;
-        _cameraRay.origin = playerTransform.position;
+        _cameraOriginHeight = Camera.main.transform.position.y - playerTransform.position.y;
+        _cameraRay.origin = playerTransform.position + Vector3.up * _cameraOriginHeight;
         _cameraRay.direction = Camera.main.transform.position - playerTransform.position;
         _cameraYawAngle = Mathf.Atan2(_cameraRay.direction.z, _cameraRay.direction.x);
     }
@@ -142,7 +149,7 @@ public class CameraController : MonoBehaviour
         _readVector2 = _cameraAction.ReadValue<Vector2>();
 
         //カメラレイの原点をプレイヤーの位置に常に更新
-        _cameraRay.origin = playerTransform.position;
+        _cameraRay.origin = playerTransform.position + Vector3.up * _cameraOriginHeight;
 
         //カメラの回転角度計算
         CalculationRayAngles();

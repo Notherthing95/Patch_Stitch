@@ -26,6 +26,7 @@ public class HitBoxScript : MonoBehaviour
             PlayerMoveController playerMoveController = other.gameObject.GetComponent<PlayerMoveController>();
             if (playerMoveController != null)
                 playerMoveController.OnKnockBack(gameObject.transform, power);
+            // TODO:bodyInfo.Life--; ‚ð‚â‚é
         }
     }
 }

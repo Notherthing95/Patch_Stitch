@@ -16,4 +16,9 @@ public class PlayerInfo : MonoBehaviour
     {
         
     }
+
+    public void Damage(int AmountDamage)
+    {
+        PlayerLife -= AmountDamage;
+    }
 }

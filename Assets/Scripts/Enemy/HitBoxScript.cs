@@ -7,6 +7,11 @@ public class HitBoxScript : MonoBehaviour
     /// </summary>
     [SerializeField] float power = 16f;
 
+    /// <summary>
+    /// É_ÉÅÅ[ÉWó 
+    /// </summary>
+    [SerializeField] int AmountDamage = 1;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,8 +30,18 @@ public class HitBoxScript : MonoBehaviour
         {
             PlayerMoveController playerMoveController = other.gameObject.GetComponent<PlayerMoveController>();
             if (playerMoveController != null)
+            {
+                // 
                 playerMoveController.OnKnockBack(gameObject.transform, power);
-            // TODO:bodyInfo.Life--; ÇÇ‚ÇÈ
+                Debug.Log("nnna-");
+                PlayerInfo playerinfo = other.GetComponent<PlayerInfo>();
+                if (playerinfo != null){
+                    playerinfo.Damage(AmountDamage);
+                    Debug.Log("nnni-");
+                }
+                Debug.Log("nnnu-");
+            }
+            
         }
     }
 }

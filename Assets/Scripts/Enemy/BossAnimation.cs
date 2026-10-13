@@ -45,6 +45,12 @@ public class BossAnimation : MonoBehaviour
         //Debug.Log("NowBossState: " + bossState);
     }
 
+    public bool IsIdle()
+    {
+        AnimatorStateInfo animatorStateInfo = m_Animator.GetCurrentAnimatorStateInfo(0);
+        return animatorStateInfo.IsName("P_Idle") && !m_Animator.IsInTransition(0);
+    }
+
     public bool CheckNormalizedAnimation(string animationName)
     {
         AnimatorStateInfo animatorState = m_Animator.GetCurrentAnimatorStateInfo(0);

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6922152434258785728}
   m_Layer: 0
   m_Name: MainPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 161997906bf231a4eb2e6b243e64c780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMoveController
+  playerInfo: {fileID: 0}
   walkSpeed: 5
   dashSpeed: 10
   dodgeSpeed: 30

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BodyInfo : MonoBehaviour
 {
+    /// <summary>
+    /// Hitbox—p
+    /// </summary>
     [SerializeField] EnemyInfo enemyInfo;
     [SerializeField] GameObject HitBox;
 

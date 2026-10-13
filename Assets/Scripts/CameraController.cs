@@ -127,11 +127,17 @@ public class CameraController : MonoBehaviour
     /// </summary>
     Vector2 _readVector2;
 
+    /// <summary>
+    /// カメラ衝突判定のマスク
+    /// </summary>
+    LayerMask _layerMask;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _cameraAction = InputSystem.actions.FindAction("Camera");
         _cameraResetAction = InputSystem.actions.FindAction("CameraReset");
+        _layerMask = LayerMask.GetMask("Field", "Eenmy");
 
         //シーンのカメラの位置から情報を取得
         _maxCameraDistance = Vector3.Distance(playerTransform.position, Camera.main.transform.position);
@@ -253,7 +259,7 @@ public class CameraController : MonoBehaviour
         _returnTimer += Time.deltaTime;
 
         RaycastHit hit;
-        Physics.Raycast(_cameraRay, out hit, _maxCameraDistance);
+        Physics.Raycast(_cameraRay, out hit, _maxCameraDistance,_layerMask);
         if (hit.collider != null)
         {
             _hitCameraDistance = (hit.point - _cameraRay.origin).magnitude - 0.1f;

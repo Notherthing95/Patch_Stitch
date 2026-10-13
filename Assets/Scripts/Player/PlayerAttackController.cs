@@ -22,6 +22,7 @@ public class PlayerAttackController : MonoBehaviour
     const float SpringValue = 1000f;
     const float DamperValue = 0.2f;
     const float ToleranceValue = 0.0001f;
+    const float BreakForceValue = 200f;
 
     /// <summary>
     /// ƒoƒl‚ÌÚ‘±æ‚Å‚ ‚é“G‚Ö‚ÌUŒ‚“_
@@ -81,7 +82,7 @@ public class PlayerAttackController : MonoBehaviour
     public float moveRange { get; private set; }
 
     /// <summary>
-    /// 
+    /// UŒ‚‚ğ‚µ‚Ä‚¢‚é•”ˆÊ‚Ì–¼‘O
     /// </summary>
     string _combatEnemyName;
 
@@ -106,9 +107,14 @@ public class PlayerAttackController : MonoBehaviour
         Debug.DrawRay(transform.position + transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
         Debug.DrawRay(transform.position + -transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
 
-        //UŒ‚‚ª“ü—Í‚³‚ê‚½
+        //Ú’n”»’è
         if (_moveController.IsGround())
         {
+            if (_isInCombat)
+            {
+                _spring.breakForce = 10000f;
+            }
+            //UŒ‚‚ğ“ü—Í‚µ‚½
             if (_finalAttackAction.WasPressedThisFrame())
             {
                 if (_isInCombat)
@@ -122,6 +128,13 @@ public class PlayerAttackController : MonoBehaviour
                 {
                     Attack();
                 }
+            }
+        }
+        else
+        {
+            if (_isInCombat)
+            {
+                _spring.breakForce = BreakForceValue;
             }
         }
 
@@ -138,6 +151,8 @@ public class PlayerAttackController : MonoBehaviour
         {
             _spring.connectedAnchor = attackPoint.transform.position;
         }
+
+
     }
 
     /// <summary>
@@ -214,5 +229,16 @@ public class PlayerAttackController : MonoBehaviour
         Destroy(_spring);
         _isInCombat = false;
         PlayerAnimation.playerState = 7;
+    }
+
+    /// <summary>
+    /// …‚ªØ‚ê‚½Û‚Éí“¬ó‘Ô‚ğ‰ğœ‚·‚é
+    /// </summary>
+    void OnJointBreak(float breakForce)
+    {
+        _bodyInfo = null;
+        attackPoint.SetActive(false);
+        attackPoint.transform.parent = null;
+        _isInCombat = false;
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class KnockBackTest : MonoBehaviour
 {
-    PlayerMoveController _moveController;
+    //PlayerMoveController _moveController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,8 +20,7 @@ public class KnockBackTest : MonoBehaviour
     {
         if(collision.collider.gameObject.GetComponent<PlayerMoveController>() != null)
         {
-            _moveController = collision.gameObject.GetComponent<PlayerMoveController>();
-            _moveController.OnKnockBack(transform, 12f);
+            collision.gameObject.GetComponent<PlayerMoveController>().OnKnockBack(transform, 16f);
         }
     }
 }

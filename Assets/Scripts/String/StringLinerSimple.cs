@@ -1,5 +1,3 @@
-using NUnit;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -52,6 +50,16 @@ public class StringLinerSimple : MonoBehaviour
     /// </summary>
     Vector3[] _shakeVectorBuffer = new Vector3[DelayFrames * 2];
 
+    /// <summary>
+    /// プレイヤーの高さの半分
+    /// </summary>
+    const float _playerHeightHalf = 0.89f;
+
+    /// <summary>
+    /// 戦闘場所の地面の高さ
+    /// </summary>
+    float _groundHeight;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -66,6 +74,7 @@ public class StringLinerSimple : MonoBehaviour
     {
         if (_playerAttackController.attackPoint.activeSelf)
         {
+            _groundHeight = player.transform.position.y - _playerHeightHalf;
             _start = needleThreadPosition.position;
             _end = _playerAttackController.attackPoint.transform.position;
             _controlPoints[0] = _start;
@@ -86,10 +95,10 @@ public class StringLinerSimple : MonoBehaviour
             UpdateShakeControlPoint();
 
             float distance = Vector3.Distance(new Vector3(_start.x, 0, _start.z), new Vector3(_end.x, 0, _end.z));
-            _pointHeights[1] = Mathf.Lerp(-_start.y * 1.5f, _start.y + (_end.y - _start.y) / 2f, distance / _playerAttackController.moveRange);
+            _pointHeights[1] = Mathf.Lerp(-(_start.y - _groundHeight) + -(_end.y - _groundHeight), _start.y + (_end.y - _start.y) / 2f, distance / _playerAttackController.moveRange);
             _controlPoints[1].Set(_controlPoints[1].x, _pointHeights[1], _controlPoints[1].z);
 
-
+            Debug.Log(_pointHeights[1]);
             DrawString();
         }
         else

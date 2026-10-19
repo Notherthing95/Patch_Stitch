@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
@@ -31,6 +30,20 @@ public class PlayerAnimation : MonoBehaviour
     /// </summary>
     [SerializeField] int amountAnimation;
 
+    /// <summary>
+    /// 一回だけ再生して待機に戻すアニメーションステート
+    /// </summary>
+    static readonly string[] OneShotStates =
+    {
+    "P_TamadomeFINISH",  // 7 玉留め
+    "P_Knockdown01",     // 8 転ぶ
+    "P_Knockdown02",     // 9 吹っ飛び
+    "P_Pulled",          // 10 引っ張られ
+    "P_HitReact",        // 11 のけぞり
+    "P_Dodge_Forward",   // 12 前回避
+    "P_Dodge_Backward",  // 13 後ろ回避
+    };
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,10 +56,13 @@ public class PlayerAnimation : MonoBehaviour
     {
 
         m_Animator.SetInteger("AnimationTransition", playerState);
-        //Debug.Log("TargetState: " + playerState);
-
-        if (CheckNormalizedAnimation("P_Dodge_Forward"))
-            SetIdle();
+        foreach (string stateName in OneShotStates)
+        {
+            if (CheckNormalizedAnimation(stateName))
+            {
+                SetIdle();
+            }
+        }
 
     }
 

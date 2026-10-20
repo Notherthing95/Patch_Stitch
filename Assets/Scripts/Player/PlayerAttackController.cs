@@ -12,7 +12,7 @@ public class PlayerAttackController : MonoBehaviour
     PlayerMoveController _moveController;
     BodyInfo _bodyInfo;
 
-    LayerMask _enemyLayer;
+    int _enemyLayer;
 
     /// <summary>
     /// プレイヤーと敵への攻撃点をつなぐ糸を表現するためのバネ
@@ -224,6 +224,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         _bodyInfo.Finish();
         _bodyInfo = null;
+        _combatEnemyName = null;
         attackPoint.SetActive(false);
         attackPoint.transform.parent = null;
         Destroy(_spring);
@@ -236,7 +237,9 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void OnJointBreak(float breakForce)
     {
+        _bodyInfo.ThreadBreak();
         _bodyInfo = null;
+        _combatEnemyName = null;
         attackPoint.SetActive(false);
         attackPoint.transform.parent = null;
         _isInCombat = false;

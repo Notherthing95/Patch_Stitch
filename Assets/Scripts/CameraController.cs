@@ -130,7 +130,7 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// カメラ衝突判定のマスク
     /// </summary>
-    LayerMask _layerMask;
+    int _layerMask;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

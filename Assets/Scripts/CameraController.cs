@@ -46,24 +46,24 @@ public class CameraController : MonoBehaviour
     float _cameraPitchAngle;
 
     /// <summary>
-    /// カメラ上向きの制限
+    /// カメラ上向きの制限 度数法
     /// </summary>
-    [Header("視点上向きの制限")]
-    [SerializeField] float maxPitch = 5f;
+    [Header("視点上向きの制限 XX°")]
+    [SerializeField] float maxPitch = 36f;
 
     /// <summary>
-    /// カメラ下向きの制限
+    /// カメラ下向きの制限 度数法
     /// </summary>
-    [Header("視点下向きの制限")]
-    [SerializeField] float minPitch = 6f;
+    [Header("視点下向きの制限 XX°")]
+    [SerializeField] float minPitch = 30f;
 
     /// <summary>
-    /// カメラのヨー回転の感度 初期値0.01f
+    /// カメラのヨー回転の感度 初期値2f
     /// </summary>
     public float yawSensitivity { get; set; } = 2f;
 
     /// <summary>
-    /// カメラのピッチ回転の感度 初期値0.01f
+    /// カメラのピッチ回転の感度 初期値2f
     /// </summary>
     public float pitchSensitivity { get; set; } = 2f;
 
@@ -198,13 +198,13 @@ public class CameraController : MonoBehaviour
         _cameraPitchAngle += _readVector2.y * Time.deltaTime * pitchSensitivity * pitchSign;
 
         //ピッチ回転制限
-        if (_cameraPitchAngle <= Mathf.PI / -maxPitch)
+        if (_cameraPitchAngle <= -maxPitch * Mathf.Deg2Rad)
         {
-            _cameraPitchAngle = Mathf.PI / -maxPitch;
+            _cameraPitchAngle = -maxPitch * Mathf.Deg2Rad;
         }
-        else if (_cameraPitchAngle >= Mathf.PI / minPitch)
+        else if (_cameraPitchAngle >= minPitch * Mathf.Deg2Rad)
         {
-            _cameraPitchAngle = Mathf.PI / minPitch;
+            _cameraPitchAngle = minPitch * Mathf.Deg2Rad;
         }
     }
 
@@ -259,7 +259,7 @@ public class CameraController : MonoBehaviour
         _returnTimer += Time.deltaTime;
 
         RaycastHit hit;
-        Physics.Raycast(_cameraRay, out hit, _maxCameraDistance,_layerMask);
+        Physics.Raycast(_cameraRay, out hit, _maxCameraDistance, _layerMask);
         if (hit.collider != null)
         {
             _hitCameraDistance = (hit.point - _cameraRay.origin).magnitude - 0.1f;

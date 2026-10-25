@@ -48,13 +48,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869ff0dcc070b3b4ab2db933f048e85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  enemySpeed: 20
   Player: {fileID: 0}
   bossAnimation: {fileID: 4990960363513171688}
-  distance: 0
-  attackRange: 5
+  attacks:
+  - name: "\u53F3\u30D1\u30F3\u30C1"
+    animationState: 1
+    stateName: Punch_Right
+    parts:
+    - {fileID: 720761203138723354}
+    range: 5
+    dashSpeed: 0
+  - name: "\u5DE6\u30D1\u30F3\u30C1"
+    animationState: 2
+    stateName: Punch_Left
+    parts:
+    - {fileID: 3801655589337945311}
+    range: 5
+    dashSpeed: 0
   trackPlayerRange: 50
-  amountBossPattern: 2
+  windupTime: 0.5
+  recoverTime: 1
 --- !u!114 &-7683050005339724655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,6 +777,7 @@ MonoBehaviour:
   - bodyInfo: {fileID: 8851232637665713157}
   - bodyInfo: {fileID: 3801655589337945311}
   - bodyInfo: {fileID: 720761203138723354}
+  bossState: 0
 --- !u!4 &3937855830290667121 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8444475863340536816, guid: 9f56e79617b039740b3e7f646d0bc519, type: 3}

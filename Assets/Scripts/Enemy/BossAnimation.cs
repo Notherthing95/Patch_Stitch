@@ -30,7 +30,7 @@ public class BossAnimation : MonoBehaviour
     /// 1:右パンチ
     /// 2:左パンチ
     /// </summary>
-    static public int bossState = 0;
+    public int bossState = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

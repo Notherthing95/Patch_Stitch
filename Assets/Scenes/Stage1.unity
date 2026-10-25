@@ -950,8 +950,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   playerTransform: {fileID: 1712350203}
-  maxPitch: 5
-  minPitch: 6
+  maxPitch: 36
+  minPitch: 30
 --- !u!1001 &854174508
 PrefabInstance:
   m_ObjectHideFlags: 0

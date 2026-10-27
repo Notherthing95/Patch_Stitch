@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -16,6 +15,8 @@ public class EnemyAI : MonoBehaviour
         public int animationState = 1;
         [Tooltip("Animator のステート名（終了判定用）")]
         public string stateName = "Punch_Right";
+        [Tooltip("ボス側から見て、この攻撃がプレイヤーに届くサイド")]
+        public AttackSide side = AttackSide.Any;
         [Tooltip("この攻撃に使う部位。全部治ると使わなくなる")]
         public BodyInfo[] parts;
         [Tooltip("この距離以内なら使う")]
@@ -25,6 +26,11 @@ public class EnemyAI : MonoBehaviour
     }
 
     enum State { Idle, Chase, Windup, Attack, Recover }
+
+    /// <summary>
+    /// ボスから見て、プレイヤーに攻撃が届くサイド
+    /// </summary>
+    public enum AttackSide { Any, Left, Right }
 
     [SerializeField] GameObject Player;
     [SerializeField] BossAnimation bossAnimation;
@@ -67,17 +73,17 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     float distanceX, distanceZ;
 
-    /// <summary>
-    /// ボスの攻撃パターン
-    /// 1:右叩きつけパンチ
-    /// 2.左叩きつけパンチ
-    /// </summary>
-    private int _bossPattern = 1;
+    ///// <summary>
+    ///// ボスの攻撃パターン
+    ///// 1:右叩きつけパンチ
+    ///// 2.左叩きつけパンチ
+    ///// </summary>
+    //private int _bossPattern = 1;
 
     /// <summary>
     /// ボスの攻撃パターンの総数(正直無いように作りたい)
     /// </summary>
-    public int amountBossPattern = 2;
+    public int amountBossPattern = 4;
 
     private NavMeshAgent navMeshAgent;
     private State _state = State.Idle;
@@ -223,7 +229,15 @@ public class EnemyAI : MonoBehaviour
 
     BossAttack ChooseAttack(float distance)
     {
-        List<BossAttack> usable = new List<BossAttack>();
+        Vector3 local = transform.InverseTransformPoint(Player.transform.position);
+        AttackSide playerSide = AttackSide.Any;
+        if (local.x >= 0)
+            playerSide = AttackSide.Right;
+        else
+            playerSide = AttackSide.Left;
+
+        List<BossAttack> usable = new List<BossAttack>();       // 使える攻撃
+        List<BossAttack> preferred = new List<BossAttack>();    // プレイヤーのいる側の攻撃
 
         foreach(BossAttack attack in attacks)
         {
@@ -233,15 +247,25 @@ public class EnemyAI : MonoBehaviour
                 continue;
 
             usable.Add(attack);
+            if (attack.side == playerSide || attack.side == AttackSide.Any)
+            {
+                preferred.Add(attack);
+            }
         }
 
-        if(usable.Count == 0)
+        List<BossAttack> pool;
+        if (preferred.Count > 0)
+            pool = preferred;
+        else
+            pool = usable;
+
+        if(pool.Count == 0)
         {
             return null;
         }
 
-        int index = Random.Range(0, usable.Count);
-        return usable[index];
+        int index = Random.Range(0, pool.Count);
+        return pool[index];
     }
 
     /// <summary>

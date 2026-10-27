@@ -443,6 +443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 545944790}
+  - component: {fileID: 545944791}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -465,6 +466,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &545944791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545944789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e33dafea7d19094e97b7a98a39096cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOverManager
+  loadSceneName: Stage1
 --- !u!1001 &622599092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -597,6 +611,10 @@ PrefabInstance:
     - target: {fileID: 2708448067190055111, guid: c94d39667c52968429f5569e562d3d24, type: 3}
       propertyPath: m_Name
       value: Bear
+      objectReference: {fileID: 0}
+    - target: {fileID: 7263738952017370175, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
       propertyPath: Player
@@ -1458,6 +1476,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4579909f8871c3e43bd5c5d09f8dd1d6, type: 3}
   m_PrefabInstance: {fileID: 854174508}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1415417677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1415417678}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1415417678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415417677}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.64944, y: -0.84455, z: -58.70853}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1417900510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1692,6 +1741,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7589282801587435941, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531170698476302813, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: gameOverManager
+      value: 
+      objectReference: {fileID: 545944791}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1986,3 +2043,4 @@ SceneRoots:
   - {fileID: 1733639859}
   - {fileID: 1206798687}
   - {fileID: 545944790}
+  - {fileID: 1415417678}

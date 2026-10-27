@@ -81,6 +81,21 @@ public class PlayerMoveController : MonoBehaviour
     /// </summary>
     const float PlayerHeightHalf = 0.8f;
 
+    /// <summary>
+    /// 吹っ飛ばされている状態
+    /// </summary>
+    bool _isKnockBack;
+
+    /// <summary>
+    /// 吹っ飛ばされている時間
+    /// </summary>
+    const float KnockBackDuration = 2.2f;
+
+    /// <summary>
+    /// 吹っ飛ばされ始めてから現在経った時間
+    /// </summary>
+    float _knockBackTimer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -118,8 +133,8 @@ public class PlayerMoveController : MonoBehaviour
             //プレイヤーが停止するのを早める
             _playerRigidbody.linearDamping = DampingValue;
 
-            //攻撃中は移動不可
-            if (!_attackController.isAttacking)
+            //攻撃中と吹っ飛ばされ中は移動不可
+            if (!_attackController.isAttacking && !_isKnockBack)
             {
                 //入力があればプレイヤーを移動させる
                 if (_readVector.magnitude > 0.1f)
@@ -132,6 +147,10 @@ public class PlayerMoveController : MonoBehaviour
                 }
             }
 
+            if (_isKnockBack)
+            {
+                UpdateKnockBackCount();
+            }
         }
         else
         {
@@ -216,12 +235,33 @@ public class PlayerMoveController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// プレイヤーを吹っ飛ばす
+    /// </summary>
+    /// <param name="transform">吹っ飛ばす側の座標</param>
+    /// <param name="power">吹っ飛ばす威力</param>
     public void OnKnockBack(Transform transform, float power)
     {
         Vector3 direction = (this.transform.position - transform.position).normalized;
         direction.y = 0.5f;
 
         _playerRigidbody.AddForce(direction * power, ForceMode.Impulse);
+
         PlayerAnimation.playerState = 9;
+        _isKnockBack = true;
+    }
+
+    /// <summary>
+    /// 吹っ飛ばされてからの時間を更新してDuration以上なら状態をfalseにする
+    /// </summary>
+    void UpdateKnockBackCount()
+    {
+        _knockBackTimer += Time.deltaTime;
+
+        if(_knockBackTimer >= KnockBackDuration)
+        {
+            _isKnockBack = false;
+            _knockBackTimer = 0;
+        }
     }
 }

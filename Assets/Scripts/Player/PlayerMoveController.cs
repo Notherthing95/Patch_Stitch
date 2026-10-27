@@ -111,12 +111,12 @@ public class PlayerMoveController : MonoBehaviour
         //回避状態ならば
         if(_isDodge)
         {
-            UpdateDodgeCount();
+            UpdateDodgeTimer();
         }
         //吹っ飛ばされ状態ならば
         if (_isKnockBack)
         {
-            UpdateKnockBackCount();
+            UpdateKnockBackTimer();
         }
         //回避が入力されたら
         if (_dodgeAction.WasPressedThisFrame() && !_isDodge)
@@ -145,7 +145,7 @@ public class PlayerMoveController : MonoBehaviour
             _playerRigidbody.linearDamping = DampingValue;
 
             //攻撃中と吹っ飛ばされ中は移動不可
-            if (!_attackController.isAttacking && !_isKnockBack)
+            if (!_attackController.isAttacking && !_attackController.isFinalAttacking && !_isKnockBack)
             {
                 //入力があればプレイヤーを移動させる
                 if (_readVector.magnitude > 0.1f)
@@ -160,7 +160,7 @@ public class PlayerMoveController : MonoBehaviour
 
             if (_isKnockBack)
             {
-                UpdateKnockBackCount();
+                UpdateKnockBackTimer();
             }
         }
         else
@@ -259,7 +259,7 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// 回避してからの時間を更新して、Duration以上なら状態をfalseにする
     /// </summary>
-    void UpdateDodgeCount()
+    void UpdateDodgeTimer()
     {
         _dodgeTimer += Time.deltaTime;
 
@@ -271,9 +271,9 @@ public class PlayerMoveController : MonoBehaviour
     }
 
     /// <summary>
-    /// 吹っ飛ばされてからの時間を更新してDuration以上なら状態をfalseにする
+    /// 吹っ飛ばされてからの時間を更新して、Duration以上なら状態をfalseにする
     /// </summary>
-    void UpdateKnockBackCount()
+    void UpdateKnockBackTimer()
     {
         _knockBackTimer += Time.deltaTime;
 

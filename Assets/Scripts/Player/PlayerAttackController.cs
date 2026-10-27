@@ -15,6 +15,24 @@ public class PlayerAttackController : MonoBehaviour
     int _enemyLayer;
 
     /// <summary>
+    /// 攻撃モーションが当たるまでの遅延時間
+    /// </summary>
+    [Header("攻撃モーションが当たるまでの遅延時間")]
+    [SerializeField]
+    float[] attackDelayTimes = new float[4];
+
+    /// <summary>
+    /// 攻撃コンボの回数
+    /// </summary>
+    int _attackCount;
+
+    /// <summary>
+    /// 玉留め攻撃モーションが決まるまでの遅延時間
+    /// </summary>
+    [Header("玉留め攻撃モーションが決まるまでの遅延時間")]
+    [SerializeField] float finalAttackDelayTime;
+
+    /// <summary>
     /// プレイヤーと敵への攻撃点をつなぐ糸を表現するためのバネ
     /// </summary>
     SpringJoint _spring;
@@ -62,14 +80,29 @@ public class PlayerAttackController : MonoBehaviour
     public bool isAttacking { get; private set; }
 
     /// <summary>
+    /// 玉留め攻撃している状態
+    /// </summary>
+    public bool isFinalAttacking { get; private set; }
+
+    /// <summary>
     /// 攻撃にかかる時間
     /// </summary>
-    const float AttckDuration = 0.3f;
+    const float AttckDuration = 0.22f;
+
+    /// <summary>
+    /// 玉留め攻撃にかかる時間
+    /// </summary>
+    const float FinalAttackDuration = 0.5f;
 
     /// <summary>
     /// 攻撃し始めてから現在経った時間
     /// </summary>
     float _attackTimer;
+
+    /// <summary>
+    /// 玉留め攻撃し始めてから現在経った時間
+    /// </summary>
+    float _finalAttackTimer;
 
     /// <summary>
     /// プレイヤーの最大行動範囲(糸の最大距離) 敵の部位から取得
@@ -119,14 +152,15 @@ public class PlayerAttackController : MonoBehaviour
             {
                 if (_isInCombat)
                 {
-                    FinalAttack();
+                    Invoke(nameof(FinalAttack), finalAttackDelayTime);
                 }
             }
             else if (_attackAction.WasPressedThisFrame())
             {
                 if (!isAttacking)
                 {
-                    Attack();
+                    isAttacking = true;
+                    Invoke(nameof(Attack), attackDelayTimes[_attackCount]);
                 }
             }
         }
@@ -140,12 +174,7 @@ public class PlayerAttackController : MonoBehaviour
 
         if (isAttacking)
         {
-            _attackTimer += Time.deltaTime;
-            if (_attackTimer >= AttckDuration)
-            {
-                isAttacking = false;
-                _attackTimer = 0;
-            }
+            UpdateAttackTimer();
         }
         if (_isInCombat)
         {
@@ -202,7 +231,6 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void Attack()
     {
-        isAttacking = true;
         Physics.SphereCast(transform.position - transform.forward.normalized * RayOriginOffset, attackRange, transform.forward, out _hit, attackReach, _enemyLayer);
         if (_hit.collider != null)
         {
@@ -215,6 +243,8 @@ public class PlayerAttackController : MonoBehaviour
                 OnHit();
             }
         }
+
+        CancelInvoke(nameof(Attack));
     }
 
     /// <summary>
@@ -230,6 +260,35 @@ public class PlayerAttackController : MonoBehaviour
         Destroy(_spring);
         _isInCombat = false;
         PlayerAnimation.playerState = 7;
+
+        CancelInvoke(nameof(FinalAttack));
+    }
+
+    /// <summary>
+    /// 攻撃してからの時間を更新して、Duration以上なら状態をfalseにする
+    /// </summary>
+    void UpdateAttackTimer()
+    {
+        _attackTimer += Time.deltaTime;
+
+        if (_attackTimer >= AttckDuration + attackDelayTimes[_attackCount])
+        {
+            isAttacking = false;
+            _attackTimer = 0;
+            _attackCount++;
+            _attackCount %= 4;
+        }
+    }
+
+    void UpdateFinalAttackTimer()
+    {
+        _finalAttackTimer += Time.deltaTime;
+        
+        if(_finalAttackTimer >= FinalAttackDuration)
+        {
+            isFinalAttacking = false;
+            _finalAttackTimer = 0;
+        }
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -36,19 +37,19 @@ public class StringLinerSimple : MonoBehaviour
     const int Resolution = 100;
 
     /// <summary>
-    /// 糸が揺れるように動かすための遅延のフレーム数
+    /// 糸が揺れるように動かすための遅延の秒数
     /// </summary>
-    const int DelayFrames = 60;
+    const float DelayTime = 0.30f;
 
     /// <summary>
-    /// 中心の制御点の位置のバッファ DelayFramesの数記録
+    /// 中心の制御点の位置のバッファ
     /// </summary>
-    Vector3[] _positionBuffer = new Vector3[DelayFrames];
+    Queue<Vector3> _positionBuffer = new Queue<Vector3>();
 
     /// <summary>
-    /// 中心の制御点を揺らすためのベクトルのバッファ DelayFrameの2倍の数記録
+    /// 中心の制御点を揺らすためのベクトルのバッファ
     /// </summary>
-    Vector3[] _shakeVectorBuffer = new Vector3[DelayFrames * 2];
+    Queue<Vector3> _shakeVectorBuffer = new Queue<Vector3>();
 
     /// <summary>
     /// プレイヤーの高さの半分
@@ -84,9 +85,9 @@ public class StringLinerSimple : MonoBehaviour
             {
                 _lineRenderer.enabled = true;
 
-                for (int i = 0; i < DelayFrames; i++)
+                for (int i = 0; i < DelayTime / Time.deltaTime; i++)
                 {
-                    _positionBuffer[i] = _start + (_end - _start) / 2f;
+                    _positionBuffer.Enqueue(_start + (_end - _start) / 2f);
                 }
             }
 
@@ -98,13 +99,14 @@ public class StringLinerSimple : MonoBehaviour
             _pointHeights[1] = Mathf.Lerp(-(_start.y - _groundHeight) + -(_end.y - _groundHeight), _start.y + (_end.y - _start.y) / 2f, distance / _playerAttackController.moveRange);
             _controlPoints[1].Set(_controlPoints[1].x, _pointHeights[1], _controlPoints[1].z);
 
-            Debug.Log(_pointHeights[1]);
             DrawString();
         }
         else
         {
             if (_lineRenderer.enabled)
             {
+                _positionBuffer.Clear();
+                _shakeVectorBuffer.Clear();
                 _lineRenderer.enabled = false;
             }
         }
@@ -132,30 +134,28 @@ public class StringLinerSimple : MonoBehaviour
     }
 
     /// <summary>
-    /// 中心の制御点の位置を決め、バッファに記録 DerayFrames遅れて反映
+    /// 中心の制御点の位置を決め、バッファに記録 DelayTime遅れて反映
     /// </summary>
     void UpdateDelayedControlPoint()
     {
-        _controlPoints[1] = _positionBuffer[DelayFrames - 1];
-
-        for (int i = DelayFrames - 1; i > 0; i--)
+        if (_positionBuffer.Count >= DelayTime / Time.deltaTime)
         {
-            _positionBuffer[i] = _positionBuffer[i - 1];
+            _controlPoints[1] = _positionBuffer.Dequeue();
         }
-        _positionBuffer[0] = _start + (_end - _start) / 2f;
+
+        _positionBuffer.Enqueue(_start + (_end - _start) / 2f);
     }
 
     /// <summary>
-    /// 中心の制御点を揺らすベクトルを計算し、バッファに記録 DelayFramesの2倍遅れて反映
+    /// 中心の制御点を揺らすベクトルを計算し、バッファに記録 DelayTimeの2倍遅れて反映
     /// </summary>
     void UpdateShakeControlPoint()
     {
-        _controlPoints[1] -= _shakeVectorBuffer[DelayFrames * 2 - 1];
-
-        for (int i = DelayFrames * 2 - 1; i > 0; i--)
+        if (_shakeVectorBuffer.Count >= (DelayTime / Time.deltaTime) * 2)
         {
-            _shakeVectorBuffer[i] = _shakeVectorBuffer[i - 1];
+            _controlPoints[1] -= _shakeVectorBuffer.Dequeue();
         }
-        _shakeVectorBuffer[0] = (_controlPoints[1] - _positionBuffer[0]) * 0.5f;
+
+        _shakeVectorBuffer.Enqueue((_controlPoints[1] - (_start + (_end - _start) / 2f)) * 0.52f);
     }
 }

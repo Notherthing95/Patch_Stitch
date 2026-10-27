@@ -137,7 +137,7 @@ public class CameraController : MonoBehaviour
     {
         _cameraAction = InputSystem.actions.FindAction("Camera");
         _cameraResetAction = InputSystem.actions.FindAction("CameraReset");
-        _layerMask = LayerMask.GetMask("Field", "Eenmy");
+        _layerMask = LayerMask.GetMask("Field", "Enemy");
 
         //シーンのカメラの位置から情報を取得
         _maxCameraDistance = Vector3.Distance(playerTransform.position, Camera.main.transform.position);

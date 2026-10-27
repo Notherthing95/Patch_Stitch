@@ -115,6 +115,7 @@ public class EnemyAI : MonoBehaviour
             case State.Chase: // í«ê’
                 if (distance >= trackPlayerRange)
                 {
+                    bossAnimation.SetIdle();
                     ChangeState(State.Idle);
                 }
                 else
@@ -122,10 +123,12 @@ public class EnemyAI : MonoBehaviour
                     _current = ChooseAttack(distance);  // çUåÇÇëIÇ‘
                     if(_current != null)
                     {
+                        bossAnimation.SetIdle();
                         ChangeState(State.Windup);
                     }
                     else
                     {
+                        bossAnimation.bossState = 8;
                         navMeshAgent.isStopped = false;
                         navMeshAgent.SetDestination(Player.transform.position);
                     }

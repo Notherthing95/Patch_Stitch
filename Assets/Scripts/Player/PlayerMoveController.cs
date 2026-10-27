@@ -108,6 +108,17 @@ public class PlayerMoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //‰ñ”ğó‘Ô‚È‚ç‚Î
+        if(_isDodge)
+        {
+            UpdateDodgeCount();
+        }
+        //‚Á”ò‚Î‚³‚êó‘Ô‚È‚ç‚Î
+        if (_isKnockBack)
+        {
+            UpdateKnockBackCount();
+        }
+        //‰ñ”ğ‚ª“ü—Í‚³‚ê‚½‚ç
         if (_dodgeAction.WasPressedThisFrame() && !_isDodge)
         {
             _isDodge = true;
@@ -174,12 +185,6 @@ public class PlayerMoveController : MonoBehaviour
             _moveSpeed = Mathf.Lerp(dodgeSpeed, dashSpeed, _dodgeTimer / DodgeDuration);
             PlayerAnimation.playerState = 12;
             Debug.Log("State: 12");
-            _dodgeTimer += Time.deltaTime;
-            if (_dodgeTimer >= DodgeDuration)
-            {
-                _isDodge = false;
-                _dodgeTimer = 0;
-            }
         }
         else if (_readVector.magnitude >= RunWalkThreshold)
         {
@@ -249,6 +254,20 @@ public class PlayerMoveController : MonoBehaviour
 
         PlayerAnimation.playerState = 9;
         _isKnockBack = true;
+    }
+
+    /// <summary>
+    /// ‰ñ”ğ‚µ‚Ä‚©‚ç‚ÌŠÔ‚ğXV‚µ‚ÄADurationˆÈã‚È‚çó‘Ô‚ğfalse‚É‚·‚é
+    /// </summary>
+    void UpdateDodgeCount()
+    {
+        _dodgeTimer += Time.deltaTime;
+
+        if (_dodgeTimer >= DodgeDuration)
+        {
+            _isDodge = false;
+            _dodgeTimer = 0;
+        }
     }
 
     /// <summary>

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class EnemyInfo : MonoBehaviour
 {
-    [SerializeField] float Life = 1; // デフォルトは1
+
+    [Header("ボスのライフ(部位の数も兼ねる)")][SerializeField] float Life = 1; // デフォルトは1
     [SerializeField] GameObject AfterDefeatEnemy;
     [SerializeField] BodyInfo[] bodyInfos;
 
@@ -17,7 +18,7 @@ public class EnemyInfo : MonoBehaviour
     {
         if(Life <= 0)
         {
-            Instantiate(AfterDefeatEnemy);
+            Instantiate(AfterDefeatEnemy, transform.position + Vector3.up, Quaternion.identity);
             Destroy(gameObject);
         }
     }

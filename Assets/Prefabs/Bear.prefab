@@ -54,27 +54,31 @@ MonoBehaviour:
   - name: "\u53F3\u30D1\u30F3\u30C1"
     animationState: 1
     stateName: Punch_Right
+    side: 2
     parts:
     - {fileID: 720761203138723354}
     range: 5
     dashSpeed: 0
   - name: "\u5DE6\u30D1\u30F3\u30C1"
-    animationState: 3
+    animationState: 2
     stateName: Punch_Left
+    side: 1
     parts:
     - {fileID: 3801655589337945311}
     range: 4
     dashSpeed: 0
   - name: "\u53F3\u30AD\u30C3\u30AF"
     animationState: 3
-    stateName: Punch_Left
+    stateName: Kick_Right
+    side: 2
     parts:
     - {fileID: 8851232637665713157}
     range: 4
     dashSpeed: 0
   - name: "\u5DE6\u30AD\u30C3\u30AF"
     animationState: 4
-    stateName: Punch_Left
+    stateName: Kick_Left
+    side: 1
     parts:
     - {fileID: 4512664081814717796}
     range: 4
@@ -196,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitBoxScript
   power: 16
-  AmountDamage: 1
+  AmountDamage: 20
 --- !u!135 &3534495129885521459
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -216,7 +220,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5102687368923921417
 GameObject:
@@ -264,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitBoxScript
   power: 16
-  AmountDamage: 1
+  AmountDamage: 20
 --- !u!135 &954729669056000329
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -284,7 +288,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.7
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6150124755204873739
 GameObject:
@@ -332,7 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitBoxScript
   power: 16
-  AmountDamage: 1
+  AmountDamage: 10
 --- !u!135 &5435524560710967658
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -400,7 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitBoxScript
   power: 16
-  AmountDamage: 1
+  AmountDamage: 10
 --- !u!135 &7542562332529029492
 SphereCollider:
   m_ObjectHideFlags: 0

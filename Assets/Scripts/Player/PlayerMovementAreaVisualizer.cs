@@ -43,7 +43,7 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     /// <summary>
     /// isChangeRangeがfalseの時の1フレーム前の制限距離
     /// </summary>
-    float _oldMoveRange;
+    float _previousMoveRange;
 
     /// <summary>
     /// エリアの範囲が縮小するのにかかる時間
@@ -77,18 +77,18 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
                 _areaCircleSize = new Vector3(_attackController.moveRange * 2, _attackController.moveRange * 2, DepthValue);
                 _decalProjector.size = _areaCircleSize;
                 _maxMoveRange = _attackController.moveRange;
-                _oldMoveRange = _attackController.moveRange;
+                _previousMoveRange = _attackController.moveRange;
                 _decalProjector.material.SetColor("_DecalColor", new Color(0, 1f, 0, AlphaValue));
             }
 
             //制限距離が変わった時
-            if (_oldMoveRange != _attackController.moveRange)
+            if (_previousMoveRange != _attackController.moveRange)
             {
                 _isChangeRange = true;
             }
             if (_isChangeRange)
             {
-                float temp = Mathf.Lerp(_oldMoveRange, _attackController.moveRange, _timer / Duration);
+                float temp = Mathf.Lerp(_previousMoveRange, _attackController.moveRange, _timer / Duration);
                 _areaCircleSize = new Vector3(temp * 2, temp * 2, DepthValue);
                 _timer += Time.deltaTime;
                 _decalProjector.size = _areaCircleSize;
@@ -97,14 +97,14 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
                 {
                     _isChangeRange = false;
                     _timer = 0;
-                    _oldMoveRange = _attackController.moveRange;
+                    _previousMoveRange = _attackController.moveRange;
                 }
 
                 ChangeColor();
             }
             else
             {
-                _oldMoveRange = _attackController.moveRange;
+                _previousMoveRange = _attackController.moveRange;
             }
 
             _areaCircle.transform.position = _attackController.attackPoint.transform.position;

@@ -52,6 +52,11 @@ public class StringLinerSimple : MonoBehaviour
     Queue<Vector3> _shakeVectorBuffer = new Queue<Vector3>();
 
     /// <summary>
+    /// 動きのノイズを減らすための移動平均
+    /// </summary>
+    Vector3[] _movingAverage = new Vector3[20];
+
+    /// <summary>
     /// プレイヤーの高さの半分
     /// </summary>
     const float _playerHeightHalf = 0.89f;
@@ -89,11 +94,19 @@ public class StringLinerSimple : MonoBehaviour
                 {
                     _positionBuffer.Enqueue(_start + (_end - _start) / 2f);
                 }
+
+                for (int i = 0; i < _movingAverage.Length; i++)
+                {
+                    _movingAverage[i] = _start + (_end - _start) / 2f;
+                }
             }
 
+            //糸を遅れて動かす
             UpdateDelayedControlPoint();
-
+            //糸を揺らす
             UpdateShakeControlPoint();
+            //動きのノイズを減らす
+            UpdateMovingAverage();
 
             float distance = Vector3.Distance(new Vector3(_start.x, 0, _start.z), new Vector3(_end.x, 0, _end.z));
             _pointHeights[1] = Mathf.Lerp(-(_start.y - _groundHeight) + -(_end.y - _groundHeight), _start.y + (_end.y - _start.y) / 2f, distance / _playerAttackController.moveRange);
@@ -157,5 +170,25 @@ public class StringLinerSimple : MonoBehaviour
         }
 
         _shakeVectorBuffer.Enqueue((_controlPoints[1] - (_start + (_end - _start) / 2f)) * 0.52f);
+    }
+
+    /// <summary>
+    /// 移動平均を更新し、制御点に反映
+    /// </summary>
+    void UpdateMovingAverage()
+    {
+        for (int i = _movingAverage.Length - 1; i > 0; i--)
+        {
+            _movingAverage[i] = _movingAverage[i - 1];
+        }
+        _movingAverage[0] = _controlPoints[1];
+
+        Vector3 point = new Vector3();
+        for(int i = 0;i < _movingAverage.Length; i++)
+        {
+            point += _movingAverage[i];
+        }
+        point /= _movingAverage.Length;
+        _controlPoints[1] = point;
     }
 }

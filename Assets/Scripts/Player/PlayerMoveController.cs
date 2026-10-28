@@ -9,7 +9,7 @@ public class PlayerMoveController : MonoBehaviour
     InputAction _moveAction;
     InputAction _dodgeAction;
     PlayerAttackController _attackController;
-    [SerializeField] PlayerInfo playerInfo;
+    PlayerInfo _playerInfo;
 
     /// <summary>
     /// プレイヤーのリジッドボディ
@@ -103,6 +103,7 @@ public class PlayerMoveController : MonoBehaviour
         _dodgeAction = InputSystem.actions.FindAction("Dodge");
         _playerRigidbody = GetComponent<Rigidbody>();
         _attackController = GetComponent<PlayerAttackController>();
+        _playerInfo = GetComponent<PlayerInfo>();
     }
 
     // Update is called once per frame
@@ -144,8 +145,8 @@ public class PlayerMoveController : MonoBehaviour
             //プレイヤーが停止するのを早める
             _playerRigidbody.linearDamping = DampingValue;
 
-            //攻撃中と吹っ飛ばされ中は移動不可
-            if (!_attackController.isAttacking && !_attackController.isFinalAttacking && !_isKnockBack)
+            //攻撃中と吹っ飛ばされ中、ライフゼロは移動不可
+            if (!_attackController.isAttacking && !_attackController.isFinalAttacking && !_isKnockBack && !(_playerInfo.PlayerLife == 0))
             {
                 //入力があればプレイヤーを移動させる
                 if (_readVector.magnitude > 0.1f)

@@ -10,6 +10,8 @@ public class ClearItem : MonoBehaviour
     /// </summary>
     private bool _isPicked = false;
 
+    
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,7 +22,7 @@ public class ClearItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,7 +33,10 @@ public class ClearItem : MonoBehaviour
             return;
 
         _isPicked = true;
-        Debug.Log("STAGE CLEAR!!");
+        StageClearManager clearManager = FindAnyObjectByType<StageClearManager>();
+        if (clearManager != null)
+            clearManager.StageClear();
+
         Destroy(gameObject);
 
     }

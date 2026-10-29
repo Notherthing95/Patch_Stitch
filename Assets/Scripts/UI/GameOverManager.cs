@@ -5,6 +5,8 @@ public class GameOverManager : MonoBehaviour
 {
 
     [Header("ゲームオーバーの際に読み込むシーンの名前")][SerializeField] string loadSceneName;
+    [SerializeField] GameObject GameOverText;
+    [SerializeField] FadeOut fadeOut;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +24,8 @@ public class GameOverManager : MonoBehaviour
     {
         Debug.Log("GAME OVER");
         Invoke(nameof(Restart), 2f);      // 2秒後にRestart()を呼ぶ
+        GameOverText.SetActive(true);
+        fadeOut.StartFadeOut();
     }
 
     void Restart()

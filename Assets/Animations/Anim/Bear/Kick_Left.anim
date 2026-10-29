@@ -282560,6 +282560,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 3
     messageOptions: 0
+  - time: 2.5416667
+    functionName: PlayKickSE
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 3.0416667
     functionName: SetHitBoxOff
     data: 

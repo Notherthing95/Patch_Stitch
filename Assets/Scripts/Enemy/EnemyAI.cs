@@ -41,17 +41,14 @@ public class EnemyAI : MonoBehaviour
     /// <summary>
     /// 予備動作秒数
     /// </summary>
-    [SerializeField] float windUpTime = 0.5f;
+    [Tooltip("予備動作秒数")][SerializeField] float windUpTime = 0.5f;
 
     /// <summary>
     /// 攻撃後の隙
     /// </summary>
-    [SerializeField] float recoverTime = 1.0f;
+    [Tooltip("攻撃後の隙")][SerializeField] float recoverTime = 1.0f;
 
-    /// <summary>
-    /// 攻撃の最大秒数(保険)
-    /// </summary>
-    const float MaxAttackTime = 5.0f;
+    [Tooltip("攻撃にかかる最大の秒数(保険)")] const float MaxAttackTime = 5.0f;
 
     /// <summary>
     /// プレイヤーとボスの距離
@@ -61,12 +58,12 @@ public class EnemyAI : MonoBehaviour
     /// <summary>
     /// ボスがアタックを始めるプレイヤーとの距離
     /// </summary>
-    public float attackRange = 10;
+    [Header("ボスが攻撃を始めるプレイヤーとの距離")]public float attackRange = 10;
 
     /// <summary>
     /// ボスがプレイヤーへ移動を始める距離
     /// </summary>
-    public float trackPlayerRange = 50;
+    [Header("ボスがプレイヤーへ移動を始める距離")]public float trackPlayerRange = 50;
 
     /// <summary>
     /// 二乗したPlayerのx,z座標の意
@@ -80,10 +77,10 @@ public class EnemyAI : MonoBehaviour
     ///// </summary>
     //private int _bossPattern = 1;
 
-    /// <summary>
-    /// ボスの攻撃パターンの総数(正直無いように作りたい)
-    /// </summary>
-    public int amountBossPattern = 4;
+    ///// <summary>
+    ///// ボスの攻撃パターンの総数(いらなくなった)
+    ///// </summary>
+    //public int amountBossPattern = 4;
 
     private NavMeshAgent navMeshAgent;
     private State _state = State.Idle;

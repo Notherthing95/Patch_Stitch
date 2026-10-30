@@ -38,15 +38,11 @@ public class BossAnimation : MonoBehaviour
     /// </summary>
     public int bossState = 0;
 
-    /// <summary>
-    /// SE—p
-    /// </summary>
-    private SoundManager _soundManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _soundManager = FindAnyObjectByType<SoundManager>();
+
     }
 
     // Update is called once per frame
@@ -91,14 +87,12 @@ public class BossAnimation : MonoBehaviour
 
     public void PlayPunchSE()
     {
-        if (_soundManager != null)
-            _soundManager.PlayBossPunchSE();
+        SoundManager.playSound.PlayBossPunchSE();
     }
 
     public void PlayKickSE()
     {
-        if (_soundManager != null)
-            _soundManager.PlayBossKickSE();
+        SoundManager.playSound.PlayBossKickSE();
     }
 
 }

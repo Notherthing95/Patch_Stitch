@@ -4,6 +4,8 @@ public class SoundManager : MonoBehaviour
 {
     AudioSource audioSource;
 
+    public static SoundManager playSound { get; private set; }
+
     [Header("ここにStitchingフォルダから自由にSEを入れて試してみよう")]
     [SerializeField]AudioClip StitchSE;
     [SerializeField]AudioClip BossPunchSE;
@@ -16,15 +18,22 @@ public class SoundManager : MonoBehaviour
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    void Awake()
     {
+        playSound = this;
         audioSource = GetComponent<AudioSource>();
     }
-
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void OnDestroy()
+    {
+        if (playSound == this)
+            playSound = null;
     }
 
     public void PlayAttackSE()

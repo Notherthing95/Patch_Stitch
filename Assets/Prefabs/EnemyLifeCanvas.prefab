@@ -539,7 +539,7 @@ GameObject:
   - component: {fileID: 7208778773906311017}
   - component: {fileID: 6647914855242682976}
   m_Layer: 5
-  m_Name: LifeCanvas
+  m_Name: EnemyLifeCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7208778773906311017
 MonoBehaviour:
   m_ObjectHideFlags: 0

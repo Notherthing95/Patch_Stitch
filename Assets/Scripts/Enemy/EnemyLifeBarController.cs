@@ -49,7 +49,7 @@ public class EnemyLifeBarController : MonoBehaviour
         _lineRenderer = line.GetComponent<LineRenderer>();
         _maxLife = _bodyInfo.Life;
         _lineRenderer.positionCount = 3;
-        _maxLength = lifeBar.sizeDelta.x;
+        _maxLength = lifeBar.rect.width;
     }
 
     // Update is called once per frame
@@ -64,7 +64,7 @@ public class EnemyLifeBarController : MonoBehaviour
             }
 
             //攻撃がヒットした回数分lifePreviewを短くする
-            lifePreview.sizeDelta = new Vector2(Mathf.Lerp(_maxLength, 0f, 1 - (_bodyInfo.Life - _bodyInfo.attackCount) / _maxLife), lifePreview.sizeDelta.y);
+            lifePreview.sizeDelta = new Vector2(Mathf.Lerp(_maxLength, 0f, 1 - (_bodyInfo.Life - _bodyInfo.attackCount) / _maxLife), lifePreview.rect.height);
 
             //バーをカメラ方向に向ける
             barUI.transform.LookAt(new Vector3(Camera.main.transform.position.x, barUI.transform.position.y, Camera.main.transform.position.z));
@@ -75,7 +75,7 @@ public class EnemyLifeBarController : MonoBehaviour
         else
         {
             //フィニッシュ攻撃が完了していた際に、lifeBarを短くする
-            if (Mathf.Lerp(_maxLength, 0f, 1 - _bodyInfo.Life / _maxLife) == lifePreview.sizeDelta.x)
+            if (Mathf.Lerp(_maxLength, 0f, 1 - _bodyInfo.Life / _maxLife) == lifePreview.rect.x)
             {
                 lifeBar.sizeDelta = lifePreview.sizeDelta;
             }

@@ -73,7 +73,7 @@ public class WoundVisualController : MonoBehaviour
                 _Height[i] = Mathf.Lerp(_maxHeight[i], MinHeight, 1 - (_lifePerWound - (_lostLife - _lifePerWound * (woundDecals.Length - 1 - i))) / _lifePerWound);
                 _isChanging = true;
 
-                if (woundDecals[i].size.y == MinHeight)
+                if (_Height[i] == MinHeight)
                 {
                     woundDecals[i].gameObject.SetActive(false);
                 }

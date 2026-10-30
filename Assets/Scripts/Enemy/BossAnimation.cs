@@ -21,14 +21,20 @@ public class BossAnimation : MonoBehaviour
     /// 0:idle
     /// 1:右パンチ
     /// 2:左パンチ
+    /// 3:右キック
+    /// 4:左キック
+    /// 5:突進
     /// </summary>
     [SerializeField] Body[] AnimationBody;
 
-        /// <summary>
+    /// <summary>
     /// ボスのアニメーションを動かします
     /// 0:idle
     /// 1:右パンチ
     /// 2:左パンチ
+    /// 3:右キック
+    /// 4:左キック
+    /// 5:突進
     /// </summary>
     public int bossState = 0;
 

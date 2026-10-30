@@ -1,2 +1,19 @@
 fileFormatVersion: 2
 guid: 59155124e3c88224fa44d0f30fa0dba7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - StitchSE: {instanceID: 0}
+  - BossPunchSE: {instanceID: 0}
+  - BossKickSE: {instanceID: 0}
+  - PlayerDamageSE: {instanceID: 0}
+  - TamadomeFinishSE: {instanceID: 0}
+  - BossDamageSE: {instanceID: 0}
+  - PlayerWalkSE: {instanceID: 0}
+  - BossWalkSE: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

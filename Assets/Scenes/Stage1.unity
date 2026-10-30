@@ -907,6 +907,38 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 1712350202}
+    - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: attacks.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: attacks.Array.data[4].name
+      value: "\u7A81\u9032"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: attacks.Array.data[4].side
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: attacks.Array.data[4].range
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: attacks.Array.data[4].stateName
+      value: Kick_Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: attacks.Array.data[4].animationState
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: attacks.Array.data[4].parts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497788714517613589, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: 'attacks.Array.data[4].parts.Array.data[0]'
+      value: 
+      objectReference: {fileID: 775921496}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1112,6 +1144,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4579909f8871c3e43bd5c5d09f8dd1d6, type: 3}
+--- !u!114 &775921496 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4512664081814717796, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+  m_PrefabInstance: {fileID: 687084248}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e0e86b7f23d09b4289bc2d8f0e407f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BodyInfo
 --- !u!1 &843854453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,7 +1243,7 @@ Transform:
   m_GameObject: {fileID: 843854453}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.937282, z: 0, w: -0.34857208}
-  m_LocalPosition: {x: 14.19, y: -0.015000001, z: -52.68}
+  m_LocalPosition: {x: 14.19, y: 0.88, z: -52.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1890,6 +1933,11 @@ MonoBehaviour:
   StitchSE: {fileID: 8300000, guid: 51551f5bc81083c43a2bbb90669cff5f, type: 3}
   BossPunchSE: {fileID: 8300000, guid: a304930d6525c3c47907eb41365a87c6, type: 3}
   BossKickSE: {fileID: 8300000, guid: 196ba0b8c95ae9142a84360f9b2fa046, type: 3}
+  PlayerDamageSE: {fileID: 0}
+  TamadomeFinishSE: {fileID: 0}
+  BossDamageSE: {fileID: 0}
+  PlayerWalkSE: {fileID: 0}
+  BossWalkSE: {fileID: 0}
 --- !u!82 &1415417680
 AudioSource:
   m_ObjectHideFlags: 0

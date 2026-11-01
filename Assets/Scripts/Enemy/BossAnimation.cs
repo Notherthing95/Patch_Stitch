@@ -13,7 +13,8 @@ public class BossAnimation : MonoBehaviour
     class Body
     {
         public BodyInfo bodyInfo;
-        //public bool[] isHitBoxOn;
+        [Tooltip("突進など、BodyInfoを使わない攻撃はここにHitBoxを入れましょう")]
+        public GameObject hitBox;
     }
 
     /// <summary>
@@ -77,12 +78,20 @@ public class BossAnimation : MonoBehaviour
     
     public void SetHitBoxOn(int animationNumber)
     {
-        AnimationBody[animationNumber].bodyInfo.SetHitboxOn();
+        Body body = AnimationBody[animationNumber];
+        if (body.bodyInfo != null)
+            body.bodyInfo.SetHitboxOn();       // パンチ・キックなど
+        else if (body.hitBox != null)
+            body.hitBox.SetActive(true);       // 突進(部位関係無い攻撃)
     }
 
     public void SetHitBoxOff(int animationNumber)
-    { 
-        AnimationBody[animationNumber].bodyInfo.SetHitboxOff();
+    {
+        Body body = AnimationBody[animationNumber];
+        if (body.bodyInfo != null)
+            body.bodyInfo.SetHitboxOff();       // パンチ・キックなど
+        else if (body.hitBox != null)
+            body.hitBox.SetActive(false);       // 突進(部位関係無い攻撃)
     }
 
     public void PlayPunchSE()
@@ -93,6 +102,11 @@ public class BossAnimation : MonoBehaviour
     public void PlayKickSE()
     {
         SoundManager.playSound.PlayBossKickSE();
+    }
+
+    public bool IsPlaying(string stateName)
+    {
+        return m_Animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 
 }

@@ -956,6 +956,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bear
       objectReference: {fileID: 0}
+    - target: {fileID: 2708448067190055111, guid: c94d39667c52968429f5569e562d3d24, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6452514315984426871, guid: c94d39667c52968429f5569e562d3d24, type: 3}
       propertyPath: m_Size.x
       value: 0.8

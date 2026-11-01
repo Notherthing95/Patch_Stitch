@@ -210675,7 +210675,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.9333333
+  - time: 1.9083333
     functionName: SetHitBoxOff
     data: 
     objectReferenceParameter: {fileID: 0}

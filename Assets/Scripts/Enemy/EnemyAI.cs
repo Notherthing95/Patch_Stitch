@@ -23,6 +23,8 @@ public class EnemyAI : MonoBehaviour
         public float range = 5f;
         [Tooltip("突進など前に進む攻撃だけ 0 より大きくする")]
         public float dashSpeed = 0f;
+        [Tooltip("前に進むステートの名前。もし空なら、攻撃中はずっと進む（ほぼ突進専用？）")]
+        public string dashStateName = "";
     }
 
     enum State { Idle, Chase, Windup, Attack, Recover }
@@ -48,7 +50,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     [Tooltip("攻撃後の隙")][SerializeField] float recoverTime = 1.0f;
 
-    [Tooltip("攻撃にかかる最大の秒数(保険)")] const float MaxAttackTime = 5.0f;
+    [Tooltip("攻撃にかかる最大の秒数(保険)")] public const float MaxAttackTime = 15.0f;
 
     /// <summary>
     /// プレイヤーとボスの距離
@@ -148,16 +150,21 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Attack: // 攻撃
-                
+
                 // 突進攻撃の移動
-                if(_current.dashSpeed > 0)
+                if (_current.dashSpeed > 0)
                 {
-                    navMeshAgent.Move(transform.forward * _current.dashSpeed * Time.deltaTime);
+                    // 進むステートの指定が無いか、指定したステートを再生中のときだけ進む
+                    if (string.IsNullOrEmpty(_current.dashStateName) || bossAnimation.IsPlaying(_current.dashStateName))
+                    {
+                        navMeshAgent.Move(transform.forward * _current.dashSpeed * Time.deltaTime);
+                    }
                 }
 
                 // アニメーション終了後にRecoverへ移行
-                if(bossAnimation.CheckNormalizedAnimation(_current.stateName) || _timer >= MaxAttackTime)
+                if (bossAnimation.CheckNormalizedAnimation(_current.stateName) || _timer >= MaxAttackTime)
                 {
+                    bossAnimation.SetHitBoxOff(_current.animationState);
                     bossAnimation.SetIdle();
                     ChangeState(State.Recover);
                 }

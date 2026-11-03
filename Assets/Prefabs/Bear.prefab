@@ -237,7 +237,7 @@ MonoBehaviour:
     dashStateName: Charging
   enemySpeed: 20
   windUpTime: 0.5
-  recoverTime: 1
+  recoverTime: 0.01
   distance: 0
   attackRange: 10
   trackPlayerRange: 50
@@ -1003,8 +1003,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.6, y: 4.6, z: 1.4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.6, y: 4.6, z: 3.08}
+  m_Center: {x: 0, y: 0, z: -1.56}
 --- !u!114 &4983529940874780186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,6 +1841,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Foot_L(C)
       objectReference: {fileID: 0}
+    - target: {fileID: 5972814614414681885, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6600749935062340549, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
       propertyPath: m_Name
       value: Hand_L(C)
@@ -1952,7 +1956,7 @@ MonoBehaviour:
   enemyInfo: {fileID: -7683050005339724655}
   HitBox: {fileID: 5941898201414800634}
   repairedMaterial: {fileID: 2100000, guid: 5784b9a0a7e013743be0403478541ae6, type: 2}
-  Life: 5
+  Life: 15
   attackCount: 0
   stringRadius: 10
   isRepaired: 0
@@ -2088,7 +2092,7 @@ MonoBehaviour:
   enemyInfo: {fileID: -7683050005339724655}
   HitBox: {fileID: 4542030499198063889}
   repairedMaterial: {fileID: 2100000, guid: 5784b9a0a7e013743be0403478541ae6, type: 2}
-  Life: 5
+  Life: 15
   attackCount: 0
   stringRadius: 10
   isRepaired: 0
@@ -2155,7 +2159,7 @@ MonoBehaviour:
   enemyInfo: {fileID: -7683050005339724655}
   HitBox: {fileID: 3489785034813779755}
   repairedMaterial: {fileID: 2100000, guid: 5784b9a0a7e013743be0403478541ae6, type: 2}
-  Life: 5
+  Life: 3
   attackCount: 0
   stringRadius: 10
   isRepaired: 0
@@ -2222,7 +2226,7 @@ MonoBehaviour:
   enemyInfo: {fileID: -7683050005339724655}
   HitBox: {fileID: 4570540448299834092}
   repairedMaterial: {fileID: 2100000, guid: 5784b9a0a7e013743be0403478541ae6, type: 2}
-  Life: 5
+  Life: 3
   attackCount: 0
   stringRadius: 10
   isRepaired: 0

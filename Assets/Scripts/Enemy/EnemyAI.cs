@@ -50,7 +50,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     [Tooltip("攻撃後の隙")][SerializeField] float recoverTime = 1.0f;
 
-    [Tooltip("攻撃にかかる最大の秒数(保険)")] public const float MaxAttackTime = 15.0f;
+    [Tooltip("攻撃にかかる最大の秒数(保険)")] public const float MaxAttackTime = 7.0f;
 
     /// <summary>
     /// プレイヤーとボスの距離
@@ -100,6 +100,8 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         // 距離の更新
         distanceX = Mathf.Abs(Player.transform.position.x - gameObject.transform.position.x);
         distanceZ = Mathf.Abs(Player.transform.position.z - gameObject.transform.position.z);
@@ -107,6 +109,8 @@ public class EnemyAI : MonoBehaviour
 
         // 現時点の状態からどれくらい経過したかの計算
         _timer += Time.deltaTime;
+
+
 
         switch (_state)
         {

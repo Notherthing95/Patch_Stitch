@@ -9,6 +9,8 @@ public class PlayerAttackController : MonoBehaviour
     InputAction _attackAction;
     InputAction _finalAttackAction;
 
+    PlayerAnimation _playerAnimation; // í«â¡
+
     PlayerMoveController _moveController;
     BodyInfo _bodyInfo;
 
@@ -128,6 +130,7 @@ public class PlayerAttackController : MonoBehaviour
         attackPoint.SetActive(false);
         _enemyLayer = LayerMask.GetMask("Enemy");
         _moveController = GetComponent<PlayerMoveController>();
+        _playerAnimation = GetComponentInChildren<PlayerAnimation>(); // í«â¡
     }
 
     // Update is called once per frame
@@ -153,6 +156,7 @@ public class PlayerAttackController : MonoBehaviour
                 if (_isInCombat)
                 {
                     Invoke(nameof(FinalAttack), finalAttackDelayTime);
+                    PlayerAnimation.playerState = 7;
                 }
             }
             else if (_attackAction.WasPressedThisFrame())
@@ -160,6 +164,8 @@ public class PlayerAttackController : MonoBehaviour
                 if (!isAttacking)
                 {
                     isAttacking = true;
+                    _playerAnimation.PlayAttack();
+                    SoundManager.playSound.PlayAttackSE();
                     Invoke(nameof(Attack), attackDelayTimes[_attackCount]);
                 }
             }
@@ -234,6 +240,7 @@ public class PlayerAttackController : MonoBehaviour
         Physics.SphereCast(transform.position - transform.forward.normalized * RayOriginOffset, attackRange, transform.forward, out _hit, attackReach, _enemyLayer);
         if (_hit.collider != null)
         {
+            SoundManager.playSound.PlayBossDamageSE();
             if (!_isInCombat)
             {
                 StartCombat();
@@ -252,6 +259,7 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void FinalAttack()
     {
+        if (!_isInCombat) return;   // ã óØÇﬂíÜÇ…êÅÇ¡îÚÇŒÇ≥ÇÍÇƒéÖÇ™êÿÇÍÇΩÇÁÉGÉâÅ[Ç…Ç»ÇÈÇÃÇ≈í«â¡ÇµÇ‹ÇµÇΩ
         _bodyInfo.Finish();
         _bodyInfo = null;
         _combatEnemyName = null;
@@ -259,7 +267,7 @@ public class PlayerAttackController : MonoBehaviour
         attackPoint.transform.parent = null;
         Destroy(_spring);
         _isInCombat = false;
-        PlayerAnimation.playerState = 7;
+        //PlayerAnimation.playerState = 7;
 
         CancelInvoke(nameof(FinalAttack));
     }
@@ -302,5 +310,9 @@ public class PlayerAttackController : MonoBehaviour
         attackPoint.SetActive(false);
         attackPoint.transform.parent = null;
         _isInCombat = false;
+
+        // êÅÇ¡îÚÇŒÇ≥ÇÍÇΩÇÁó\íËÇµÇƒÇ¢ÇΩçUåÇÇéÊÇËè¡Ç∑(í«â¡)
+        CancelInvoke(nameof(Attack));
+        CancelInvoke(nameof(FinalAttack));
     }
 }

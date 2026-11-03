@@ -31,15 +31,13 @@ public class HitBoxScript : MonoBehaviour
             PlayerMoveController playerMoveController = other.gameObject.GetComponent<PlayerMoveController>();
             if (playerMoveController != null)
             {
-                // 
                 playerMoveController.OnKnockBack(gameObject.transform, power);
-                Debug.Log("nnna-");
+                
                 PlayerInfo playerinfo = other.GetComponent<PlayerInfo>();
                 if (playerinfo != null){
                     playerinfo.Damage(AmountDamage);
-                    Debug.Log("nnni-");
+                    SoundManager.playSound.PlayPlayerDamageSE();
                 }
-                Debug.Log("nnnu-");
             }
             
         }

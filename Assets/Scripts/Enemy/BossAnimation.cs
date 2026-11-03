@@ -109,4 +109,13 @@ public class BossAnimation : MonoBehaviour
         return m_Animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 
+    public void PlayChargeSE()
+    {
+        SoundManager.playSound.PlayBossChargeSE();
+    }
+
+    public void PlayWalkSE()
+    {
+        SoundManager.playSound.PlayBossWalkSE();
+    }
 }

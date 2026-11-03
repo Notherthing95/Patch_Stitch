@@ -7,15 +7,17 @@ public class SoundManager : MonoBehaviour
     public static SoundManager playSound { get; private set; }
 
     [Header("ここにStitchingフォルダから自由にSEを入れて試してみよう")]
-    [SerializeField]AudioClip StitchSE;
-    [SerializeField]AudioClip BossPunchSE;
-    [SerializeField]AudioClip BossKickSE;    
-    [SerializeField]AudioClip PlayerDamageSE;    
-    [SerializeField]AudioClip TamadomeFinishSE;    
-    [SerializeField]AudioClip BossDamageSE;    
-    [SerializeField]AudioClip PlayerWalkSE;
-    [SerializeField]AudioClip BossWalkSE;
-    
+    [SerializeField] AudioClip StitchSE;
+    [SerializeField] AudioClip BossPunchSE;
+    [SerializeField] AudioClip BossKickSE;
+    [SerializeField] AudioClip PlayerDamageSE;
+    [SerializeField] AudioClip TamadomeFinishSE;
+    [SerializeField] AudioClip BossDamageSE;
+    [SerializeField] AudioClip PlayerWalkSE;
+    [SerializeField] AudioClip BossWalkSE;
+    [SerializeField] AudioClip BossChargeSE;
+    [SerializeField] AudioClip TamadomeStartSE;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -36,40 +38,61 @@ public class SoundManager : MonoBehaviour
             playSound = null;
     }
 
+    /// <summary>
+    /// SEを鳴らす。nullならば何もしない
+    /// </summary>
+    private void Play(AudioClip clip)
+    {
+        if (clip == null)
+            return;
+        audioSource.PlayOneShot(clip);
+    }
+
     public void PlayAttackSE()
     {
-        audioSource.PlayOneShot(StitchSE);
+        Play(StitchSE);
     }
 
     public void PlayBossPunchSE()
     {
-        audioSource.PlayOneShot(BossPunchSE);
+        Play(BossPunchSE);
     }
 
     public void PlayBossKickSE()
     {
-        audioSource.PlayOneShot(BossKickSE);
+        Play(BossKickSE);
     }
     public void PlayPlayerDamageSE()
     {
-        audioSource.PlayOneShot(PlayerDamageSE);
+        Play(PlayerDamageSE);
     }
     public void PlayTamadomeFinishSE()
     {
-        audioSource.PlayOneShot(TamadomeFinishSE);
+        Play(TamadomeFinishSE);
     }
     public void PlayBossDamageSE()
     {
-        audioSource.PlayOneShot(BossDamageSE);
+        Play(BossDamageSE);
     }
     public void PlayPlayerWalkSE()
     {
-        audioSource.PlayOneShot(PlayerWalkSE);
+        Play(PlayerWalkSE);
     }
     public void PlayBossWalkSE()
     {
-        audioSource.PlayOneShot(BossWalkSE);
+        Play(BossWalkSE);
+        Debug.Log("aruiteru");
     }
+    public void PlayBossChargeSE()
+    {
+        Play(BossChargeSE);
+    }
+    public void PlayTamadomeStartSE()
+    {
+        Play(BossWalkSE);
+    }
+
+    
 
 
 

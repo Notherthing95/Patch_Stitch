@@ -120,7 +120,7 @@ public class PlayerMoveController : MonoBehaviour
             UpdateKnockBackTimer();
         }
         //回避が入力されたら
-        if (_dodgeAction.WasPressedThisFrame() && !_isDodge)
+        if (_dodgeAction.WasPressedThisFrame() && !_isDodge && PlayerAnimation.playerState != 7 && !_isKnockBack)　// 追加
         {
             _isDodge = true;
         }
@@ -176,6 +176,10 @@ public class PlayerMoveController : MonoBehaviour
     /// </summary>
     void SetMoveSpeed()
     {
+        // 追加 玉留め, ノックバック中は無視
+        if (PlayerAnimation.playerState == 7 || _isKnockBack)
+            return;
+
         if (_isDodge)
         {
             //入力が無ければ前方に

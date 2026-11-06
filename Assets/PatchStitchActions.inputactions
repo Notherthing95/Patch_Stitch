@@ -151,7 +151,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
+                    "name": "Down",
                     "id": "acfdd592-e9ca-443f-9026-71cb4b290f07",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
@@ -162,7 +162,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
+                    "name": "Up",
                     "id": "73bce759-f0f8-4baf-a25d-9460eb99620d",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
@@ -173,7 +173,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
+                    "name": "Right",
                     "id": "090747f8-d265-41d8-aa4b-fd82949f758d",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
@@ -184,7 +184,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
+                    "name": "Left",
                     "id": "3ff4eedd-05cd-461f-972e-a5141b18fb6f",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",

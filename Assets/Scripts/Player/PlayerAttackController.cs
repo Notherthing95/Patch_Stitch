@@ -120,6 +120,11 @@ public class PlayerAttackController : MonoBehaviour
     public float moveRange { get; private set; }
 
     /// <summary>
+    /// 1ヒットで減るmoveRangeの値
+    /// </summary>
+    [SerializeField] float rangeDecreaseAmount = 0.5f;
+
+    /// <summary>
     /// 攻撃をしている部位の名前
     /// </summary>
     string _combatEnemyName;
@@ -229,7 +234,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (moveRange > 1)
         {
-            moveRange -= 0.5f;
+            moveRange -= rangeDecreaseAmount;
             _spring.maxDistance = moveRange;
             _bodyInfo.Hit();
         }

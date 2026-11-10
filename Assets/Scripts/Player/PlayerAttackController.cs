@@ -122,6 +122,7 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// 1ヒットで減るmoveRangeの値
     /// </summary>
+    [Header("1ヒットで減るmoveRangeの値")]
     [SerializeField] float rangeDecreaseAmount = 0.5f;
 
     /// <summary>

@@ -29,16 +29,19 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// 歩き状態の速さ
     /// </summary>
+    [Header("歩き状態の速さ")]
     [SerializeField] float walkSpeed = 5;
 
     /// <summary>
     /// 走り状態の速さ
     /// </summary>
+    [Header("走り状態の速さ")]
     [SerializeField] float dashSpeed = 10;
 
     /// <summary>
-    /// 回避時の速さ
+    /// 回避した瞬間の速さ
     /// </summary>
+    [Header("回避した瞬間の速さ")]
     [SerializeField] float dodgeSpeed = 30;
 
     /// <summary>
@@ -47,17 +50,13 @@ public class PlayerMoveController : MonoBehaviour
     float _moveSpeed;
 
     /// <summary>
-    /// 回避している状態
+    /// 回避している時間
     /// </summary>
-    bool _isDodge;
+    [Header("回避している時間")]
+    [SerializeField] float dodgeDuration = 0.33f;
 
     /// <summary>
-    /// 回避にかかる時間
-    /// </summary>
-    const float DodgeDuration = 0.33f;
-
-    /// <summary>
-    /// 回避し始めてから現在経った時間
+    /// 回避し始めてから現在経った時間 0で開始 -1で停止
     /// </summary>
     float _dodgeTimer;
 
@@ -82,17 +81,12 @@ public class PlayerMoveController : MonoBehaviour
     const float PlayerHeightHalf = 0.8f;
 
     /// <summary>
-    /// 吹っ飛ばされている状態
-    /// </summary>
-    bool _isKnockBack;
-
-    /// <summary>
     /// 吹っ飛ばされている時間
     /// </summary>
     const float KnockBackDuration = 2.2f;
 
     /// <summary>
-    /// 吹っ飛ばされ始めてから現在経った時間
+    /// 吹っ飛ばされ始めてから現在経った時間 0で開始 -1で停止
     /// </summary>
     float _knockBackTimer;
 
@@ -110,19 +104,19 @@ public class PlayerMoveController : MonoBehaviour
     void Update()
     {
         //回避状態ならば
-        if(_isDodge)
+        if(_dodgeTimer >= 0)
         {
             UpdateDodgeTimer();
         }
         //吹っ飛ばされ状態ならば
-        if (_isKnockBack)
+        if (_knockBackTimer >= 0)
         {
             UpdateKnockBackTimer();
         }
         //回避が入力されたら
-        if (_dodgeAction.WasPressedThisFrame() && !_isDodge && PlayerAnimation.playerState != 7 && !_isKnockBack)　// 追加
+        if (_dodgeAction.WasPressedThisFrame() && _dodgeTimer == -1f && PlayerAnimation.playerState != 7 && _knockBackTimer == -1f)
         {
-            _isDodge = true;
+            _dodgeTimer = 0;
         }
     }
 
@@ -134,7 +128,7 @@ public class PlayerMoveController : MonoBehaviour
         SetMoveSpeed();
 
         //移動する方向ベクトルの計算 回避中は方向転換不可
-        if (!_isDodge)
+        if (_dodgeTimer == -1f)
         {
             CalculationMoveVector();
         }
@@ -146,20 +140,20 @@ public class PlayerMoveController : MonoBehaviour
             _playerRigidbody.linearDamping = DampingValue;
 
             //攻撃中と吹っ飛ばされ中、ライフゼロは移動不可
-            if (!_attackController.isAttacking && !_attackController.isFinalAttacking && !_isKnockBack && !(_playerInfo.PlayerLife == 0))
+            if (!_attackController.isAttacking && !_attackController.isFinalAttacking && _knockBackTimer == -1f && !(_playerInfo.PlayerLife == 0))
             {
                 //入力があればプレイヤーを移動させる
                 if (_readVector.magnitude > 0.1f)
                 {
                     MovePlayer();
                 }
-                else if (_isDodge)
+                else if (_dodgeTimer >= 0)
                 {
                     MovePlayer();
                 }
             }
 
-            if (_isKnockBack)
+            if (_knockBackTimer >= 0)
             {
                 UpdateKnockBackTimer();
             }
@@ -177,17 +171,17 @@ public class PlayerMoveController : MonoBehaviour
     void SetMoveSpeed()
     {
         // 追加 玉留め, ノックバック中は無視
-        if (PlayerAnimation.playerState == 7 || _isKnockBack)
+        if (PlayerAnimation.playerState == 7 || _knockBackTimer >= 0)
             return;
 
-        if (_isDodge)
+        if (_dodgeTimer >= 0)
         {
             //入力が無ければ前方に
             if (_moveVector == Vector3.zero)
             {
                 _moveVector = transform.forward.normalized;
             }
-            _moveSpeed = Mathf.Lerp(dodgeSpeed, dashSpeed, _dodgeTimer / DodgeDuration);
+            _moveSpeed = Mathf.Lerp(dodgeSpeed, dashSpeed, _dodgeTimer / dodgeDuration);
             PlayerAnimation.playerState = 12;
             Debug.Log("State: 12");
         }
@@ -258,7 +252,7 @@ public class PlayerMoveController : MonoBehaviour
         _playerRigidbody.AddForce(direction * power, ForceMode.Impulse);
 
         PlayerAnimation.playerState = 9;
-        _isKnockBack = true;
+        _knockBackTimer = 0;
     }
 
     /// <summary>
@@ -268,10 +262,9 @@ public class PlayerMoveController : MonoBehaviour
     {
         _dodgeTimer += Time.deltaTime;
 
-        if (_dodgeTimer >= DodgeDuration)
+        if (_dodgeTimer >= dodgeDuration)
         {
-            _isDodge = false;
-            _dodgeTimer = 0;
+            _dodgeTimer = -1;
         }
     }
 
@@ -284,8 +277,7 @@ public class PlayerMoveController : MonoBehaviour
 
         if(_knockBackTimer >= KnockBackDuration)
         {
-            _isKnockBack = false;
-            _knockBackTimer = 0;
+            _knockBackTimer = -1f;
         }
     }
 }

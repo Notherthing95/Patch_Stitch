@@ -31,11 +31,6 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     const float AlphaValue = 0.5f;
 
     /// <summary>
-    /// 制限距離が変わりエリアが縮小している状態
-    /// </summary>
-    bool _isChangeRange;
-
-    /// <summary>
     /// 戦闘状態移行時の制限距離
     /// </summary>
     float _maxMoveRange;
@@ -51,7 +46,7 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     const float Duration = 0.2f;
 
     /// <summary>
-    /// エリアの範囲が縮小し始めてから現在経った時間
+    /// エリアの範囲が縮小し始めてから現在経った時間 0で開始 -1で停止
     /// </summary>
     float _timer;
 
@@ -84,9 +79,9 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
             //制限距離が変わった時
             if (_previousMoveRange != _attackController.moveRange)
             {
-                _isChangeRange = true;
+                _timer = 0;
             }
-            if (_isChangeRange)
+            if (_timer >= 0)
             {
                 float temp = Mathf.Lerp(_previousMoveRange, _attackController.moveRange, _timer / Duration);
                 _areaCircleSize = new Vector3(temp * 2, temp * 2, DepthValue);
@@ -95,8 +90,7 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
 
                 if (_timer >= Duration)
                 {
-                    _isChangeRange = false;
-                    _timer = 0;
+                    _timer = -1f;
                     _previousMoveRange = _attackController.moveRange;
                 }
 

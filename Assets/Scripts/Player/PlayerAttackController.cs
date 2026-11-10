@@ -9,7 +9,7 @@ public class PlayerAttackController : MonoBehaviour
     InputAction _attackAction;
     InputAction _finalAttackAction;
 
-    PlayerAnimation _playerAnimation; // 追加
+    PlayerAnimation _playerAnimation;
 
     PlayerMoveController _moveController;
     BodyInfo _bodyInfo;
@@ -69,7 +69,8 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// レイの原点をずらす数値
     /// </summary>
-    const float RayOriginOffset = 0.2f;
+    [Header("レイの原点をずらす数値")]
+    [SerializeField] float rayOriginOffset = 0.2f;
 
     /// <summary>
     /// 戦闘している状態
@@ -89,12 +90,14 @@ public class PlayerAttackController : MonoBehaviour
     /// <summary>
     /// 攻撃にかかる時間
     /// </summary>
-    const float AttckDuration = 0.22f;
+    [Header("攻撃にかかる時間")]
+    [SerializeField] float attckDuration = 0.22f;
 
     /// <summary>
     /// 玉留め攻撃にかかる時間
     /// </summary>
-    const float FinalAttackDuration = 0.5f;
+    [Header("玉留め攻撃にかかる時間")]
+    [SerializeField] float FinalAttackDuration = 0.5f;
 
     /// <summary>
     /// 攻撃し始めてから現在経った時間
@@ -137,11 +140,11 @@ public class PlayerAttackController : MonoBehaviour
     void Update()
     {
         //円形の当たり判定の中心と４端の描画
-        Debug.DrawRay(transform.position - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach + transform.forward * attackRange, Color.red);
-        Debug.DrawRay(transform.position + transform.right.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
-        Debug.DrawRay(transform.position + -transform.right.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
-        Debug.DrawRay(transform.position + transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
-        Debug.DrawRay(transform.position + -transform.up.normalized * attackRange - transform.forward.normalized * RayOriginOffset, transform.forward * attackReach, Color.red);
+        Debug.DrawRay(transform.position - transform.forward.normalized * rayOriginOffset, transform.forward * attackReach + transform.forward * attackRange, Color.red);
+        Debug.DrawRay(transform.position + transform.right.normalized * attackRange - transform.forward.normalized * rayOriginOffset, transform.forward * attackReach, Color.red);
+        Debug.DrawRay(transform.position + -transform.right.normalized * attackRange - transform.forward.normalized * rayOriginOffset, transform.forward * attackReach, Color.red);
+        Debug.DrawRay(transform.position + transform.up.normalized * attackRange - transform.forward.normalized * rayOriginOffset, transform.forward * attackReach, Color.red);
+        Debug.DrawRay(transform.position + -transform.up.normalized * attackRange - transform.forward.normalized * rayOriginOffset, transform.forward * attackReach, Color.red);
 
         //接地判定
         if (_moveController.IsGround())
@@ -237,7 +240,7 @@ public class PlayerAttackController : MonoBehaviour
     /// </summary>
     void Attack()
     {
-        Physics.SphereCast(transform.position - transform.forward.normalized * RayOriginOffset, attackRange, transform.forward, out _hit, attackReach, _enemyLayer);
+        Physics.SphereCast(transform.position - transform.forward.normalized * rayOriginOffset, attackRange, transform.forward, out _hit, attackReach, _enemyLayer);
         if (_hit.collider != null)
         {
             SoundManager.playSound.PlayBossDamageSE();
@@ -279,7 +282,7 @@ public class PlayerAttackController : MonoBehaviour
     {
         _attackTimer += Time.deltaTime;
 
-        if (_attackTimer >= AttckDuration + attackDelayTimes[_attackCount])
+        if (_attackTimer >= attckDuration + attackDelayTimes[_attackCount])
         {
             isAttacking = false;
             _attackTimer = 0;

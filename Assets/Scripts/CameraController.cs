@@ -85,7 +85,7 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// リセットし始めてから現在経った時間 0で開始 -1で停止
     /// </summary>
-    float _resettingTimer;
+    float _resettingTimer = -1f;
 
     /// <summary>
     /// リセットボタンを押した時のカメラのヨー回転

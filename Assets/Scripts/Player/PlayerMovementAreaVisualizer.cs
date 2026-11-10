@@ -36,7 +36,7 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     float _maxMoveRange;
 
     /// <summary>
-    /// isChangeRangeがfalseの時の1フレーム前の制限距離
+    /// エリア縮小をしていない時の1フレーム前の制限距離
     /// </summary>
     float _previousMoveRange;
 
@@ -48,7 +48,7 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     /// <summary>
     /// エリアの範囲が縮小し始めてから現在経った時間 0で開始 -1で停止
     /// </summary>
-    float _timer;
+    float _timer = -1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -77,7 +77,7 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
             }
 
             //制限距離が変わった時
-            if (_previousMoveRange != _attackController.moveRange)
+            if (_previousMoveRange != _attackController.moveRange && _timer == -1f)
             {
                 _timer = 0;
             }

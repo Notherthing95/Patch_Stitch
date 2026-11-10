@@ -6,29 +6,60 @@ public class WoundVisualController : MonoBehaviour
     [SerializeField] DecalProjector[] woundDecals;
     BodyInfo _bodyInfo;
 
+    /// <summary>
+    /// 部位の最大ライフ
+    /// </summary>
     float _maxLife;
 
+    /// <summary>
+    /// 最大ライフと現在のライフの差
+    /// </summary>
     float _lostLife;
 
+    /// <summary>
+    /// 1フレーム前の部位の攻撃回数
+    /// </summary>
     float _previousAttackCount;
 
+    /// <summary>
+    /// 傷のテクスチャの最大高さ
+    /// </summary>
     float[] _maxHeight;
 
+    /// <summary>
+    /// 1フレーム前の傷のテクスチャの高さ
+    /// </summary>
     float[] _previousHeight;
 
+    /// <summary>
+    /// 現在の傷のテクスチャの高さ
+    /// </summary>
     float[] _Height;
 
+    /// <summary>
+    /// 1つの傷あたりのライフ量
+    /// </summary>
     float _lifePerWound;
 
+    /// <summary>
+    /// 1フレーム前の糸が繋がっているか
+    /// </summary>
     bool _isJointPrevious;
 
+    /// <summary>
+    /// 傷のテクスチャの最小高さ
+    /// </summary>
     const float MinHeight = 0.04f;
 
+    /// <summary>
+    /// 傷が縮まるのにかかる時間
+    /// </summary>
     const float Duration = 0.17f;
 
-    float _timer;
-
-    bool _isChanging;
+    /// <summary>
+    /// 傷が縮まり始めてから現在経った時間 0で開始 -1で停止
+    /// </summary>
+    float _timer = -1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -63,7 +94,7 @@ public class WoundVisualController : MonoBehaviour
                 {
                     _Height[i] = Mathf.Lerp(_maxHeight[i], MinHeight, 1 - (_lifePerWound - ((_bodyInfo.attackCount + _lostLife) - _lifePerWound * (woundDecals.Length - 1 - i))) / _lifePerWound);
                 }
-                _isChanging = true;
+                _timer = 0;
             }
         }
         else if (_isJointPrevious)
@@ -71,7 +102,7 @@ public class WoundVisualController : MonoBehaviour
             for (int i = 0; i < woundDecals.Length; i++)
             {
                 _Height[i] = Mathf.Lerp(_maxHeight[i], MinHeight, 1 - (_lifePerWound - (_lostLife - _lifePerWound * (woundDecals.Length - 1 - i))) / _lifePerWound);
-                _isChanging = true;
+                _timer = 0;
 
                 if (_Height[i] == MinHeight)
                 {
@@ -84,7 +115,7 @@ public class WoundVisualController : MonoBehaviour
         _previousAttackCount = _bodyInfo.attackCount;
 
 
-        if (_isChanging)
+        if (_timer >= 0)
         {
             _timer += Time.deltaTime;
 
@@ -95,8 +126,7 @@ public class WoundVisualController : MonoBehaviour
 
             if (_timer >= Duration)
             {
-                _isChanging = false;
-                _timer = 0;
+                _timer = -1f;
                 for (int i = 0; i < woundDecals.Length; i++)
                 {
                     _previousHeight[i] = _Height[i];

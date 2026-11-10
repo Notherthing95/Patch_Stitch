@@ -58,7 +58,7 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// 回避し始めてから現在経った時間 0で開始 -1で停止
     /// </summary>
-    float _dodgeTimer;
+    float _dodgeTimer = -1f;
 
     /// <summary>
     /// 走ると歩くを切り替える閾値
@@ -88,7 +88,7 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// 吹っ飛ばされ始めてから現在経った時間 0で開始 -1で停止
     /// </summary>
-    float _knockBackTimer;
+    float _knockBackTimer = -1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -78,17 +78,12 @@ public class CameraController : MonoBehaviour
     public bool isInvertPitch { get; set; }
 
     /// <summary>
-    /// カメラ回転リセットフラグ
-    /// </summary>
-    bool _isReset;
-
-    /// <summary>
     /// リセットにかかる時間
     /// </summary>
     const float ResetDuration = 0.2f;
 
     /// <summary>
-    /// リセットし始めてから現在経った時間
+    /// リセットし始めてから現在経った時間 0で開始 -1で停止
     /// </summary>
     float _resettingTimer;
 
@@ -161,11 +156,11 @@ public class CameraController : MonoBehaviour
         CalculationRayAngles();
 
         //カメラ回転リセット
-        if (_cameraResetAction.WasPressedThisFrame() && !_isReset)
+        if (_cameraResetAction.WasPressedThisFrame() && _resettingTimer == -1f)
         {
             ResetTiggered();
         }
-        if (_isReset)
+        if (_resettingTimer >= 0)
         {
             CameraResetting();
         }
@@ -213,7 +208,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     void ResetTiggered()
     {
-        _isReset = true;
+        _resettingTimer = 0;
         //リセット前と後の回転の角度の代入
         _beforeResetYawAngle = _cameraYawAngle;
         _afterResetYawAngle = Mathf.Atan2(-playerTransform.forward.z, -playerTransform.forward.x);
@@ -246,8 +241,7 @@ public class CameraController : MonoBehaviour
 
         if (_resettingTimer >= ResetDuration)
         {
-            _isReset = false;
-            _resettingTimer = 0;
+            _resettingTimer = -1;
         }
     }
 

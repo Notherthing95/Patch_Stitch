@@ -36,18 +36,45 @@ public class EnemyLifeBarController : MonoBehaviour
     /// </summary>
     float _maxLife;
 
-    Vector3 _initialPosition;
-
-    float _previousAttackCount;
-
-    float _vibrationTimer = -1f;
-
-    const float VibrationDuration = 0.15f;
-
     /// <summary>
     /// lifeBarの最大長さ
     /// </summary>
     float _maxLength;
+
+    /// <summary>
+    /// 現在のlifeBarのサイズ
+    /// </summary>
+    float _width;
+
+    /// <summary>
+    /// lifePreviewが減った時に、減る前のlifePreview
+    /// </summary>
+    float _previousWidth;
+
+    /// <summary>
+    /// lifePreviewが減るのにかかる時間
+    /// </summary>
+    const float LifePreviewDuration = 0.17f;
+
+    /// <summary>
+    /// lifePreviewが減ってから現在経った時間 0で開始 -1で停止
+    /// </summary>
+    float _lifePreviewTimer = -1f;
+
+    /// <summary>
+    /// 1フレーム前のAttackCount
+    /// </summary>
+    float _previousAttackCount;
+
+    /// <summary>
+    /// 糸が切れてからバーを見せる時間
+    /// </summary>
+    const float ShowDuration = 1f;
+
+    /// <summary>
+    /// 糸が切れてから現在経った時間 0で開始 -1で停止
+    /// </summary>
+    float _showTimer = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -56,10 +83,10 @@ public class EnemyLifeBarController : MonoBehaviour
         _bodyInfo = enemyBodyParts.GetComponent<BodyInfo>();
         _lineRenderer = line.GetComponent<LineRenderer>();
         _maxLife = _bodyInfo.Life;
-        _previousAttackCount = _maxLife;
         _lineRenderer.positionCount = 3;
         _maxLength = lifeBar.rect.width;
-        _initialPosition = this.transform.localPosition;
+        _width = _maxLength;
+        _previousWidth = _width;
     }
 
     // Update is called once per frame
@@ -67,30 +94,24 @@ public class EnemyLifeBarController : MonoBehaviour
     {
         if (_bodyInfo.isJoint)
         {
+            _showTimer = -1f;
+
             if (!_canvas.enabled)
             {
                 _canvas.enabled = true;
                 line.SetActive(true);
             }
 
-            if (_bodyInfo.attackCount != _previousAttackCount)
-            {
-                _vibrationTimer = 0;
-            }
-            if (_vibrationTimer >= 0)
-            {
-                _vibrationTimer += Time.deltaTime;
-
-                this.transform.localPosition = _initialPosition + new Vector3(Mathf.Sin(_vibrationTimer * 10) * 0.5f, Mathf.Sin(2 * _vibrationTimer * 10) * 0.5f, 0);
-
-                if (_vibrationTimer >= VibrationDuration)
-                {
-                    _vibrationTimer = -1f;
-                }
-            }
-
             //攻撃がヒットした回数分lifePreviewを短くする
-            lifePreview.sizeDelta = new Vector2(Mathf.Lerp(_maxLength, 0f, 1 - (_bodyInfo.Life - _bodyInfo.attackCount) / _maxLife), lifePreview.rect.height);
+            if (_previousAttackCount != _bodyInfo.attackCount && _lifePreviewTimer == -1f)
+            {
+                Debug.Log("!!!");
+                _lifePreviewTimer = 0;
+                _width = Mathf.Lerp(_maxLength, 0f, 1 - (_bodyInfo.Life - _bodyInfo.attackCount) / _maxLife);
+                _previousAttackCount = _bodyInfo.attackCount;
+            }
+
+            UpdateLifePreview();
 
             //バーをカメラ方向に向ける
             barUI.transform.LookAt(new Vector3(Camera.main.transform.position.x, barUI.transform.position.y, Camera.main.transform.position.z));
@@ -105,17 +126,32 @@ public class EnemyLifeBarController : MonoBehaviour
             {
                 lifeBar.sizeDelta = lifePreview.sizeDelta;
             }
-
-            if (_canvas.enabled)
+            else
             {
-                _canvas.enabled = false;
-                line.SetActive(false);
+                lifePreview.sizeDelta = new Vector2(Mathf.Lerp(_maxLength, 0f, 1 - _bodyInfo.Life / _maxLife), lifePreview.rect.height);
+            }
+
+            //糸が切れた後、ShowDurationだけ残す
+            if (_canvas.enabled && _showTimer == -1f)
+            {
+                _showTimer = 0;
+            }
+            if (_showTimer >= 0)
+            {
+                _showTimer += Time.deltaTime;
+                if (_showTimer >= ShowDuration)
+                {
+                    _canvas.enabled = false;
+                    line.SetActive(false);
+                    _showTimer = -1f;
+                }
             }
         }
-
-        _previousAttackCount = _bodyInfo.attackCount;
     }
 
+    /// <summary>
+    /// バーと敵の部位をつなぐ線を描画
+    /// </summary>
     void DrawLine()
     {
         _lineRenderer.SetPosition(0, line.transform.position);
@@ -123,5 +159,24 @@ public class EnemyLifeBarController : MonoBehaviour
 
         Vector3 temp = (enemyBodyParts.transform.position - line.transform.position).normalized;
         _lineRenderer.SetPosition(1, new Vector3(temp.x, 0, temp.z) * 0.5f + line.transform.position);
+    }
+
+    /// <summary>
+    /// lifePreviewのwidthが変更された時に線形補完をかける
+    /// </summary>
+    void UpdateLifePreview()
+    {
+        if (_lifePreviewTimer >= 0)
+        {
+            _lifePreviewTimer += Time.deltaTime;
+            float temp = Mathf.Lerp(_previousWidth, _width, _lifePreviewTimer / LifePreviewDuration);
+            lifePreview.sizeDelta = new Vector2(temp, lifePreview.rect.height);
+            if (_lifePreviewTimer >= LifePreviewDuration)
+            {
+                _lifePreviewTimer = -1f;
+                lifePreview.sizeDelta = new Vector2(_width, lifePreview.rect.height);
+                _previousWidth = _width;
+            }
+        }
     }
 }

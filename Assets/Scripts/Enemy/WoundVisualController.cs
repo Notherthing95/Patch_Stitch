@@ -27,7 +27,7 @@ public class WoundVisualController : MonoBehaviour
     float[] _maxHeight;
 
     /// <summary>
-    /// 1フレーム前の傷のテクスチャの高さ
+    /// 傷が縮まる前の傷のテクスチャの高さ
     /// </summary>
     float[] _previousHeight;
 
@@ -88,6 +88,7 @@ public class WoundVisualController : MonoBehaviour
                 _isJointPrevious = true;
             }
 
+            //攻撃回数が増えたら
             if (_previousAttackCount != _bodyInfo.attackCount)
             {
                 for (int i = 0; i < woundDecals.Length; i++)
@@ -99,11 +100,13 @@ public class WoundVisualController : MonoBehaviour
         }
         else if (_isJointPrevious)
         {
+            //実際に減ったライフに傷のテクスチャの高さを合わせる
             for (int i = 0; i < woundDecals.Length; i++)
             {
                 _Height[i] = Mathf.Lerp(_maxHeight[i], MinHeight, 1 - (_lifePerWound - (_lostLife - _lifePerWound * (woundDecals.Length - 1 - i))) / _lifePerWound);
                 _timer = 0;
 
+                //傷のテクスチャの高さが最小になったら傷を消す
                 if (_Height[i] == MinHeight)
                 {
                     woundDecals[i].gameObject.SetActive(false);
@@ -114,7 +117,15 @@ public class WoundVisualController : MonoBehaviour
         }
         _previousAttackCount = _bodyInfo.attackCount;
 
+        //傷のテクスチャの高さを変更する
+        UpdateWoundHeights();
+    }
 
+    /// <summary>
+    /// 傷のテクスチャの高さが変更されたときに、線形補完をかける
+    /// </summary>
+    void UpdateWoundHeights()
+    {
         if (_timer >= 0)
         {
             _timer += Time.deltaTime;

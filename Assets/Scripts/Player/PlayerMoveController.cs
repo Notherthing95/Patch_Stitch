@@ -29,19 +29,19 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// •à‚«ó‘Ô‚Ì‘¬‚³
     /// </summary>
-    [Header("•à‚«ó‘Ô‚Ì‘¬‚³")]
+    [Header("•à‚­‘¬“x")]
     [SerializeField] float walkSpeed = 5;
 
     /// <summary>
     /// ‘–‚èó‘Ô‚Ì‘¬‚³
     /// </summary>
-    [Header("‘–‚èó‘Ô‚Ì‘¬‚³")]
+    [Header("‘–‚é‘¬“x")]
     [SerializeField] float dashSpeed = 10;
 
     /// <summary>
     /// ‰ñ”ğ‚µ‚½uŠÔ‚Ì‘¬‚³
     /// </summary>
-    [Header("‰ñ”ğ‚µ‚½uŠÔ‚Ì‘¬‚³")]
+    [Header("‰ñ”ğ‘¬“x")]
     [SerializeField] float dodgeSpeed = 30;
 
     /// <summary>
@@ -52,7 +52,7 @@ public class PlayerMoveController : MonoBehaviour
     /// <summary>
     /// ‰ñ”ğ‚µ‚Ä‚¢‚éŠÔ
     /// </summary>
-    [Header("‰ñ”ğ‚µ‚Ä‚¢‚éŠÔ")]
+    [Header("‰ñ”ğŠÔ")]
     [SerializeField] float dodgeDuration = 0.33f;
 
     /// <summary>

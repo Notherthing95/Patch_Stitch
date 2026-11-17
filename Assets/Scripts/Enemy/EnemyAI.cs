@@ -60,7 +60,7 @@ public class EnemyAI : MonoBehaviour
     /// <summary>
     /// ボスがアタックを始めるプレイヤーとの距離
     /// </summary>
-    [Header("ボスが攻撃を始めるプレイヤーとの距離")]public float attackRange = 10;
+    [Header("ボスの攻撃範囲")]public float attackRange = 10;
 
     /// <summary>
     /// ボスがプレイヤーへ移動を始める距離

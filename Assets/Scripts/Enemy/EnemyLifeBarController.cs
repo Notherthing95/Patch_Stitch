@@ -36,14 +36,6 @@ public class EnemyLifeBarController : MonoBehaviour
     /// </summary>
     float _maxLife;
 
-    Vector3 _initialPosition;
-
-    float _previousAttackCount;
-
-    float _vibrationTimer = -1f;
-
-    const float VibrationDuration = 0.15f;
-
     /// <summary>
     /// lifeBar‚ÌÅ‘å’·‚³
     /// </summary>
@@ -56,10 +48,9 @@ public class EnemyLifeBarController : MonoBehaviour
         _bodyInfo = enemyBodyParts.GetComponent<BodyInfo>();
         _lineRenderer = line.GetComponent<LineRenderer>();
         _maxLife = _bodyInfo.Life;
-        _previousAttackCount = _maxLife;
         _lineRenderer.positionCount = 3;
         _maxLength = lifeBar.rect.width;
-        _initialPosition = this.transform.localPosition;
+        //_initialPosition = this.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -71,22 +62,6 @@ public class EnemyLifeBarController : MonoBehaviour
             {
                 _canvas.enabled = true;
                 line.SetActive(true);
-            }
-
-            if (_bodyInfo.attackCount != _previousAttackCount)
-            {
-                _vibrationTimer = 0;
-            }
-            if (_vibrationTimer >= 0)
-            {
-                _vibrationTimer += Time.deltaTime;
-
-                this.transform.localPosition = _initialPosition + new Vector3(Mathf.Sin(_vibrationTimer * 10) * 0.5f, Mathf.Sin(2 * _vibrationTimer * 10) * 0.5f, 0);
-
-                if (_vibrationTimer >= VibrationDuration)
-                {
-                    _vibrationTimer = -1f;
-                }
             }
 
             //UŒ‚‚ªƒqƒbƒg‚µ‚½‰ñ”•ªlifePreview‚ğ’Z‚­‚·‚é
@@ -112,8 +87,6 @@ public class EnemyLifeBarController : MonoBehaviour
                 line.SetActive(false);
             }
         }
-
-        _previousAttackCount = _bodyInfo.attackCount;
     }
 
     void DrawLine()

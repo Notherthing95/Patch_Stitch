@@ -173,7 +173,7 @@ public class PlayerAttackController : MonoBehaviour
                 if (!isAttacking)
                 {
                     isAttacking = true;
-                    _playerAnimation.PlayAttack();
+                    _playerAnimation.PlayAttack(_attackCount);
                     SoundManager.playSound.PlayAttackSE();
                     Invoke(nameof(Attack), attackDelayTimes[_attackCount]);
                 }

@@ -38,6 +38,9 @@ public class PlayerAnimation : MonoBehaviour
     static readonly string[] OneShotStates =
     {
     "P_Attack01",        // 3 攻撃01
+    "P_Attack02",        // 4 攻撃02
+    "P_Attack03",        // 5 攻撃03
+    "P_Attack04",        // 6 攻撃04
     "P_TamadomeFINISH",  // 7 玉留め
     "P_Knockdown01",     // 8 転ぶ
     "P_Knockdown02",     // 9 吹っ飛び
@@ -45,6 +48,14 @@ public class PlayerAnimation : MonoBehaviour
     "P_HitReact",        // 11 のけぞり
     "P_Dodge_Forward",   // 12 前回避
     "P_Dodge_Backward",  // 13 後ろ回避
+    };
+
+    static readonly string[] AttackStates =
+    {
+    "P_Attack01",        // 1 攻撃01
+    "P_Attack02",        // 2 攻撃02
+    "P_Attack03",        // 3 攻撃03
+    "P_Attack04",        // 4 攻撃04
     };
 
     [Header("玉留めのスロー演出の長さ")]
@@ -56,6 +67,9 @@ public class PlayerAnimation : MonoBehaviour
     private float _defaultFixedDeltaTime;
     private bool _isSlow = false;
     private float _slowTimer = 0f;
+
+    [Header("ここにPlayerのRigidbodyを入れる")]
+    [SerializeField]Rigidbody playerRb;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -104,12 +118,13 @@ public class PlayerAnimation : MonoBehaviour
     }
 
     /// <summary>
-    /// 攻撃アニメーションを最初から再生する
+    /// 攻撃アニメーションを最初から再生する。回数で連続攻撃になる
     /// </summary>
-    public void PlayAttack()
+    public void PlayAttack(int index)
     {
-        playerState = 3;
-        m_Animator.Play("P_Attack01", 0, 0f);
+        index = index % AttackStates.Length;
+        playerState = 3 + index;
+        m_Animator.Play(AttackStates[index], 0, 0f);
     }
 
     public void StartSlow()
@@ -149,5 +164,17 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (_isSlow)
             EndSlow();
+    }
+
+
+    /// <summary>
+    /// もしかしたら、攻撃の際にこれを呼んでプレイヤーをアニメーションっぽく動かすかも
+    /// </summary>
+    public void AddForceAnimation()
+    {
+
+        Vector3 force = new Vector3(1.0f, 1.0f, 1.0f);
+        playerRb.AddForce(force);
+
     }
 }

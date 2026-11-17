@@ -67,6 +67,11 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     [Header("ボスがプレイヤーへ移動を始める距離")]public float trackPlayerRange = 50;
 
+    [Tooltip("プレイヤーに攻撃を始めるまでの角度")]
+    [SerializeField] float faceAngle = 15f;
+
+    [Tooltip("向き切れなかったらこの秒数で攻撃へ移行する")] public const float MaxWindUpTime = 1.5f;
+
     /// <summary>
     /// 二乗したPlayerのx,z座標の意
     /// </summary>
@@ -146,7 +151,7 @@ public class EnemyAI : MonoBehaviour
 
             case State.Windup: // 予備動作
                 FacePlayer();
-                if(_timer >= windUpTime)
+                if((_timer >= windUpTime && IsFacingPlayer()) || _timer >= MaxWindUpTime)
                 {
                     bossAnimation.bossState = _current.animationState;
                     ChangeState(State.Attack);
@@ -288,6 +293,13 @@ public class EnemyAI : MonoBehaviour
 
         Quaternion target = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, target, 10f * Time.deltaTime);
+    }
+
+    bool IsFacingPlayer()
+    {
+        Vector3 dir = Player.transform.position - transform.position;   //
+        dir.y = 0;                                            // 高さは無視
+        return Vector3.Angle(transform.forward, dir) <= faceAngle;
     }
 
 }

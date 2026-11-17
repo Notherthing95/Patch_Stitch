@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyInfo : MonoBehaviour
 {
 
-    [Header("ボスのライフ(部位の数も兼ねる)")][SerializeField] float Life = 1; // デフォルトは1
+    [Header("ボスの生きてる部位の数")][SerializeField] float Life = 1; // デフォルトは1
     [SerializeField] GameObject AfterDefeatEnemy;
     [SerializeField] BodyInfo[] bodyInfos;
 

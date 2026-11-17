@@ -90,6 +90,14 @@ public class PlayerMoveController : MonoBehaviour
     /// </summary>
     float _knockBackTimer = -1f;
 
+    /// <summary>
+    /// ‰ñ”ğ‚Ì–³“G‚Å‚ ‚éó‘Ô
+    /// </summary>
+    public bool isInvincible {  get; private set; }
+
+    [Header("‰ñ”ğ‚Ì–³“GŠÔ")]
+    [SerializeField] float invincibleDuration = 0.1f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -117,6 +125,7 @@ public class PlayerMoveController : MonoBehaviour
         if (_dodgeAction.WasPressedThisFrame() && _dodgeTimer == -1f && PlayerAnimation.playerState != 7 && _knockBackTimer == -1f)
         {
             _dodgeTimer = 0;
+            isInvincible = true;
         }
     }
 
@@ -263,7 +272,10 @@ public class PlayerMoveController : MonoBehaviour
     void UpdateDodgeTimer()
     {
         _dodgeTimer += Time.deltaTime;
-
+        if(_dodgeTimer >= invincibleDuration)
+        {
+            isInvincible = false;
+        }
         if (_dodgeTimer >= dodgeDuration)
         {
             _dodgeTimer = -1f;

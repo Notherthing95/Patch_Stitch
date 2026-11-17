@@ -228729,7 +228729,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 10.5
+  - time: 6.6833334
     functionName: SetIdle
     data: 
     objectReferenceParameter: {fileID: 0}

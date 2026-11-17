@@ -124,14 +124,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         _readVector = _moveAction.ReadValue<Vector2>();
 
-        //移動速度の設定
-        SetMoveSpeed();
-
-        //移動する方向ベクトルの計算 回避中は方向転換不可
-        if (_dodgeTimer == -1f)
-        {
-            CalculationMoveVector();
-        }
+        
 
         //接地しているか
         if (IsGround())
@@ -142,6 +135,15 @@ public class PlayerMoveController : MonoBehaviour
             //攻撃中と吹っ飛ばされ中、ライフゼロは移動不可
             if (!_attackController.isAttacking && !_attackController.isFinalAttacking && _knockBackTimer == -1f && !(_playerInfo.PlayerLife == 0))
             {
+                //移動速度の設定
+                SetMoveSpeed();
+
+                //移動する方向ベクトルの計算 回避中は方向転換不可
+                if (_dodgeTimer == -1f)
+                {
+                    CalculationMoveVector();
+                }
+
                 //入力があればプレイヤーを移動させる
                 if (_readVector.magnitude > 0.1f)
                 {
@@ -171,7 +173,7 @@ public class PlayerMoveController : MonoBehaviour
     void SetMoveSpeed()
     {
         // 追加 玉留め, ノックバック中は無視
-        if (PlayerAnimation.playerState == 7 || _knockBackTimer >= 0)
+        if (PlayerAnimation.playerState == 7)
             return;
 
         if (_dodgeTimer >= 0)
@@ -264,7 +266,7 @@ public class PlayerMoveController : MonoBehaviour
 
         if (_dodgeTimer >= dodgeDuration)
         {
-            _dodgeTimer = -1;
+            _dodgeTimer = -1f;
         }
     }
 

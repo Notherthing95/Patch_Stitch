@@ -105,19 +105,16 @@ public class EnemyLifeBarController : MonoBehaviour
             //攻撃がヒットした回数分lifePreviewを短くする
             if (_previousAttackCount != _bodyInfo.attackCount && _lifePreviewTimer == -1f)
             {
-                Debug.Log("!!!");
                 _lifePreviewTimer = 0;
                 _width = Mathf.Lerp(_maxLength, 0f, 1 - (_bodyInfo.Life - _bodyInfo.attackCount) / _maxLife);
                 _previousAttackCount = _bodyInfo.attackCount;
             }
 
+            //実際の幅変更
             UpdateLifePreview();
 
             //バーをカメラ方向に向ける
             barUI.transform.LookAt(new Vector3(Camera.main.transform.position.x, barUI.transform.position.y, Camera.main.transform.position.z));
-
-            //バーと敵の部位をつなぐ線の描画
-            DrawLine();
         }
         else
         {
@@ -147,6 +144,9 @@ public class EnemyLifeBarController : MonoBehaviour
                 }
             }
         }
+
+        //バーと敵の部位をつなぐ線の描画
+        DrawLine();
     }
 
     /// <summary>

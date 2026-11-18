@@ -28,7 +28,7 @@ public class PlayerMovementAreaVisualizer : MonoBehaviour
     /// <summary>
     /// “§–¾“x‚Ì’l
     /// </summary>
-    const float AlphaValue = 0.5f;
+    const float AlphaValue = 0.25f;
 
     /// <summary>
     /// í“¬ó‘ÔˆÚs‚Ì§ŒÀ‹——£

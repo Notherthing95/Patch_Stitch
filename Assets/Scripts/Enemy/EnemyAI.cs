@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
         public string name = "右パンチ";
         [Tooltip("BossAnimation.bossStateに渡す番号 1:右パンチ 2: 左パンチ")]
         public int animationState = 1;
-        [Tooltip("Animator のステート名（終了判定用）")]
+        [Tooltip("AnimatorのState名（終了判定用）")]
         public string stateName = "Punch_Right";
         [Tooltip("ボス側から見て、この攻撃がプレイヤーに届くサイド")]
         public AttackSide side = AttackSide.Any;
@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
         public float range = 5f;
         [Tooltip("突進など前に進む攻撃だけ 0 より大きくする")]
         public float dashSpeed = 0f;
-        [Tooltip("前に進むステートの名前。もし空なら、攻撃中はずっと進む（ほぼ突進専用？）")]
+        [Tooltip("前に進むStateの名前。もし空なら、攻撃中はずっと進む（ほぼ突進専用？）")]
         public string dashStateName = "";
     }
 

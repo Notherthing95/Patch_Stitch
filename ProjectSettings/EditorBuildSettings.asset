@@ -14,5 +14,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage1.unity
     guid: c18675aa86716124da93bd7b28f5336d
+  - enabled: 1
+    path: Assets/Debug_Yuki/TitleScene_Yuki.unity
+    guid: aaa38528f9029bb42814b2cff8971f56
+  - enabled: 1
+    path: Assets/Debug_Yuki/Debug_Yuki.unity
+    guid: 2528b0125570ecb44b5ef2ab18e9993d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 9bb1f87815d76994b9c07fac3f32e2ef, type: 3}

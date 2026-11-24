@@ -1899,6 +1899,9 @@ PrefabInstance:
       addedObject: {fileID: 1366658550723516000}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 8073629633023277337}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7434055620200645375}
     - targetCorrespondingSourceObject: {fileID: 6600749935062340549, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
       insertIndex: -1
@@ -2041,6 +2044,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8073629633023277337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018137470335117225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781728be8b2b2b34eba9fcf11b2b89cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyShake
+  shakePower: 0.05
+  shakeDuration: 0.1
 --- !u!114 &7434055620200645375
 MonoBehaviour:
   m_ObjectHideFlags: 0

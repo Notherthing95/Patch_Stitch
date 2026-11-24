@@ -576,6 +576,7 @@ GameObject:
   - component: {fileID: 545944790}
   - component: {fileID: 545944792}
   - component: {fileID: 545944791}
+  - component: {fileID: 545944793}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -629,6 +630,20 @@ MonoBehaviour:
   fadeOut: {fileID: 5863276}
   nextSceneName: 
   waitTime: 3
+--- !u!114 &545944793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545944789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eb9b932afa49fa44b061d9409a2c2c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStop
+  normalHitStopTime: 0.06
+  finishHitStopTime: 0.15
 --- !u!1001 &622599092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2990,6 +3005,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 290381164452710589, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: dodgeSpeed
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 290381164452710589, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: dodgeDuration
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2422450559392143588, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
       propertyPath: m_Name
       value: MainPlayer
@@ -3041,6 +3064,10 @@ PrefabInstance:
     - target: {fileID: 6570236158934373877, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
       propertyPath: rayOriginOffset
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570236158934373877, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: rangeDecreaseAmount
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6570236158934373877, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
       propertyPath: finalAttackDelayTime

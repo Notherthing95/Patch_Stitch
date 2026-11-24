@@ -2990,6 +2990,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 290381164452710589, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: dodgeSpeed
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 290381164452710589, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: dodgeDuration
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2422450559392143588, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
       propertyPath: m_Name
       value: MainPlayer
@@ -3041,6 +3049,10 @@ PrefabInstance:
     - target: {fileID: 6570236158934373877, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
       propertyPath: rayOriginOffset
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570236158934373877, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+      propertyPath: rangeDecreaseAmount
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6570236158934373877, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
       propertyPath: finalAttackDelayTime

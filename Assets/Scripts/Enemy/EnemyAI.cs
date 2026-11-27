@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
         public string name = "右パンチ";
         [Tooltip("BossAnimation.bossStateに渡す番号 1:右パンチ 2: 左パンチ")]
         public int animationState = 1;
-        [Tooltip("Animator のステート名（終了判定用）")]
+        [Tooltip("AnimatorのState名（終了判定用）")]
         public string stateName = "Punch_Right";
         [Tooltip("ボス側から見て、この攻撃がプレイヤーに届くサイド")]
         public AttackSide side = AttackSide.Any;
@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
         public float range = 5f;
         [Tooltip("突進など前に進む攻撃だけ 0 より大きくする")]
         public float dashSpeed = 0f;
-        [Tooltip("前に進むステートの名前。もし空なら、攻撃中はずっと進む（ほぼ突進専用？）")]
+        [Tooltip("前に進むStateの名前。もし空なら、攻撃中はずっと進む（ほぼ突進専用？）")]
         public string dashStateName = "";
     }
 
@@ -60,12 +60,17 @@ public class EnemyAI : MonoBehaviour
     /// <summary>
     /// ボスがアタックを始めるプレイヤーとの距離
     /// </summary>
-    [Header("ボスが攻撃を始めるプレイヤーとの距離")]public float attackRange = 10;
+    [Header("ボスの攻撃範囲")]public float attackRange = 10;
 
     /// <summary>
     /// ボスがプレイヤーへ移動を始める距離
     /// </summary>
     [Header("ボスがプレイヤーへ移動を始める距離")]public float trackPlayerRange = 50;
+
+    [Tooltip("プレイヤーに攻撃を始めるまでの角度")]
+    [SerializeField] float faceAngle = 15f;
+
+    [Tooltip("向き切れなかったらこの秒数で攻撃へ移行する")] public const float MaxWindUpTime = 1.5f;
 
     /// <summary>
     /// 二乗したPlayerのx,z座標の意
@@ -146,7 +151,7 @@ public class EnemyAI : MonoBehaviour
 
             case State.Windup: // 予備動作
                 FacePlayer();
-                if(_timer >= windUpTime)
+                if((_timer >= windUpTime && IsFacingPlayer()) || _timer >= MaxWindUpTime)
                 {
                     bossAnimation.bossState = _current.animationState;
                     ChangeState(State.Attack);
@@ -288,6 +293,13 @@ public class EnemyAI : MonoBehaviour
 
         Quaternion target = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, target, 10f * Time.deltaTime);
+    }
+
+    bool IsFacingPlayer()
+    {
+        Vector3 dir = Player.transform.position - transform.position;   //
+        dir.y = 0;                                            // 高さは無視
+        return Vector3.Angle(transform.forward, dir) <= faceAngle;
     }
 
 }

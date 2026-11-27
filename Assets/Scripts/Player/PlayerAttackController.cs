@@ -173,7 +173,7 @@ public class PlayerAttackController : MonoBehaviour
                 if (!isAttacking)
                 {
                     isAttacking = true;
-                    _playerAnimation.PlayAttack();
+                    _playerAnimation.PlayAttack(_attackCount);
                     SoundManager.playSound.PlayAttackSE();
                     Invoke(nameof(Attack), attackDelayTimes[_attackCount]);
                 }
@@ -250,6 +250,14 @@ public class PlayerAttackController : MonoBehaviour
         if (_hit.collider != null)
         {
             SoundManager.playSound.PlayBossDamageSE();
+
+            // (追加)ヒットストップ(通常版)
+            if(HitStop.instance != null)
+            {
+                Animator bearAnimator = _hit.collider.GetComponentInParent<Animator>();
+                HitStop.instance.PlayHitStop(HitStop.instance.normalHitStopTime, _playerAnimation.m_Animator, bearAnimator);
+            }
+
             if (!_isInCombat)
             {
                 StartCombat();
@@ -270,6 +278,14 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (!_isInCombat) return;   // 玉留め中に吹っ飛ばされて糸が切れたらエラーになるので追加しました
         _bodyInfo.Finish();
+
+        // (追加)ヒットストップ(玉留めなので少し長め)
+        if (HitStop.instance != null)
+        {
+            Animator bearAnimator = _bodyInfo.GetComponentInParent<Animator>();
+            HitStop.instance.PlayHitStop(HitStop.instance.finishHitStopTime, _playerAnimation.m_Animator, bearAnimator);
+        }
+
         _bodyInfo = null;
         _combatEnemyName = null;
         attackPoint.SetActive(false);

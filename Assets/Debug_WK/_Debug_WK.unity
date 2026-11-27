@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyInfo
   enemyInfo: {fileID: 930086285}
+  HitBox: {fileID: 0}
   repairedMaterial: {fileID: 2100000, guid: be590ae034754f54590b755872859154, type: 2}
   Life: 5
   attackCount: 0
@@ -384,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyInfo
   enemyInfo: {fileID: 930086285}
+  HitBox: {fileID: 0}
   repairedMaterial: {fileID: 2100000, guid: be590ae034754f54590b755872859154, type: 2}
   Life: 5
   attackCount: 0
@@ -675,11 +677,124 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2ddce4177b153428d0fac32ff8dfe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StringLiner_test
+  attackController: {fileID: 0}
   start: {x: 0, y: 0, z: 0}
-  between: {x: 0, y: 0, z: 0}
+  controlPoint: {x: 0, y: 0, z: 0}
   end: {x: 2.41, y: 0.68, z: -0.01}
-  betY: -0.22
+  pointS_Y: 0
+  point_Y: 0
+  pointE_Y: 0
+  Yurasu: 0
   playrObj: {fileID: 1265594512}
+--- !u!1001 &433845311
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 161786747844804629, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239670894037643813, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681976742182561063, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_ConnectedBody
+      value: 
+      objectReference: {fileID: 4873868671221951461}
+    - target: {fileID: 1875142186410232212, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 2274345963631423335, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Name
+      value: String
+      objectReference: {fileID: 0}
+    - target: {fileID: 2528688984025439310, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2695194050363961432, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3352365851095967160, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 3493468546502714811, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 3984456690514253449, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 5168933283366870043, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589449742999318284, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 7895861175905660010, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132781638526787697, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322295650126035303, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e13af2150ad4c2438f7d372a1ee2844, type: 3}
 --- !u!1 &641431377
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,6 +1036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyInfo
   enemyInfo: {fileID: 930086285}
+  HitBox: {fileID: 0}
   repairedMaterial: {fileID: 2100000, guid: be590ae034754f54590b755872859154, type: 2}
   Life: 5
   attackCount: 0
@@ -1127,8 +1243,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869ff0dcc070b3b4ab2db933f048e85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  enemySpeed: 20
   Player: {fileID: 1265594512}
+  bossAnimation: {fileID: 0}
+  attacks: []
+  enemySpeed: 20
+  windUpTime: 0.5
+  recoverTime: 1
   distance: 0
   attackRange: 10
   trackPlayerRange: 50
@@ -1412,6 +1532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyInfo
   enemyInfo: {fileID: 930086285}
+  HitBox: {fileID: 0}
   repairedMaterial: {fileID: 2100000, guid: be590ae034754f54590b755872859154, type: 2}
   Life: 5
   attackCount: 0
@@ -1787,6 +1908,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7206fb5052be59748a84e15606648e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackController
+--- !u!54 &4873868671221951461 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 7589282801587435941, guid: 85c9fe6db7a694840bd440bad07e49cd, type: 3}
+  m_PrefabInstance: {fileID: 4873868671221951457}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5968370714684221825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1862,3 +1988,4 @@ SceneRoots:
   - {fileID: 1466240176}
   - {fileID: 930086282}
   - {fileID: 5968370714684221825}
+  - {fileID: 433845311}

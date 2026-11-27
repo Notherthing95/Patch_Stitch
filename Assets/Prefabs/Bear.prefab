@@ -241,6 +241,7 @@ MonoBehaviour:
   distance: 0
   attackRange: 10
   trackPlayerRange: 50
+  faceAngle: 15
 --- !u!114 &-7683050005339724655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +270,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2708448067190055111}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1.05
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -278,8 +279,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
+  m_Height: 5.3
+  m_BaseOffset: -0.1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &96928857651789047
@@ -978,7 +979,7 @@ Transform:
   m_GameObject: {fileID: 7762254006054222167}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6, z: 2.5}
+  m_LocalPosition: {x: 0, y: 1.6, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1003,7 +1004,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.6, y: 4.6, z: 3.08}
+  m_Size: {x: 2.6, y: 4.6, z: 4.57}
   m_Center: {x: 0, y: 0, z: -1.56}
 --- !u!114 &4983529940874780186
 MonoBehaviour:
@@ -1898,6 +1899,9 @@ PrefabInstance:
       addedObject: {fileID: 1366658550723516000}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 8073629633023277337}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7434055620200645375}
     - targetCorrespondingSourceObject: {fileID: 6600749935062340549, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
       insertIndex: -1
@@ -2040,6 +2044,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8073629633023277337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018137470335117225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781728be8b2b2b34eba9fcf11b2b89cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyShake
+  shakePower: 0.05
+  shakeDuration: 0.1
 --- !u!114 &7434055620200645375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2202,10 +2220,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1
+  m_Radius: 0.35
+  m_Height: 1.18
   m_Direction: 0
-  m_Center: {x: -0.3, y: -0.1, z: 0}
+  m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!1 &5584869266706515056 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2503502739594666360, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
@@ -2269,10 +2287,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1
+  m_Radius: 0.35
+  m_Height: 1.18
   m_Direction: 0
-  m_Center: {x: 0.3, y: 0.1, z: 0}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!4 &5619660434506319778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2504634832812319398, guid: a076c75a373183c4a8e27a7ca24fe218, type: 3}
